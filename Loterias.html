@@ -574,10 +574,11 @@ function carregarTabelaBichos() {
   gruposBicho.forEach(g => {
     const dezenasFormatadas = g.dezenas.join(' — ');
     tabela.innerHTML += '<tr>' +
-      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ccc;">' + g.grupo + '</td>' +
-      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ccc;">' + g.emoji + ' ' + g.bicho + '</td>' +
-      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ccc;">' + dezenasFormatadas + '</td>' +
-    '</tr>';
+  '<td style="background-color:#0055b8; color:#fff; padding:6px; border:1px solid #ccc;">' + g.grupo + '</td>' +
+  '<td style="background-color:#0055b8; color:#fff; padding:6px; border:1px solid #ccc;">' + g.emoji + ' ' + g.bicho + '</td>' +
+  '<td style="background-color:#0055b8; color:#fff; padding:6px; border:1px solid #ccc;">' + dezenasFormatadas + '</td>' +
+'</tr>';
+    
   });
 }
 
@@ -604,13 +605,14 @@ function carregarResultadosBicho() {
 
   resultadosBicho.forEach(r => {
     tbody.innerHTML += '<tr>' +
-      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ccc;">' + r.data + '</td>' +
-      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ccc;">' + r.periodo + '</td>' +
-      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ccc;">' + r.milhar + '</td>' +
-      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ccc;">' + r.centena + '</td>' +
-      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ccc;">' + r.dezena + '</td>' +
-      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ccc;">' + r.bicho + '</td>' +
-    '</tr>';
+  '<td style="background-color:#0055b8; color:#fff; padding:6px; border:1px solid #ccc;">' + r.data + '</td>' +
+  '<td style="background-color:#0055b8; color:#fff; padding:6px; border:1px solid #ccc;">' + r.periodo + '</td>' +
+  '<td style="background-color:#0055b8; color:#fff; padding:6px; border:1px solid #ccc;">' + r.milhar + '</td>' +
+  '<td style="background-color:#0055b8; color:#fff; padding:6px; border:1px solid #ccc;">' + r.centena + '</td>' +
+  '<td style="background-color:#0055b8; color:#fff; padding:6px; border:1px solid #ccc;">' + r.dezena + '</td>' +
+  '<td style="background-color:#0055b8; color:#fff; padding:6px; border:1px solid #ccc;">' + (bichoData ? bichoData.emoji + ' ' + bichoData.bicho : '') + '</td>' +
+'</tr>';
+
   });
 
   alert('✅ Resultados carregados!');
