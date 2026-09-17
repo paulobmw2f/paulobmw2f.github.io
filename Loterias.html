@@ -251,7 +251,7 @@ input:focus {
 <button class="ativo" onclick="mostrarAba('quina')">🔶 Quina</button>
 <button onclick="mostrarAba('loto')">⭐ Lotofácil</button>
 <button onclick="mostrarAba('mania')">🔢 Lotomania</button>
-<button onclick="mostrarAba('mega')">🎰 Mega Sena</button>
+<button onclick="mostrarAba('mega')">🎰 Mega</button>
 <button class="aba" onclick="mostrarAba('aba-bicho')">🦎 Jogo do Bicho</button>
 </div>
 
@@ -600,12 +600,12 @@ function carregarResultadosBicho() {
 
   resultadosBicho.forEach(r => {
     tbody.innerHTML += '<tr>' +
-  '<td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">' + r.data + '</td>' +
-  '<td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">' + r.periodo + '</td>' +
-  '<td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">' + r.milhar + '</td>' +
-  '<td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">' + r.centena + '</td>' +
-  '<td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">' + r.dezena + '</td>' +
-  '<td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">' + (r.bicho || '') + '</td>' +
+  '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + r.data + '</td>' +
+  '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + r.periodo + '</td>' +
+  '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + r.milhar + '</td>' +
+  '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + r.centena + '</td>' +
+  '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + r.dezena + '</td>' +
+  '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + (r.bicho || '') + '</td>' +
 '</tr>';
 
   });
