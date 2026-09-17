@@ -566,14 +566,14 @@ function carregarTabelaBichos() {
   const tabela = document.getElementById('tabela-bichos');
   if (!tabela) return;
   
-tabela.innerHTML = '<tr><th style="padding:12px; background:#e0e0e0; color:#000; font-weight:700; border:1px solid #ccc; text-align:center;">Grupo</th><th style="padding:12px; background:#e0e0e0; color:#000; font-weight:700; border:1px solid #ccc; text-align:center;">Bicho</th><th style="padding:12px; background:#e0e0e0; color:#000; font-weight:700; border:1px solid #ccc; text-align:center;">Dezenas</th></tr>';
+tabela.innerHTML = '<tr><th>Grupo</th><th>Bicho</th><th>Dezenas</th></tr>';
   gruposBicho.forEach(g => {
     const dezenasFormatadas = g.dezenas.map(d => d.toString().padStart(2, '0')).join(' — ');
     tabela.innerHTML += `
       <tr>
-        <td style="padding:10px; border:1px solid #fff; background:#1565c0; color:#fff; text-align:center; font-size:15px;">
-        <td style="padding:10px; border:1px solid #fff; background:#1565c0; color:#fff; text-align:center; font-size:15px;">
-        <td style="padding:10px; border:1px solid #fff; background:#1565c0; color:#fff; text-align:center; font-size:15px;">
+        <td style="color:#fff; padding:10px; border:1px solid #ddd;">
+        <td style="color:#fff; padding:10px; border:1px solid #ddd;">
+        <td style="color:#fff; padding:10px; border:1px solid #ddd;">
       </tr>
     `;
   });
