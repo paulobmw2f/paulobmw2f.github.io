@@ -571,7 +571,35 @@ tabela.innerHTML = '<tr><th>Grupo</th><th>Bicho</th><th>Dezenas</th></tr>';
     const dezenasFormatadas = g.dezenas.map(d => d.toString().padStart(2, '0')).join(' — ');
     tabela.innerHTML += `
       <tr>
-        <td style="color:#fff; padding:10px; border:1px solid #ddd;">
+        tabela.innerHTML += `
+<tr>
+  <td style="color:#fff; padding:10px; border:1px solid #ddd;">${g.grupo}</td>
+  tabela.innerHTML += `
+<tr>
+  <td style="color:#fff; padding:10px; border:1px solid #ddd;">${g.grupo}</td>
+  <td style="color:#fff; padding:10px; border:1px solid #ddd;">${g.emoji} ${g.bicho}</td>
+  tabela.innerHTML += `
+<tr>
+  tabela.innerHTML += `
+<tr>
+  <td style="color:#fff; padding:10px; border:1px solid #ddd;">${g.grupo}</td>
+  <td style="color:#fff; padding:10px; border:1px solid #ddd;">${g.emoji} ${g.bicho}</td>
+  <td style="color:#fff; padding:10px; border:1px solid #ddd;">${g.dezenas.join(' — ')}</td>
+</tr>
+`;
+
+  <td style="color:#fff; padding:10px; border:1px solid #ddd;">${g.emoji} ${g.bicho}</td>
+  <td style="color:#fff; padding:10px; border:1px solid #ddd;">${g.dezenas.join(' — ')}</td>
+</tr>
+`;
+
+</tr>
+`;
+
+  <td style="color:#fff; padding:10px; border:1px solid #ddd;">${g.dezenas.join(' — ')}</td>
+</tr>
+`;
+
         <td style="color:#fff; padding:10px; border:1px solid #ddd;">
         <td style="color:#fff; padding:10px; border:1px solid #ddd;">
       </tr>
