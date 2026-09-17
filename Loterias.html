@@ -596,14 +596,16 @@ function carregarResultadosBicho() {
   resultadosBicho.forEach(r => {
     const bichoData = gruposBicho.find(g => g.grupo === r.grupo);
     tbody.innerHTML += `
-      <tr>
-        <td style="padding:6px; border:1px solid #ddd;">${r.data}</td>
-        <td style="padding:10px; border:1px solid #fff; background:#1565c0; color:#fff; text-align:center; font-size:15px;">
-        <td style="padding:10px; border:1px solid #fff; background:#1565c0; color:#fff; text-align:center; font-size:15px;">
-        <td style="padding:10px; border:1px solid #fff; background:#1565c0; color:#fff; text-align:center; font-size:15px;">
-        <td style="padding:6px; border:1px solid #ddd; font-family:monospace;">${r.dezena}</td>
-        <td style="padding:6px; border:1px solid #ddd;">${bichoData?.emoji || ''} ${r.bicho}</td>
-      </tr>
+  <tr>
+    <td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">${r.data}</td>
+    <td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">${r.periodo}</td>
+    <td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">${r.milhar}</td>
+    <td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">${r.centena}</td>
+    <td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">${r.dezena}</td>
+    <td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">${bichoData ? bichoData.emoji + ' ' + bichoData.nome : ''}</td>
+  </tr>
+`;
+
     `;
   });
   alert('✅ Resultados carregados! Atualize com dados reais do site oficial.');
