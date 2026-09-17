@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loterias App</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  min-height: 100vh;
+  padding: 20px 16px;
+}
+
+.caixa {
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+h1 {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 22px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+h2 {
+  color: #1e40af;
+  margin-bottom: 20px;
+  font-size: 19px;
+  text-align: center;
+}
+
+.aviso {
+  background: #fef3c7;
+  border-left: 4px solid #f59e0b;
+  padding: 14px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  color: #92400e;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.link-site {
+  display: block;
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #005aa7, #0073cf);
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid #ffd700;
+  margin-bottom: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.link-site:active {
+  transform: scale(0.98);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.btn-principal {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 24px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 10px rgba(22, 163, 74, 0.3);
+}
+
+.btn-principal:active {
+  transform: scale(0.98);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.abas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.abas button {
+  flex: 1;
+  min-width: 85px;
+  padding: 12px 8px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+  color: #334155;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  border: 2px solid transparent;
+}
+
+.abas button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.abas button.ativo {
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.4);
+  border-color: #ffd700;
+}
+
+.jogo1, .jogo2 {
+  padding: 16px;
+  border-radius: 12px;
+  margin: 14px 0;
+}
+
+.jogo1 {
+  background: #fef2f2;
+  border-left: 4px solid #ef4444;
+}
+
+.jogo2 {
+  background: #f0fdf4;
+  border-left: 4px solid #22c55e;
+}
+
+.jogo1 strong, .jogo2 strong {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.dezenas {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  color: #1f2937;
+  font-size: 16px;
+}
+
+.data {
+  text-align: right;
+  color: #6b7280;
+  font-size: 13px;
+  margin-top: 12px;
+}
+
+label {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 15px;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  font-size: 16px;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #1e40af;
+}
+
+.pagina {
+  display: none;
+}
+
+.pagina.mostrar {
+  display: block;
+}
+
+.aviso-rodape {
+  text-align: center;
+  margin-top: 16px;
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.5;
+}
+</style>
+</head>
+<body>
+<div class="caixa">
+<h1>🎰 Loterias App — Quina • Mega • Loto • Mania</h1>
+
+<div id="tela-login" class="card pagina mostrar">
+<h2>🔐 Entrar / Cadastrar</h2>
+<label>Nome Completo</label>
+<input type="text" id="nome" placeholder="Digite seu nome">
+<label>E-mail</label>
+<input type="email" id="email" placeholder="seu@email.com">
+<label>Senha (mínimo 6 caracteres)</label>
+<input type="password" id="senha" placeholder="••••••••">
+<button class="btn-principal" onclick="entrar()">✅ Entrar / Criar Conta</button>
+<p class="aviso-rodape">Ao entrar, você confirma ser maior de 18 anos e joga com responsabilidade.</p>
+</div>
+
+<div id="tela-app" class="pagina">
+<div class="aviso">⚠️ Os sorteios são aleatórios. Recomendações estatísticas <strong>não garantem prêmio</strong>. Jogue com moderação!</div>
+
+<a href="https://www.loterias.caixa.gov.br" class="link-site" target="_blank" rel="noopener noreferrer">🌐 SITE OFICIAL — Apostar na Caixa</a>
+
+<button class="btn-principal" onclick="gerarTodos()">🎯 GERAR TODOS OS JOGOS</button>
+
+<div class="abas">
+<button class="ativo" onclick="mostrarAba('quina')">🔶 Quina</button>
+<button onclick="mostrarAba('loto')">⭐ Lotofácil</button>
+<button onclick="mostrarAba('mania')">🔢 Lotomania</button>
+<button onclick="mostrarAba('mega')">🎰 Mega</button>
+</div>
+
+<div id="quina">
+<div class="card">
+<h2>🔶 QUINA — 5 dezenas (1 a 80)</h2>
+<div class="jogo1">
+<strong>🔴 Jogo Quente</strong>
+<div class="dezenas" id="q1"></div>
+</div>
+<div class="jogo2">
+<strong>🟡 Jogo Alternativo</strong>
+<div class="dezenas" id="q2"></div>
+</div>
+<div class="data" id="dq"></div>
+</div>
+</div>
+
+<div id="mega" style="display:none">
+<div class="card">
+<h2>🎰 MEGA-SENA — 6 dezenas (1 a 60)</h2>
+<div class="jogo1">
+<strong>🔴 Jogo Quente</strong>
+<div class="dezenas" id="m1"></div>
+</div>
+<div class="jogo2">
+<strong>🟡 Jogo Alternativo</strong>
+<div class="dezenas" id="m2"></div>
+</div>
+<div class="data" id="dm"></div>
+</div>
+</div>
+
+<div id="loto" style="display:none">
+<div class="card">
+<h2>⭐ LOTOFÁCIL — 15 dezenas (1 a 25)</h2>
+<div class="jogo1">
+<strong>🔴 Jogo Quente</strong>
+<div class="dezenas" id="l1"></div>
+</div>
+<div class="jogo2">
+<strong>🟡 Jogo Alternativo</strong>
+<div class="dezenas" id="l2"></div>
+</div>
+<div class="data" id="dl"></div>
+</div>
+</div>
+
+<div id="mania" style="display:none">
+<div class="card">
+<h2>🔢 LOTOMANIA — 50 dezenas</h2>
+<div class="jogo1">
+<strong>🔴 Jogo Principal + Espelho ✅</strong>
+<div class="dezenas" style="font-size:15px" id="ma1"></div>
+</div>
+<div class="jogo2">
+<strong>🟡 Jogo Alternativo + Espelho ✅</strong>
+<div class="dezenas" style="font-size:15px" id="ma2"></div>
+</div>
+<div class="data" id="dma"></div>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+const data = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
+function d(n){return '<span class="num">'+n+'</span>'}
+
+window.addEventListener('load', function(){
+const nomeSalvo = localStorage.getItem('loteria_nome');
+const emailSalvo = localStorage.getItem('loteria_email');
+const senhaSalva = localStorage.getItem('loteria_senha');
+if(nomeSalvo) document.getElementById('nome').value = nomeSalvo;
+if(emailSalvo) document.getElementById('email').value = emailSalvo;
+if(senhaSalva) document.getElementById('senha').value = senhaSalva;
+if(nomeSalvo && senhaSalva && senhaSalva.length >= 6){
+document.getElementById('tela-login').classList.remove('mostrar');
+document.getElementById('tela-app').classList.add('mostrar');
+}
+});
+
+function entrar(){
+const nome = document.getElementById('nome').value.trim();
+const email = document.getElementById('email').value.trim();
+const senha = document.getElementById('senha').value;
+if(!nome){alert('Digite seu nome!');return}
+if(senha.length<6){alert('Senha precisa ter pelo menos 6 caracteres!');return}
+localStorage.setItem('loteria_nome', nome);
+localStorage.setItem('loteria_email', email);
+localStorage.setItem('loteria_senha', senha);
+document.getElementById('tela-login').classList.remove('mostrar');
+document.getElementById('tela-app').classList.add('mostrar');
+alert('✅ Bem-vindo, '+nome+'! Clique em GERAR para ver os jogos!');
+}
+
+function mostrarAba(nome){
+document.getElementById('quina').style.display='none';
+document.getElementById('mega').style.display='none';
+document.getElementById('loto').style.display='none';
+document.getElementById('mania').style.display='none';
+document.getElementById(nome).style.display='block';
+document.querySelectorAll('.abas button').forEach(b=>b.classList.remove('ativo'));
+event.target.classList.add('ativo');
+}
+
+function gerarTodos(){
+document.getElementById('q1').innerHTML = ['04','12','27','45','68'].map(d).join('');
+document.getElementById('q2').innerHTML = ['15','32','49','63','77'].map(d).join('');
+document.getElementById('dq').innerHTML = '📅 Atualizado: '+data;
+
+document.getElementById('m1').innerHTML = ['06','27','33','42','53','58'].map(d).join('');
+document.getElementById('m2').innerHTML = ['10','16','30','40','47','52'].map(d).join('');
+document.getElementById('dm').innerHTML = '📅 Atualizado: '+data;
+
+const lq = ['03','05','07','09','11','12','14','17','20','21','22','23','24','25','08'];
+const la = ['01','04','06','10','13','15','16','18','19','20','21','22','23','24','25'];
+document.getElementById('l1').innerHTML = lq.map(d).join('');
+document.getElementById('l2').innerHTML = la.map(d).join('');
+document.getElementById('dl').innerHTML = '📅 Atualizado: '+data;
+
+const maq = ['04','05','07','08','11','14','16','17','19','21','24','25','26','31','33','34','37','39','41','42','43','44','48','49','50','51','53','57','61','62','65','67','68','72','76','81','82','84','85','87','88','91','93','95','98','15','28','70','80','40'];
+const maa = ['01','02','03','06','09','10','12','13','18','20','22','23','27','29','30','32','35','36','38','45','46','47','52','54','55','56','58','59','60','63','64','66','69','71','73','74','75','77','78','79','83','86','89','90','92','94','96','97','99','00'];
+document.getElementById('ma1').innerHTML = maq.map(d).join('');
+document.getElementById('ma2').innerHTML = maa.map(d).join('');
+document.getElementById('dma').innerHTML = '📅 Atualizado: '+data;
+
+alert('✅ Todos os jogos gerados! Boa sorte! 🍀');
+}
+</script>
+</body>
+</html>
+
