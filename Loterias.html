@@ -567,14 +567,14 @@ function carregarTabelaBichos() {
   const tabela = document.getElementById('tabela-bichos');
   if (!tabela) return;
   
-  tabela.innerHTML = '';
+tabela.innerHTML = '<tr><th style="padding:12px; background:#0d47a1; color:#fff; font-weight:700; border:1px solid #fff; text-align:center;">Grupo</th><th style="padding:12px; background:#0d47a1; color:#fff; font-weight:700; border:1px solid #fff; text-align:center;">Bicho</th><th style="padding:12px; background:#0d47a1; color:#fff; font-weight:700; border:1px solid #fff; text-align:center;">Dezenas</th></tr>';
   gruposBicho.forEach(g => {
     const dezenasFormatadas = g.dezenas.map(d => d.toString().padStart(2, '0')).join(' — ');
     tabela.innerHTML += `
       <tr>
-        <td style="padding:6px; border:1px solid #ddd; text-align:center; font-weight:bold;">${g.grupo}</td>
-        <td style="padding:6px; border:1px solid #ddd;">${g.emoji} ${g.bicho}</td>
-        <td style="padding:6px; border:1px solid #ddd; text-align:center; font-family:monospace;">${dezenasFormatadas}</td>
+        <td style="padding:10px; border:1px solid #fff; background:#1565c0; color:#fff; text-align:center; font-size:15px;">
+        <td style="padding:10px; border:1px solid #fff; background:#1565c0; color:#fff; text-align:center; font-size:15px;">
+        <td style="padding:10px; border:1px solid #fff; background:#1565c0; color:#fff; text-align:center; font-size:15px;">
       </tr>
     `;
   });
@@ -600,9 +600,9 @@ function carregarResultadosBicho() {
     tbody.innerHTML += `
       <tr>
         <td style="padding:6px; border:1px solid #ddd;">${r.data}</td>
-        <td style="padding:6px; border:1px solid #ddd;">${r.periodo}</td>
-        <td style="padding:6px; border:1px solid #ddd; font-weight:bold; font-family:monospace;">${r.milhar}</td>
-        <td style="padding:6px; border:1px solid #ddd; font-family:monospace;">${r.centena}</td>
+        <td style="padding:10px; border:1px solid #fff; background:#1565c0; color:#fff; text-align:center; font-size:15px;">
+        <td style="padding:10px; border:1px solid #fff; background:#1565c0; color:#fff; text-align:center; font-size:15px;">
+        <td style="padding:10px; border:1px solid #fff; background:#1565c0; color:#fff; text-align:center; font-size:15px;">
         <td style="padding:6px; border:1px solid #ddd; font-family:monospace;">${r.dezena}</td>
         <td style="padding:6px; border:1px solid #ddd;">${bichoData?.emoji || ''} ${r.bicho}</td>
       </tr>
