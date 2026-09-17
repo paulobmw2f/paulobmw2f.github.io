@@ -670,6 +670,19 @@ function gerarSugestoesBicho() {
   document.getElementById('sugestao-centena').textContent = centena;
   document.getElementById('sugestao-milhar').textContent = milhar;
 }
+    // ✅ FUNÇÃO DE NAVEGAÇÃO ENTRE ABAS
+function mostrarAba(nomeAba) {
+  document.querySelectorAll('#quina, #mega, #loto, #mania, #aba-bicho').forEach(aba => {
+    aba.style.display = 'none';
+  });
+  const abaAtiva = document.getElementById(nomeAba);
+  if (abaAtiva) {
+    abaAtiva.style.display = 'block';
+  }
+  document.querySelectorAll('.abas button').forEach(btn => btn.classList.remove('ativo'));
+  event.target.classList.add('ativo');
+}
+
 </script>
 
 </body>
