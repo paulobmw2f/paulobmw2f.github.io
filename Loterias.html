@@ -563,7 +563,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function carregarTabelaBichos() {
-function carregarTabelaBichos() {
   const tabela = document.getElementById('tabela-bichos');
   if (!tabela) return;
 
@@ -572,26 +571,26 @@ function carregarTabelaBichos() {
   gruposBicho.forEach(g => {
     const dezenasFormatadas = g.dezenas.join(' — ');
     tabela.innerHTML += '<tr>' +
-      '<td style="color:#fff; padding:6px; border:1px solid #ccc;">' + g.grupo + '</td>' +
-      '<td style="color:#fff; padding:6px; border:1px solid #ccc;">' + g.emoji + ' ' + g.bicho + '</td>' +
-      '<td style="color:#fff; padding:6px; border:1px solid #ccc;">' + dezenasFormatadas + '</td>' +
+      '<td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">' + g.grupo + '</td>' +
+      '<td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">' + g.emoji + ' ' + g.bicho + '</td>' +
+      '<td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">' + dezenasFormatadas + '</td>' +
       '</tr>';
   });
 }
 
-// ==============================================
+// ==========================================
 // 📊 CARREGAR RESULTADOS
-// ==============================================
+// ==========================================
 function carregarResultadosBicho() {
-  // Dados de exemplo — substitua por resultados reais
+  // Dados atualizados conforme o print
   resultadosBicho = [
-    {data:'17/09', periodo:'PT', milhar:'4829', centena:'829', dezena:'29', grupo:8, bicho:'Camelo'},
-    {data:'17/09', periodo:'PTN', milhar:'1745', centena:'745', dezena:'45', grupo:12, bicho:'Elefante'},
-    {data:'16/09', periodo:'PT', milhar:'9273', centena:'273', dezena:'73', grupo:19, bicho:'Pavão'},
-    {data:'16/09', periodo:'PTN', milhar:'5108', centena:'108', dezena:'08', grupo:2, bicho:'Águia'},
-    {data:'15/09', periodo:'PT', milhar:'3964', centena:'964', dezena:'64', grupo:16, bicho:'Leão'},
+    {data:'17/09', periodo:'PT', milhar:'', centena:'', dezena:'29', bicho:'🐫 Camelo'},
+    {data:'17/09', periodo:'PTN', milhar:'', centena:'', dezena:'45', bicho:'🐘 Elefante'},
+    {data:'16/09', periodo:'PT', milhar:'', centena:'', dezena:'73', bicho:'🦚 Pavão'},
+    {data:'16/09', periodo:'PTN', milhar:'', centena:'', dezena:'08', bicho:'🦅 Águia'},
+    {data:'15/09', periodo:'PT', milhar:'', centena:'', dezena:'64', bicho:'🦁 Leão'}
   ];
-  
+
   const tbody = document.getElementById('resultados-bicho');
   tbody.innerHTML = '';
   resultadosBicho.forEach(r => {
