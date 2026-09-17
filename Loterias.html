@@ -562,6 +562,9 @@ document.addEventListener('DOMContentLoaded', function() {
   carregarTabelaBichos();
 });
 
+// ==========================================
+// 📋 TABELA DOS GRUPOS
+// ==========================================
 function carregarTabelaBichos() {
   const tabela = document.getElementById('tabela-bichos');
   if (!tabela) return;
@@ -569,21 +572,19 @@ function carregarTabelaBichos() {
   tabela.innerHTML = '<tr><th>Grupo</th><th>Bicho</th><th>Dezenas</th></tr>';
 
   gruposBicho.forEach(g => {
-  const dezenasFormatadas = g.dezenas.join(' — ');
-  tabela.innerHTML += '<tr>' +
-    '<td style="background-color: #0055b8; color: #ffffff; padding: 8px; border: 1px solid #ddd;">' + g.grupo + '</td>' +
-    '<td style="background-color: #0055b8; color: #ffffff; padding: 8px; border: 1px solid #ddd;">' + g.emoji + ' ' + g.bicho + '</td>' +
-    '<td style="background-color: #0055b8; color: #ffffff; padding: 8px; border: 1px solid #ddd;">' + dezenasFormatadas + '</td>' +
-  '</tr>';
-});
-
+    const dezenasFormatadas = g.dezenas.join(' — ');
+    tabela.innerHTML += '<tr>' +
+      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + g.grupo + '</td>' +
+      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + g.emoji + ' ' + g.bicho + '</td>' +
+      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + dezenasFormatadas + '</td>' +
+    '</tr>';
+  });
 }
 
 // ==========================================
 // 📊 CARREGAR RESULTADOS
 // ==========================================
 function carregarResultadosBicho() {
-  // Dados atualizados conforme o print
   resultadosBicho = [
     {data:'17/09', periodo:'PT', milhar:'', centena:'', dezena:'29', bicho:'🐫 Camelo'},
     {data:'17/09', periodo:'PTN', milhar:'', centena:'', dezena:'45', bicho:'🐘 Elefante'},
@@ -592,23 +593,22 @@ function carregarResultadosBicho() {
     {data:'15/09', periodo:'PT', milhar:'', centena:'', dezena:'64', bicho:'🦁 Leão'}
   ];
 
-  const tbody = document.getElementById('resultados-bicho');
+  const tbody = document.getElementById('resultados-corpo');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
   resultadosBicho.forEach(r => {
-  const bichoData = gruposBicho.find(g => g.dezenas.includes(parseInt(r.dezena)));
-  tbody.innerHTML += '<tr>' +
-  '<td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">' + r.data + '</td>' +
-  '<td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">' + r.periodo + '</td>' +
-  '<td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">' + r.milhar + '</td>' +
-  '<td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">' + r.centena + '</td>' +
-  '<td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">' + r.dezena + '</td>' +
-  '<td style="background-color: #0055b8; color: #fff; padding:6px; border:1px solid #ccc;">' + (bichoData ? bichoData.emoji + ' ' + bichoData.bicho : '') + '</td>' +
-'</tr>';
-});
+    tbody.innerHTML += '<tr>' +
+      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + r.data + '</td>' +
+      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + r.periodo + '</td>' +
+      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + r.milhar + '</td>' +
+      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + r.centena + '</td>' +
+      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + r.dezena + '</td>' +
+      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + r.bicho + '</td>' +
+    '</tr>';
+  });
 
-alert('✅ Resultados carregados! Atualize as estatísticas.');
-}
-
-  alert('✅ Resultados carregados! Atualize com dados reais do site oficial.');
+  alert('✅ Resultados carregados! Atualize as estatísticas.');
 }
 
 // ==============================================
