@@ -63,23 +63,23 @@
     ⚠️ Os sorteios são aleatórios. Recomendações não garantem prêmio. Jogue com moderação!
   </div>
   
-  <!-- ✅ BOTÃO SITE OFICIAL -->
+  <!-- ✅ BOTÃO SITE OFICIAL -- ONCLICK DIRETO -->
   <button class="btn-site" onclick="window.open('https://www.loteriasonline.caixa.gov.br', '_blank')">
     🌐 SITE OFICIAL – Apostar na Caixa
   </button>
   
-  <!-- ✅ BOTÃO GERAR TODOS OS JOGOS -->
+  <!-- ✅ BOTÃO GERAR TODOS -- ONCLICK DIRETO -->
   <button class="btn-gerar" onclick="gerarTodosJogos()">
     🎯 GERAR TODOS OS JOGOS
   </button>
 
-  <!-- ✅ BOTÕES DAS LOTERIAS -->
+  <!-- ✅ BOTÕES DAS LOTERIAS -- ONCLICK DIRETO -->
   <div class="botoes-loterias">
-    <button class="btn-loto ativo" id="btn-quina" onclick="mostrarAba('quina')">🔷 Quina</button>
-    <button class="btn-loto inativo" id="btn-lotofacil" onclick="mostrarAba('lotofacil')">⭐ LotoFácil</button>
-    <button class="btn-loto inativo" id="btn-lotomania" onclick="mostrarAba('lotomania')">🔢 LotoMania</button>
-    <button class="btn-loto inativo" id="btn-megasena" onclick="mostrarAba('megasena')">🎫 Mega</button>
-    <button class="btn-loto inativo" id="btn-bicho" onclick="mostrarAba('bicho')">🦎 Bicho</button>
+    <button class="btn-loto ativo" id="btn-quina" onclick="trocarAba('quina')">🔷 Quina</button>
+    <button class="btn-loto inativo" id="btn-lotofacil" onclick="trocarAba('lotofacil')">⭐ LotoFácil</button>
+    <button class="btn-loto inativo" id="btn-lotomania" onclick="trocarAba('lotomania')">🔢 LotoMania</button>
+    <button class="btn-loto inativo" id="btn-megasena" onclick="trocarAba('megasena')">🎫 Mega</button>
+    <button class="btn-loto inativo" id="btn-bicho" onclick="trocarAba('bicho')">🦎 Bicho</button>
   </div>
 
   <div class="conteudo">
@@ -115,7 +115,7 @@
       <button class="btn-bicho" onclick="gerarMegaSena()">🔄 Gerar Mega Sena</button>
     </div>
 
-    <!-- ✅ JOGO DO BICHO – 5 PRÊMIOS + ATUALIZAÇÃO DIÁRIA -->
+    <!-- ✅ JOGO DO BICHO -->
     <div id="bicho" class="aba bicho-body">
       <h2>🐾 JOGO DO BICHO – Análise Estatística</h2>
 
@@ -177,33 +177,29 @@
   </div>
 </div>
 
+<!-- ==========================================
+     ✅ JAVASCRIPT NO FINAL — CARREGA DEPOIS DA PÁGINA
+     ========================================== -->
 <script>
-// ==========================================
-// ✅ FUNÇÃO DE NAVEGAÇÃO — CORRIGIDA
-// ==========================================
-function mostrarAba(nomeAba) {
+// ✅ FUNÇÃO DE TROCA DE ABA — SIMPLES E DIRETA
+function trocarAba(nomeAba) {
+  console.log('🔄 Trocando para:', nomeAba);
   // Esconde todas as abas
   document.querySelectorAll('.aba').forEach(aba => aba.classList.remove('ativa'));
   // Mostra a aba selecionada
   document.getElementById(nomeAba).classList.add('ativa');
   
-  // Reseta todos os botões
+  // Reseta botões
   document.querySelectorAll('.btn-loto').forEach(btn => {
     btn.classList.remove('ativo');
     btn.classList.add('inativo');
   });
-  // Ativa o botão selecionado
-  const btnAtivo = document.getElementById('btn-' + nomeAba);
-  if (btnAtivo) {
-    btnAtivo.classList.add('ativo');
-    btnAtivo.classList.remove('inativo');
-  }
-  console.log('✅ Aba aberta:', nomeAba);
+  // Ativa botão correto
+  document.getElementById('btn-' + nomeAba).classList.add('ativo');
+  document.getElementById('btn-' + nomeAba).classList.remove('inativo');
 }
 
-// ==========================================
-// ✅ FUNÇÕES DE GERAÇÃO DE JOGOS — CORRIGIDAS
-// ==========================================
+// ✅ GERAR NÚMEROS ALEATÓRIOS
 function gerarNumeros(qtd, min, max) {
   let nums = [];
   while(nums.length < qtd) {
@@ -213,6 +209,7 @@ function gerarNumeros(qtd, min, max) {
   return nums.sort((a, b) => a - b).map(n => n.toString().padStart(2, '0')).join(' — ');
 }
 
+// ✅ FUNÇÕES DE GERAÇÃO DE JOGOS
 function gerarQuina() {
   document.getElementById('quina-quente').textContent = gerarNumeros(5, 1, 80);
   document.getElementById('quina-alternativo').textContent = gerarNumeros(5, 1, 80);
@@ -245,9 +242,7 @@ function gerarTodosJogos() {
   alert('✅ TODOS OS JOGOS GERADOS COM SUCESSO! 🎉');
 }
 
-// ==========================================
 // 🐾 DADOS DO JOGO DO BICHO
-// ==========================================
 const gruposBicho = [
   {grupo:1, bicho:'Avestruz', emoji:'🐦', dezenas:[1,2,3,4]},
   {grupo:2, bicho:'Águia', emoji:'🦅', dezenas:[5,6,7,8]},
@@ -276,21 +271,18 @@ const gruposBicho = [
   {grupo:25, bicho:'Zebra', emoji:'🦓', dezenas:[97,98,99,0]}
 ];
 
-// Formatar data
 function formatarData(data) {
   const dia = data.getDate().toString().padStart(2, '0');
   const mes = (data.getMonth() + 1).toString().padStart(2, '0');
   return `${dia}/${mes}`;
 }
 
-// 📊 Resultados fixos — últimos 3 dias com 5 prêmios
 const dadosFixos = {
   '17/09': { PT: {p1:'29 🐫 Camelo', p2:'—', p3:'—', p4:'—', p5:'—'}, PTN: {p1:'45 🐘 Elefante', p2:'—', p3:'—', p4:'—', p5:'—'} },
   '16/09': { PT: {p1:'73 🦚 Pavão', p2:'—', p3:'—', p4:'—', p5:'—'}, PTN: {p1:'08 🦅 Águia', p2:'—', p3:'—', p4:'—', p5:'—'} },
   '15/09': { PT: {p1:'64 🦁 Leão', p2:'—', p3:'—', p4:'—', p5:'—'}, PTN: {p1:'17 🐶 Cachorro', p2:'—', p3:'—', p4:'—', p5:'—'} }
 };
 
-// Gerar resultados dos últimos 3 dias
 function gerarResultados3Dias() {
   const hoje = new Date();
   const resultados = [];
@@ -308,7 +300,6 @@ function gerarResultados3Dias() {
   return resultados;
 }
 
-// 📋 Carregar tabela de grupos
 function carregarTabelaBichos() {
   const tabela = document.getElementById('tabela-bichos');
   if (!tabela) return;
@@ -322,7 +313,6 @@ function carregarTabelaBichos() {
   });
 }
 
-// 📊 Carregar resultados — 1º ao 5º prêmio
 function carregarResultadosBicho() {
   const tbody = document.getElementById('resultados-corpo');
   tbody.innerHTML = '';
@@ -345,7 +335,6 @@ function carregarResultadosBicho() {
     'Última atualização: ' + formatarData(agora) + ' (atualiza diariamente às 8h)';
 }
 
-// 📈 Estatísticas — 30 dias, bloqueio de 24h
 let ultimaAtualizacaoEstat = null;
 
 function atualizarEstatisticasBicho() {
@@ -358,7 +347,6 @@ function atualizarEstatisticasBicho() {
     }
   }
 
-  // Simula 30 sorteios realistas
   const sorteios30 = [];
   for (let i = 0; i < 30; i++) {
     const grupo = gruposBicho[Math.floor(Math.random() * gruposBicho.length)];
@@ -370,19 +358,16 @@ function atualizarEstatisticasBicho() {
     });
   }
 
-  // Contagem grupos
   const contagemGrupos = {};
   gruposBicho.forEach(g => contagemGrupos[g.grupo] = 0);
   sorteios30.forEach(s => contagemGrupos[s.grupo]++);
 
-  // Mais sorteados
   const maisSorteados = Object.entries(contagemGrupos).sort((a, b) => b[1] - a[1]).slice(0, 5);
   document.getElementById('mais-sorteados-bicho').innerHTML = maisSorteados.map(([g, q]) => {
     const b = gruposBicho.find(x => x.grupo == g);
     return `${b.emoji} ${b.bicho}: ${q}x`;
   }).join('<br>');
 
-  // Em atraso
   const ultimoIndice = {};
   gruposBicho.forEach(g => ultimoIndice[g.grupo] = -1);
   sorteios30.forEach((s, i) => { ultimoIndice[s.grupo] = i; });
@@ -394,28 +379,24 @@ function atualizarEstatisticasBicho() {
     return `${b.emoji} ${b.bicho}: ${item.atraso} sorteios`;
   }).join('<br>');
 
-  // Dezenas
   const contDez = {};
   sorteios30.forEach(s => contDez[s.dezena] = (contDez[s.dezena] || 0) + 1);
   const dezOrdenadas = Object.entries(contDez).sort((a, b) => b[1] - a[1]);
   document.getElementById('dezenas-quentes').textContent = dezOrdenadas.slice(0,4).map(d => d[0].toString().padStart(2,'0')).join(' — ');
   document.getElementById('dezenas-frias').textContent = dezOrdenadas.slice(-4).reverse().map(d => d[0].toString().padStart(2,'0')).join(' — ');
 
-  // Centenas
   const contCen = {};
   sorteios30.forEach(s => contCen[s.centena] = (contCen[s.centena] || 0) + 1);
   const cenOrdenadas = Object.entries(contCen).sort((a, b) => b[1] - a[1]);
   document.getElementById('centenas-quentes').textContent = cenOrdenadas.slice(0,4).map(c => c[0].toString().padStart(2,'0')).join(' — ');
   document.getElementById('centenas-frias').textContent = cenOrdenadas.slice(-4).reverse().map(c => c[0].toString().padStart(2,'0')).join(' — ');
 
-  // Milhares
   const contMil = {};
   sorteios30.forEach(s => contMil[s.milhar] = (contMil[s.milhar] || 0) + 1);
   const milOrdenadas = Object.entries(contMil).sort((a, b) => b[1] - a[1]);
   document.getElementById('milhares-quentes').textContent = milOrdenadas.slice(0,4).map(m => m[0].toString().padStart(3,'0')).join(' — ');
   document.getElementById('milhares-frias').textContent = milOrdenadas.slice(-4).reverse().map(m => m[0].toString().padStart(3,'0')).join(' — ');
 
-  // Sugestão
   const melhor = maisSorteados[0];
   if (melhor) {
     const bicho = gruposBicho.find(x => x.grupo == melhor[0]);
@@ -427,11 +408,25 @@ function atualizarEstatisticasBicho() {
   alert('✅ Estatísticas atualizadas! Bloqueado por 24h.');
 }
 
-// ⏰ Atualização diária automática às 8h
 function verificarAtualizacaoDiaria() {
   const agora = new Date();
   const ultimaData = localStorage.getItem('ultimaAtualizacaoResultados');
   const hoje = formatarData(agora);
   if (agora.getHours() >= 8 && ultimaData !== hoje) {
     carregarResultadosBicho();
-    localStorage.setItem('ultimaAtualizacaoResultados', hoje)
+    localStorage.setItem('ultimaAtualizacaoResultados', hoje);
+  }
+}
+
+// ✅ INICIALIZAÇÃO — CARREGA QUANDO A PÁGINA ESTÁ PRONTA
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('🚀 App carregando...');
+  carregarTabelaBichos();
+  carregarResultadosBicho();
+  verificarAtualizacaoDiaria();
+  console.log('✅ TODOS OS SISTEMAS PRONTOS! Botões funcionando!');
+});
+</script>
+
+</body>
+</html>
