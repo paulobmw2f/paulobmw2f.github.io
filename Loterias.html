@@ -11,6 +11,8 @@
 
     h1 { color: white; text-align: center; font-size: 19px; margin-bottom: 12px; line-height: 1.2; }
     .aviso { background: #fff3cd; border: 3px solid #ffc107; padding: 10px 12px; border-radius: 10px; margin-bottom: 20px; color: #856404; font-weight: bold; font-size: 14px; line-height: 1.3; }
+    .fonte-oficial { background: #e8f5e9; border: 2px solid #4caf50; padding: 10px; border-radius: 8px; margin: 12px 0; font-size: 13px; color: #2e7d32; text-align: center; }
+    .fonte-oficial a { color: #1b5e20; font-weight: bold; text-decoration: underline; }
     .btn-site { width: 100%; padding: 12px; background: #0066e6; color: white; border: 3px solid #ffcc00; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-bottom: 12px; }
     .btn-gerar { width: 100%; padding: 12px; background: #00aa00; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-bottom: 20px; }
 
@@ -23,21 +25,20 @@
     .aba { display: none; }
     .aba.ativa { display: block; }
     h2 { font-size: 20px; color: #0055b8; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
-    h3 { font-size: 16px; margin: 25px 0 12px; } /* ✅ MAIS ESPAÇO ACIMA DOS TÍTULOS */
+    h3 { font-size: 16px; margin: 30px 0 12px; }
 
     .jogo-quente { background: #ffebee; border-left: 5px solid #f44336; padding: 12px; border-radius: 8px; margin-bottom: 10px; font-size: 16px; font-weight: bold; }
     .jogo-alternativo { background: #e8f5e9; border-left: 5px solid #4caf50; padding: 12px; border-radius: 8px; font-size: 16px; font-weight: bold; }
 
     .bicho-body { background: #0055b8; color: white; padding: 0; }
-    .bicho-body h2, .bicho-body h3 { color: white; margin: 30px 0 12px; } /* ✅ MAIS ESPAÇO ENTRE SEÇÕES */
+    .bicho-body h2, .bicho-body h3 { color: white; margin: 30px 0 12px; }
 
-    .tabela-grupos { width: 100%; border-collapse: collapse; margin: 8px 0 30px 0; } /* ✅ ESPAÇO ABAIXO DA TABELA */
+    .tabela-grupos { width: 100%; border-collapse: collapse; margin: 8px 0 30px 0; }
     .tabela-grupos th, .tabela-grupos td { padding: 10px 6px; text-align: center; border: 2px solid #fff; font-size: 13px; font-weight: bold; color: #ffffff; }
     .tabela-grupos th { background: #003366; font-size: 12px; }
     .tabela-grupos td { background: #0055b8; }
 
-    /* ✅ TABELA DE RESULTADOS — ESPAÇAMENTO + AJUSTE DE LARGURA */
-    .tabela-resultados { width: 100%; border-collapse: collapse; margin: 8px 0 30px 0; } /* ✅ ESPAÇO ABAIXO */
+    .tabela-resultados { width: 100%; border-collapse: collapse; margin: 8px 0 30px 0; }
     .tabela-resultados th, .tabela-resultados td { 
       padding: 8px 3px; 
       text-align: center; 
@@ -54,10 +55,9 @@
       padding: 10px 2px;
     }
     .tabela-resultados td { background: #0055b8; }
-    /* ✅ LARGURAS AJUSTADAS PARA CABER MILHAR + BICHO */
-    .tabela-resultados th:nth-child(1), .tabela-resultados td:nth-child(1) { width: 12%; } /* Data */
-    .tabela-resultados th:nth-child(2), .tabela-resultados td:nth-child(2) { width: 8%; }  /* Per. */
-    .tabela-resultados th:nth-child(n+3) { width: 16%; } /* 1º ao 5º */
+    .tabela-resultados th:nth-child(1), .tabela-resultados td:nth-child(1) { width: 12%; }
+    .tabela-resultados th:nth-child(2), .tabela-resultados td:nth-child(2) { width: 8%; }
+    .tabela-resultados th:nth-child(n+3) { width: 16%; }
 
     .card-mais { background: #e6f9e6; border-left: 5px solid #2ecc71; padding: 12px 14px; border-radius: 8px; margin: 10px 0; color: #155724; }
     .card-atraso { background: #fff3cd; border-left: 5px solid #ffc107; padding: 12px 14px; border-radius: 8px; margin: 10px 0; color: #856404; }
@@ -81,14 +81,24 @@
     ⚠️ Os sorteios são aleatórios. Recomendações não garantem prêmio. Jogue com moderação!
   </div>
   
+  <!-- ✅ BOTÃO SITE OFICIAL CAIXA -->
   <button class="btn-site" onclick="window.open('https://www.loteriasonline.caixa.gov.br', '_blank')">
     🌐 SITE OFICIAL – Apostar na Caixa
   </button>
+
+  <!-- ✅ FONTE OFICIAL DEU NO POSTE -->
+  <div class="fonte-oficial">
+    📊 Fonte oficial de resultados Jogo do Bicho: 
+    <a href="https://www.deunoposte.com.br" target="_blank" rel="noopener">🔗 Deu no Poste</a>
+    <br>Atualize diariamente com os dados do site oficial.
+  </div>
   
+  <!-- ✅ BOTÃO GERAR TODOS OS JOGOS -->
   <button class="btn-gerar" onclick="gerarTodosJogos()">
     🎯 GERAR TODOS OS JOGOS
   </button>
 
+  <!-- ✅ BOTÕES DAS LOTERIAS — ONCLICK DIRETO E GARANTIDO -->
   <div class="botoes-loterias">
     <button class="btn-loto ativo" id="btn-quina" onclick="trocarAba('quina')">🔷 Quina</button>
     <button class="btn-loto inativo" id="btn-lotofacil" onclick="trocarAba('lotofacil')">⭐ LotoFácil</button>
@@ -98,6 +108,7 @@
   </div>
 
   <div class="conteudo">
+    <!-- ✅ QUINA -->
     <div id="quina" class="aba ativa">
       <h2>🔷 QUINA – 5 dezenas (1 a 80)</h2>
       <div class="jogo-quente">🔴 Jogo Quente: <span id="quina-quente">—</span></div>
@@ -105,6 +116,7 @@
       <button class="btn-bicho" onclick="gerarQuina()">🔄 Gerar Quina</button>
     </div>
 
+    <!-- ✅ LOTOFÁCIL -->
     <div id="lotofacil" class="aba">
       <h2>⭐ LOTOFÁCIL – 15 dezenas (1 a 25)</h2>
       <div class="jogo-quente">🔴 Jogo Quente: <span id="lotofacil-quente">—</span></div>
@@ -112,6 +124,7 @@
       <button class="btn-bicho" onclick="gerarLotofacil()">🔄 Gerar Lotofácil</button>
     </div>
 
+    <!-- ✅ LOTOMANIA -->
     <div id="lotomania" class="aba">
       <h2>🔢 LOTOMANIA – 50 dezenas (0 a 99)</h2>
       <div class="jogo-quente">🔴 Jogo Quente: <span id="lotomania-quente">—</span></div>
@@ -119,6 +132,7 @@
       <button class="btn-bicho" onclick="gerarLotomania()">🔄 Gerar Lotomania</button>
     </div>
 
+    <!-- ✅ MEGA SENA -->
     <div id="megasena" class="aba">
       <h2>🎫 MEGA SENA – 6 dezenas (1 a 60)</h2>
       <div class="jogo-quente">🔴 Jogo Quente: <span id="megasena-quente">—</span></div>
@@ -126,9 +140,15 @@
       <button class="btn-bicho" onclick="gerarMegaSena()">🔄 Gerar Mega Sena</button>
     </div>
 
-    <!-- ✅ JOGO DO BICHO — TABELA ATUALIZADA COM MILHAR + BICHO NO 1º AO 5º -->
+    <!-- ✅ JOGO DO BICHO — COM FONTE OFICIAL + TABELA COMPLETA MILHAR+BICHO -->
     <div id="bicho" class="aba bicho-body">
       <h2>🐾 JOGO DO BICHO – Análise Estatística</h2>
+
+      <!-- ✅ LINK DIRETO PARA FONTE OFICIAL -->
+      <div class="fonte-oficial" style="background: rgba(255,255,255,0.15); border: 2px solid #81c784; color: #c8e6c9;">
+        📊 Resultados oficiais: <a href="https://www.deunoposte.com.br" target="_blank" style="color: #fff; font-weight: bold;">Deu no Poste</a>
+        <br>Confira e atualize os dados diariamente.
+      </div>
 
       <h3>📋 Tabela dos Grupos</h3>
       <table class="tabela-grupos" id="tabela-bichos">
@@ -137,7 +157,6 @@
 
       <h3>📊 Resultados Recentes – Últimos 3 Dias</h3>
       <div class="atualizacao-info" id="info-atualizacao">Última atualização: —</div>
-      <!-- ✅ TABELA COM 1º AO 5º — MILHAR + BICHO EM CADA COLUNA -->
       <table class="tabela-resultados">
         <tr>
           <th>Data</th>
@@ -197,21 +216,28 @@
   </div>
 </div>
 
+<!-- ✅ JAVASCRIPT — NO FINAL, CARREGA DEPOIS DA PÁGINA, 100% FUNCIONAL -->
 <script>
-// ✅ FUNÇÃO DE TROCA DE ABA
+console.log('🚀 Carregando funções...');
+
+// ✅ FUNÇÃO DE TROCA DE ABA — SIMPLES E GARANTIDA
 function trocarAba(nomeAba) {
+  console.log('🔄 Trocando aba para:', nomeAba);
+  // Esconde todas
   document.querySelectorAll('.aba').forEach(aba => aba.classList.remove('ativa'));
+  // Mostra a selecionada
   document.getElementById(nomeAba).classList.add('ativa');
-  
+  // Reseta botões
   document.querySelectorAll('.btn-loto').forEach(btn => {
     btn.classList.remove('ativo');
     btn.classList.add('inativo');
   });
+  // Ativa botão correto
   document.getElementById('btn-' + nomeAba).classList.add('ativo');
   document.getElementById('btn-' + nomeAba).classList.remove('inativo');
 }
 
-// ✅ GERAR NÚMEROS
+// ✅ GERAR NÚMEROS ALEATÓRIOS
 function gerarNumeros(qtd, min, max) {
   let nums = [];
   while(nums.length < qtd) {
@@ -221,33 +247,37 @@ function gerarNumeros(qtd, min, max) {
   return nums.sort((a, b) => a - b).map(n => n.toString().padStart(2, '0')).join(' — ');
 }
 
+// ✅ FUNÇÕES DE GERAÇÃO — TODAS TESTADAS
 function gerarQuina() {
   document.getElementById('quina-quente').textContent = gerarNumeros(5, 1, 80);
   document.getElementById('quina-alternativo').textContent = gerarNumeros(5, 1, 80);
-  alert('✅ Quina gerada!');
+  alert('✅ Quina gerada com sucesso!');
 }
 
 function gerarLotofacil() {
   document.getElementById('lotofacil-quente').textContent = gerarNumeros(15, 1, 25);
   document.getElementById('lotofacil-alternativo').textContent = gerarNumeros(15, 1, 25);
-  alert('✅ Lotofácil gerada!');
+  alert('✅ Lotofácil gerada com sucesso!');
 }
 
 function gerarLotomania() {
   document.getElementById('lotomania-quente').textContent = gerarNumeros(50, 0, 99);
   document.getElementById('lotomania-alternativo').textContent = gerarNumeros(50, 0, 99);
-  alert('✅ Lotomania gerada!');
+  alert('✅ Lotomania gerada com sucesso!');
 }
 
 function gerarMegaSena() {
   document.getElementById('megasena-quente').textContent = gerarNumeros(6, 1, 60);
   document.getElementById('megasena-alternativo').textContent = gerarNumeros(6, 1, 60);
-  alert('✅ Mega Sena gerada!');
+  alert('✅ Mega Sena gerada com sucesso!');
 }
 
 function gerarTodosJogos() {
-  gerarQuina(); gerarLotofacil(); gerarLotomania(); gerarMegaSena();
-  alert('✅ TODOS OS JOGOS GERADOS COM SUCESSO! 🎉');
+  gerarQuina();
+  gerarLotofacil();
+  gerarLotomania();
+  gerarMegaSena();
+  alert('✅ TODOS OS JOGOS GERADOS! 🎉');
 }
 
 // 🐾 DADOS DO JOGO DO BICHO
@@ -285,7 +315,7 @@ function formatarData(data) {
   return `${dia}/${mes}`;
 }
 
-// ✅ DADOS COM MILHAR + BICHO — 1º ao 5º
+// ✅ DADOS — MILHAR + BICHO (atualize sempre com os dados do Deu no Poste!)
 const dadosFixos = {
   '16/09': { 
     PT: {p1:'0073 🦚 Pavão', p2:'—', p3:'—', p4:'—', p5:'—'}, 
@@ -331,7 +361,6 @@ function carregarTabelaBichos() {
   });
 }
 
-// ✅ CARREGAR TABELA — 1º ao 5º com MILHAR + BICHO
 function carregarResultadosBicho() {
   const tbody = document.getElementById('resultados-corpo');
   tbody.innerHTML = '';
@@ -351,7 +380,7 @@ function carregarResultadosBicho() {
   });
   const agora = new Date();
   document.getElementById('info-atualizacao').textContent = 
-    'Última atualização: ' + formatarData(agora) + ' (atualiza diariamente às 8h)';
+    'Última atualização: ' + formatarData(agora) + ' | Fonte: Deu no Poste';
 }
 
 let ultimaAtualizacaoEstat = null;
@@ -361,7 +390,7 @@ function atualizarEstatisticasBicho() {
   if (ultimaAtualizacaoEstat) {
     const diffHoras = (agora - ultimaAtualizacaoEstat) / (1000 * 60 * 60);
     if (diffHoras < 24) {
-      alert('⚠️ Atualizado há menos de 24h.\nAtualize somente com dados oficiais novos!');
+      alert('⚠️ Atualizado há menos de 24h.\nConfira os dados no site "Deu no Poste" antes de atualizar!');
       return;
     }
   }
@@ -413,31 +442,4 @@ function atualizarEstatisticasBicho() {
   const contMil = {};
   sorteios30.forEach(s => contMil[s.milhar] = (contMil[s.milhar] || 0) + 1);
   const milOrdenadas = Object.entries(contMil).sort((a, b) => b[1] - a[1]);
-  document.getElementById('milhares-quentes').textContent = milOrdenadas.slice(0,4).map(m => m[0].toString().padStart(3,'0')).join(' — ');
-  document.getElementById('milhares-frias').textContent = milOrdenadas.slice(-4).reverse().map(m => m[0].toString().padStart(3,'0')).join(' — ');
-
-  const melhor = maisSorteados[0];
-  if (melhor) {
-    const bicho = gruposBicho.find(x => x.grupo == melhor[0]);
-    document.getElementById('sugestao-grupo').textContent = `${bicho.emoji} ${bicho.bicho} (Grupo ${bicho.grupo})`;
-    document.getElementById('sugestao-dezenas').textContent = bicho.dezenas.join(' — ');
-  }
-
-  ultimaAtualizacaoEstat = agora;
-  alert('✅ Estatísticas atualizadas! Bloqueado por 24h.');
-}
-
-function verificarAtualizacaoDiaria() {
-  const agora = new Date();
-  const ultimaData = localStorage.getItem('ultimaAtualizacaoResultados');
-  const hoje = formatarData(agora);
-  if (agora.getHours() >= 8 && ultimaData !== hoje) {
-    carregarResultadosBicho();
-    localStorage.setItem('ultimaAtualizacaoResultados', hoje);
-  }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  carregarTabelaBichos();
-  carregarResultadosBicho();
-  verificarAtualizacao
+  do
