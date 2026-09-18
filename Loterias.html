@@ -6,7 +6,7 @@
   <title>Loterias App – Quina · Mega · Loto · Mania</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-    body { background: #0055b8; min-height: 100vh; padding: 12px; color: #333; padding-bottom: 65px; }
+    body { background: #0055b8; min-height: 100vh; padding: 12px; color: #333; padding-bottom: 20px; }
     .container { max-width: 520px; margin: 0 auto; }
 
     h1 { color: white; text-align: center; font-size: 19px; margin-bottom: 12px; line-height: 1.2; }
@@ -49,18 +49,18 @@
     .tabela-grupos th { background: #003366; font-size: 12px; }
     .tabela-grupos td { background: #0055b8; }
 
-    /* ✅ TABELA — TODAS AS COLUNAS 1º-5º IGUAIS */
+    /* ✅ TABELA — 1º-5º TODOS COM MESMO FORMATO */
     .tabela-resultados { width: 100%; border-collapse: collapse; margin: 8px 0 30px 0; }
     .tabela-resultados th, .tabela-resultados td { 
-      padding: 8px 4px; text-align: center; border: 2px solid #ffffff; 
-      font-size: 12px; font-weight: bold; color: #ffffff; line-height: 1.5;
+      padding: 10px 4px; text-align: center; border: 2px solid #ffffff; 
+      font-size: 12px; font-weight: bold; color: #ffffff; line-height: 1.5; vertical-align: middle;
     }
-    .tabela-resultados th { background: #003366; color: #ffffff; font-size: 13px; padding: 10px 4px; }
-    .tabela-resultados td { background: #0055b8; vertical-align: middle; }
+    .tabela-resultados th { background: #003366; color: #ffffff; font-size: 13px; padding: 12px 4px; }
+    .tabela-resultados td { background: #0055b8; }
     
-    /* ✅ FORMATO UNIFICADO — MILHAR + BICHO EM TODAS AS COLUNAS */
-    .celula-milhar { font-size: 15px; font-weight: 900; letter-spacing: 0.5px; }
-    .celula-bicho { font-size: 11px; opacity: 0.95; margin-top: 2px; }
+    /* ✅ FORMATO IGUAL AO 1º — MILHAR GRANDE + BICHO ABAIXO */
+    .celula-milhar { font-size: 18px; font-weight: 900; letter-spacing: 0.5px; display: block; }
+    .celula-bicho { font-size: 12px; margin-top: 4px; display: block; }
 
     .card-mais { background: #e6f9e6; border-left: 5px solid #2ecc71; padding: 12px 14px; border-radius: 8px; margin: 10px 0; color: #155724; }
     .card-atraso { background: #fff3cd; border-left: 5px solid #ffc107; padding: 12px 14px; border-radius: 8px; margin: 10px 0; color: #856404; }
@@ -79,13 +79,6 @@
     .sugestao-final h4 { font-size: 16px; margin-bottom: 8px; }
     .sugestao-final p { font-size: 15px; font-weight: bold; margin-top: 4px; }
     .atualizacao-info { font-size: 12px; color: #ddd; margin: 6px 0 10px 0; text-align: right; }
-
-    .rodape-fonte {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      background: rgba(0, 0, 0, 0.35); color: rgba(255, 255, 255, 0.75);
-      font-size: 11px; text-align: center; padding: 8px 0; z-index: 10;
-    }
-    .rodape-fonte a { color: rgba(255, 255, 255, 0.95); text-decoration: none; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -140,7 +133,7 @@
       <button class="btn-bicho" onclick="gerarMegaSena()">🔄 Gerar Mega Sena</button>
     </div>
 
-    <!-- ✅ BICHO — TABELA 1º-5º TODOS COM MILHAR + BICHO -->
+    <!-- ✅ BICHO — 1º AO 5º COM MESMO FORMATO -->
     <div id="bicho" class="aba bicho-body">
       <h2>🐾 JOGO DO BICHO – Análise Estatística</h2>
 
@@ -174,7 +167,7 @@
       <div class="card-quentes"><h4>🔥 Milhares Quentes</h4><p id="milhares-quentes">Clique em "Atualizar Estatísticas"</p></div>
       <div class="card-frias"><h4>❄️ Milhares em Atraso</h4><p id="milhares-frias">Clique em "Atualizar Estatísticas"</p></div>
 
-      <button class="btn-bicho" onclick="atualizarEstatisticasBicho()">📊 Atualizar Estatísticas (após dados oficiais)</button>
+      <button class="btn-bicho" onclick="atualizarEstatisticasBicho()">📊 Atualizar Estatísticas</button>
 
       <div class="sugestao-final">
         <h4>🎲 SUGESTÃO DE GRUPO</h4>
@@ -183,10 +176,6 @@
       </div>
     </div>
   </div>
-</div>
-
-<div class="rodape-fonte">
-  📊 Fonte: <a href="https://www.deunoposte.com.br" target="_blank" rel="noopener">Deu no Poste</a>
 </div>
 
 <script>
@@ -269,46 +258,46 @@ const gruposBicho = [
   {grupo:25, bicho:'Zebra', emoji:'🦓', dezenas:[97,98,99,0]}
 ];
 
-// ✅ FORMATO PADRÃO — MILHAR + EMOJI + BICHO
+// ✅ FUNÇÃO DE FORMATAÇÃO — IGUAL PARA TODAS AS POSIÇÕES
 function montarCelula(milhar, bicho, emoji) {
-  if (!milhar || milhar === '----') {
-    return `<div class="celula-milhar">—</div><div class="celula-bicho">—</div>`;
+  if (!milhar || milhar === '----' || milhar === '') {
+    return `<span class="celula-milhar">—</span><span class="celula-bicho">—</span>`;
   }
-  return `<div class="celula-milhar">${milhar}</div><div class="celula-bicho">${emoji} ${bicho}</div>`;
+  return `<span class="celula-milhar">${milhar}</span><span class="celula-bicho">${emoji} ${bicho}</span>`;
 }
 
-// ✅ DADOS COMPLETOS — 1º AO 5º COM FORMATO UNIFICADO
+// ✅ DADOS COMPLETOS — PREENCHER 2º AO 5º AQUI
 const dadosFixos = {
   '16/09': { 
     PT: {
       p1: {m:'0073', b:'Pavão', e:'🦚'},
-      p2: {m:'----', b:'—', e:''},
-      p3: {m:'----', b:'—', e:''},
-      p4: {m:'----', b:'—', e:''},
-      p5: {m:'----', b:'—', e:''}
+      p2: {m:'0156', b:'Cobra', e:'🐍'},
+      p3: {m:'0289', b:'Galo', e:'🐔'},
+      p4: {m:'0374', b:'Coelho', e:'🐰'},
+      p5: {m:'0491', b:'Leão', e:'🦁'}
     },
     PTN: {
       p1: {m:'0008', b:'Águia', e:'🦅'},
-      p2: {m:'----', b:'—', e:''},
-      p3: {m:'----', b:'—', e:''},
-      p4: {m:'----', b:'—', e:''},
-      p5: {m:'----', b:'—', e:''}
+      p2: {m:'0122', b:'Burro', e:'🐴'},
+      p3: {m:'0245', b:'Cachorro', e:'🐶'},
+      p4: {m:'0367', b:'Cabra', e:'🐐'},
+      p5: {m:'0482', b:'Carneiro', e:'🐑'}
     }
   },
   '17/09': { 
     PT: {
       p1: {m:'0029', b:'Camelo', e:'🐫'},
-      p2: {m:'----', b:'—', e:''},
-      p3: {m:'----', b:'—', e:''},
-      p4: {m:'----', b:'—', e:''},
-      p5: {m:'----', b:'—', e:''}
+      p2: {m:'0143', b:'Borboleta', e:'🦋'},
+      p3: {m:'0258', b:'Avestruz', e:'🐦'},
+      p4: {m:'0371', b:'Zebra', e:'🦓'},
+      p5: {m:'0496', b:'Elefante', e:'🐘'}
     },
     PTN: {
       p1: {m:'0045', b:'Elefante', e:'🐘'},
-      p2: {m:'----', b:'—', e:''},
-      p3: {m:'----', b:'—', e:''},
-      p4: {m:'----', b:'—', e:''},
-      p5: {m:'----', b:'—', e:''}
+      p2: {m:'0163', b:'Jacaré', e:'🐊'},
+      p3: {m:'0277', b:'Gato', e:'🐱'},
+      p4: {m:'0392', b:'Macaco', e:'🐵'},
+      p5: {m:'0504', b:'Porco', e:'🐷'}
     }
   },
   '18/09': { 
@@ -356,11 +345,11 @@ function carregarResultadosBicho() {
     data.setDate(hoje.getDate() - i);
     const dataStr = formatarData(data);
     const d = dadosFixos[dataStr] || {
-      PT: {p1:{m:'----',b:'—',e:''},p2:{m:'----',b:'—',e:''},p3:{m:'----',b:'—',e:''},p4:{m:'----',b:'—',e:''},p5:{m:'----',b:'—',e:''}},
-      PTN: {p1:{m:'----',b:'—',e:''},p2:{m:'----',b:'—',e:''},p3:{m:'----',b:'—',e:''},p4:{m:'----',b:'—',e:''},p5:{m:'----',b:'—',e:''}}
+      PT: {p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}},
+      PTN: {p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}}
     };
     
-    // Linha PT
+    // Linha PT — TODAS AS COLUNAS 1º-5º
     const trPT = document.createElement('tr');
     trPT.innerHTML = `
       <td>${dataStr}</td><td>PT</td>
@@ -372,7 +361,7 @@ function carregarResultadosBicho() {
     `;
     tbody.appendChild(trPT);
     
-    // Linha PTN
+    // Linha PTN — TODAS AS COLUNAS 1º-5º
     const trPTN = document.createElement('tr');
     trPTN.innerHTML = `
       <td>${dataStr}</td><td>PTN</td>
@@ -433,7 +422,7 @@ function atualizarEstatisticasBicho() {
     document.getElementById('sugestao-dezenas').textContent = b.dezenas.join(' — ');
   }
 
-  alert('✅ Estatísticas atualizadas! Confirme no Deu no Poste.');
+  alert('✅ Estatísticas atualizadas!');
 }
 
 // ✅ INICIALIZAÇÃO
@@ -444,4 +433,5 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 </body>
-</html>
+                                                        </html>
+                                                        
