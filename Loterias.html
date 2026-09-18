@@ -566,29 +566,36 @@ document.addEventListener('DOMContentLoaded', function() {
 // 📋 TABELA DOS GRUPOS
 // ==========================================
 function carregarTabelaBichos() {
+function carregarTabelaBichos() {
   const tabela = document.getElementById('tabela-bichos');
-  if (!tabela) return;
+  if (!tabela) {
+    console.log("ERRO: Elemento #tabela-bichos não encontrado no HTML");
+    return;
+  }
 
-  tabela.innerHTML = '<tr><th>Grupo</th><th>Bicho</th><th>Dezenas</th></tr>';
+  // Cabeçalho
+  tabela.innerHTML = '<tr style="background:#f0f0f0;"><th>Grupo</th><th>Bicho</th><th>Dezenas</th></tr>';
 
+  // Corpo da tabela — fundo azul + letra branca + CONTEÚDO
   gruposBicho.forEach(g => {
-    const dezenasFormatadas = g.dezenas.join(' — ');
+    const dezenas = g.dezenas.join(' — ');
     tabela.innerHTML += '<tr>' +
-      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + g.grupo + '</td>' +
-      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + g.emoji + ' ' + g.bicho + '</td>' +
-      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + dezenasFormatadas + '</td>' +
+      '<td style="background-color:#0055b8; color:#ffffff; padding:10px; border:1px solid #ddd; text-align:center;">' + g.grupo + '</td>' +
+      '<td style="background-color:#0055b8; color:#ffffff; padding:10px; border:1px solid #ddd;">' + g.emoji + ' ' + g.bicho + '</td>' +
+      '<td style="background-color:#0055b8; color:#ffffff; padding:10px; border:1px solid #ddd;">' + dezenas + '</td>' +
     '</tr>';
   });
-}
 
-  console.log("Tabela carregada com", gruposBicho.length, "itens");
+  console.log("✅ Tabela dos Grupos carregada:", gruposBicho.length, "itens");
 }
 
 // ==========================================
 // 📊 CARREGAR RESULTADOS
 // ==========================================
 function carregarResultadosBicho() {
-  resultadosBicho = [
+function carregarResultadosBicho() {
+  // Dados de exemplo
+  const resultadosBicho = [
     {data:'17/09', periodo:'PT', milhar:'', centena:'', dezena:'29', bicho:'🐫 Camelo'},
     {data:'17/09', periodo:'PTN', milhar:'', centena:'', dezena:'45', bicho:'🐘 Elefante'},
     {data:'16/09', periodo:'PT', milhar:'', centena:'', dezena:'73', bicho:'🦚 Pavão'},
@@ -596,42 +603,28 @@ function carregarResultadosBicho() {
     {data:'15/09', periodo:'PT', milhar:'', centena:'', dezena:'64', bicho:'🦁 Leão'}
   ];
 
-  let tbody = document.getElementById('resultados-corpo') || document.getElementById('res');
-if (!tbody) {
-  alert('⚠️ Tabela não encontrada. Verifique o ID no HTML.');
-  return;
-}
+  // Busca a tabela — tenta 2 IDs comuns
+  const tbody = document.getElementById('resultados-corpo') || document.getElementById('res');
+  if (!tbody) {
+    alert('⚠️ Tabela não encontrada. Verifique o ID no HTML.');
+    return;
+  }
 
-tbody.innerHTML = '';
-
-resultadosBicho.forEach(r => {
-  tbody.innerHTML += '<tr>' +
-    '<td style="background-color:#0055b8; color:#fff; padding:6px; border:1px solid #ccc;">' + r.data + '</td>' +
-    '<td style="background-color:#0055b8; color:#fff; padding:6px; border:1px solid #ccc;">' + r.periodo + '</td>' +
-    '<td style="background-color:#0055b8; color:#fff; padding:6px; border:1px solid #ccc;">' + r.milhar + '</td>' +
-    '<td style="background-color:#0055b8; color:#fff; padding:6px; border:1px solid #ccc;">' + r.centena + '</td>' +
-    '<td style="background-color:#0055b8; color:#fff; padding:6px; border:1px solid #ccc;">' + r.dezena + '</td>' +
-    '<td style="background-color:#0055b8; color:#fff; padding:6px; border:1px solid #ccc;">' + (r.bicho || '') + '</td>' +
-  '</tr>';
-});
-
-alert('✅ Resultados carregados!');
-
+  // Limpa e preenche — MESMA formatação azul+branca
   tbody.innerHTML = '';
-
   resultadosBicho.forEach(r => {
     tbody.innerHTML += '<tr>' +
-  '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + r.data + '</td>' +
-  '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + r.periodo + '</td>' +
-  '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + r.milhar + '</td>' +
-  '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + r.centena + '</td>' +
-  '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + r.dezena + '</td>' +
-  '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + (r.bicho || '') + '</td>' +
-'</tr>';
-
+      '<td style="background-color:#0055b8; color:#ffffff; padding:10px; border:1px solid #ddd; text-align:center;">' + r.data + '</td>' +
+      '<td style="background-color:#0055b8; color:#ffffff; padding:10px; border:1px solid #ddd; text-align:center;">' + r.periodo + '</td>' +
+      '<td style="background-color:#0055b8; color:#ffffff; padding:10px; border:1px solid #ddd; text-align:center;">' + r.milhar + '</td>' +
+      '<td style="background-color:#0055b8; color:#ffffff; padding:10px; border:1px solid #ddd; text-align:center;">' + r.centena + '</td>' +
+      '<td style="background-color:#0055b8; color:#ffffff; padding:10px; border:1px solid #ddd; text-align:center;">' + r.dezena + '</td>' +
+      '<td style="background-color:#0055b8; color:#ffffff; padding:10px; border:1px solid #ddd;">' + r.bicho + '</td>' +
+    '</tr>';
   });
 
-  alert('✅ Resultados carregados! Atualize as estatísticas.');
+  alert('✅ Resultados carregados com sucesso!');
+  console.log("✅ Tabela de Resultados carregada:", resultadosBicho.length, "itens");
 }
 
 // ==============================================
@@ -708,7 +701,38 @@ function mostrarAba(nomeAba) {
 
   
 </script>
+<!-- Tabela dos Grupos -->
+<table id="tabela-bichos" width="100%" border="0" cellspacing="0" cellpadding="0"></table>
 
+<!-- Tabela de Resultados -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:20px;">
+  <thead>
+    <tr style="background:#f0f0f0;">
+      <th>Data</th>
+      <th>Período</th>
+      <th>Milhar</th>
+      <th>Centena</th>
+      <th>Dezena</th>
+      <th>Bicho</th>
+    </tr>
+  </thead>
+  <tbody id="resultados-corpo"></tbody>
+</table>
+
+<!-- Botão de acionamento -->
+<button onclick="carregarResultadosBicho()" style="margin-top:15px; padding:12px 20px; background:#007bff; color:white; border:none; border-radius:6px; font-size:16px; cursor:pointer;">
+  🔄 Carregar Resultados de Exemplo
+</button>
+
+<!-- CHAMADA OBRIGATÓRIA — Tabela dos Grupos aparece AO ABRIR a página -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof carregarTabelaBichos === 'function') {
+      carregarTabelaBichos();
+    }
+  });
+</script>
+  
 </body>
 </html>
 
