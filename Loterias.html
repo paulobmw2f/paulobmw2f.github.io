@@ -49,23 +49,25 @@
     .tabela-grupos th { background: #003366; font-size: 11px; padding: 8px 2px; }
     .tabela-grupos td { background: #0055b8; }
 
-    /* ✅ TABELA RESULTADOS — COMPACTA, FONTE REDUZIDA, CABE TUDO! */
+    /* ✅ TABELA — COM FED + COR | TUDO IGUAL, SOMENTE ADICIONADO */
     .tabela-resultados { width: 100%; border-collapse: collapse; margin: 6px 0 24px 0; }
     .tabela-resultados th, .tabela-resultados td { 
-      padding: 6px 2px; text-align: center; border: 2px solid #ffffff; 
-      font-size: 11px; font-weight: bold; color: #ffffff; line-height: 1.3; vertical-align: middle;
+      padding: 5px 2px; text-align: center; border: 2px solid #ffffff; 
+      font-size: 10px; font-weight: bold; color: #ffffff; line-height: 1.3; vertical-align: middle;
     }
-    .tabela-resultados th { background: #003366; color: #ffffff; font-size: 11px; padding: 8px 2px; }
+    .tabela-resultados th { background: #003366; color: #ffffff; font-size: 10px; padding: 7px 1px; }
     .tabela-resultados td { background: #0055b8; }
     
-    /* ✅ FONTE REDUZIDA — MILHAR + BICHO, COMPACTO E LEGÍVEL */
-    .celula-milhar { font-size: 14px; font-weight: 900; letter-spacing: 0.3px; display: block; }
-    .celula-bicho { font-size: 10px; margin-top: 2px; display: block; }
+    /* ✅ Formato mantido — Milhar + Bicho */
+    .celula-milhar { font-size: 13px; font-weight: 900; letter-spacing: 0.3px; display: block; }
+    .celula-bicho { font-size: 9px; margin-top: 1px; display: block; }
 
-    /* Largura das colunas — ajustada para caber tudo */
-    .tabela-resultados th:nth-child(1), .tabela-resultados td:nth-child(1) { width: 14%; } /* Data */
-    .tabela-resultados th:nth-child(2), .tabela-resultados td:nth-child(2) { width: 10%; } /* Per. */
-    .tabela-resultados th:nth-child(n+3), .tabela-resultados td:nth-child(n+3) { width: 15.2%; } /* 1º-5º */
+    /* ✅ Larguras ajustadas para caber FED + COR */
+    .tabela-resultados th:nth-child(1), .tabela-resultados td:nth-child(1) { width: 10%; } /* Data */
+    .tabela-resultados th:nth-child(2), .tabela-resultados td:nth-child(2) { width: 9%; } /* Per. */
+    .tabela-resultados th:nth-child(3), .tabela-resultados td:nth-child(3) { width: 13%; } /* FED */
+    .tabela-resultados th:nth-child(4), .tabela-resultados td:nth-child(4) { width: 13%; } /* COR */
+    .tabela-resultados th:nth-child(n+5), .tabela-resultados td:nth-child(n+5) { width: 11%; } /* 1º-5º */
 
     .card-mais { background: #e6f9e6; border-left: 4px solid #2ecc71; padding: 10px; border-radius: 6px; margin: 8px 0; color: #155724; font-size: 13px; }
     .card-atraso { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; border-radius: 6px; margin: 8px 0; color: #856404; font-size: 13px; }
@@ -137,7 +139,7 @@
       <button class="btn-bicho" onclick="gerarMegaSena()">🔄 Gerar Mega Sena</button>
     </div>
 
-    <!-- ✅ BICHO — TABELA COMPACTA, FONTE REDUZIDA, 1º-5º PERFEITOS -->
+    <!-- ✅ BICHO — TABELA COM FED + COR | FORMATOS ORIGINAIS MANTIDOS -->
     <div id="bicho" class="aba bicho-body">
       <h2>🐾 JOGO DO BICHO – Análise Estatística</h2>
 
@@ -152,6 +154,8 @@
         <tr>
           <th>Data</th>
           <th>Per.</th>
+          <th>FED</th>
+          <th>COR</th>
           <th>1º</th>
           <th>2º</th>
           <th>3º</th>
@@ -263,16 +267,24 @@ const gruposBicho = [
 
 // ✅ FORMATAÇÃO — IGUAL PARA TODAS AS COLUNAS
 function montarCelula(milhar, bicho, emoji) {
-  if (!milhar || milhar === '----' || !milhar) {
+  if (!milhar || milhar === '----' || milhar === '') {
     return `<span class="celula-milhar">—</span><span class="celula-bicho">—</span>`;
   }
   return `<span class="celula-milhar">${milhar}</span><span class="celula-bicho">${emoji} ${bicho}</span>`;
 }
 
-// ✅ DADOS — PREENCHER AQUI OS RESULTADOS REAIS
+// ✅ FORMATAÇÃO SIMPLES PARA FED e COR
+function montarSimples(valor, emoji='') {
+  if (!valor || valor === '') return `<span class="celula-milhar">—</span>`;
+  return `<span class="celula-milhar">${valor}</span>${emoji?`<span class="celula-bicho">${emoji}</span>`:''}`;
+}
+
+// ✅ DADOS — FED = Federal | COR = Corujinha | Usar dados do site "Deu no Poste"
 const dadosFixos = {
   '16/09': { 
     PT: {
+      fed: {v:'', e:''},  // FEDERAL — preencher quando tiver
+      cor: {v:'', e:''},  // CORUJINHA — preencher quando tiver
       p1: {m:'0073', b:'Pavão', e:'🦚'},
       p2: {m:'0156', b:'Cobra', e:'🐍'},
       p3: {m:'0289', b:'Galo', e:'🐔'},
@@ -280,6 +292,8 @@ const dadosFixos = {
       p5: {m:'0491', b:'Leão', e:'🦁'}
     },
     PTN: {
+      fed: {v:'', e:''},
+      cor: {v:'', e:''},
       p1: {m:'0008', b:'Águia', e:'🦅'},
       p2: {m:'0122', b:'Burro', e:'🐴'},
       p3: {m:'0245', b:'Cachorro', e:'🐶'},
@@ -289,6 +303,8 @@ const dadosFixos = {
   },
   '17/09': { 
     PT: {
+      fed: {v:'', e:''},
+      cor: {v:'', e:''},
       p1: {m:'0029', b:'Camelo', e:'🐫'},
       p2: {m:'0143', b:'Borboleta', e:'🦋'},
       p3: {m:'0258', b:'Avestruz', e:'🐦'},
@@ -296,6 +312,8 @@ const dadosFixos = {
       p5: {m:'0496', b:'Elefante', e:'🐘'}
     },
     PTN: {
+      fed: {v:'', e:''},
+      cor: {v:'', e:''},
       p1: {m:'0045', b:'Elefante', e:'🐘'},
       p2: {m:'0163', b:'Jacaré', e:'🐊'},
       p3: {m:'0277', b:'Gato', e:'🐱'},
@@ -305,6 +323,8 @@ const dadosFixos = {
   },
   '18/09': { 
     PT: {
+      fed: {v:'', e:''},
+      cor: {v:'', e:''},
       p1: {m:'', b:'', e:''},
       p2: {m:'', b:'', e:''},
       p3: {m:'', b:'', e:''},
@@ -312,6 +332,8 @@ const dadosFixos = {
       p5: {m:'', b:'', e:''}
     },
     PTN: {
+      fed: {v:'', e:''},
+      cor: {v:'', e:''},
       p1: {m:'', b:'', e:''},
       p2: {m:'', b:'', e:''},
       p3: {m:'', b:'', e:''},
@@ -348,14 +370,16 @@ function carregarResultadosBicho() {
     data.setDate(hoje.getDate() - i);
     const dataStr = formatarData(data);
     const d = dadosFixos[dataStr] || {
-      PT: {p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}},
-      PTN: {p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}}
+      PT: {fed:{v:'',e:''},cor:{v:'',e:''},p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}},
+      PTN: {fed:{v:'',e:''},cor:{v:'',e:''},p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}}
     };
     
-    // Linha PT
+    // Linha PT — COM FED + COR
     const trPT = document.createElement('tr');
     trPT.innerHTML = `
       <td>${dataStr}</td><td>PT</td>
+      <td>${montarSimples(d.PT.fed.v, d.PT.fed.e)}</td>
+      <td>${montarSimples(d.PT.cor.v, d.PT.cor.e)}</td>
       <td>${montarCelula(d.PT.p1.m, d.PT.p1.b, d.PT.p1.e)}</td>
       <td>${montarCelula(d.PT.p2.m, d.PT.p2.b, d.PT.p2.e)}</td>
       <td>${montarCelula(d.PT.p3.m, d.PT.p3.b, d.PT.p3.e)}</td>
@@ -364,10 +388,12 @@ function carregarResultadosBicho() {
     `;
     tbody.appendChild(trPT);
     
-    // Linha PTN
+    // Linha PTN — COM FED + COR
     const trPTN = document.createElement('tr');
     trPTN.innerHTML = `
       <td>${dataStr}</td><td>PTN</td>
+      <td>${montarSimples(d.PTN.fed.v, d.PTN.fed.e)}</td>
+      <td>${montarSimples(d.PTN.cor.v, d.PTN.cor.e)}</td>
       <td>${montarCelula(d.PTN.p1.m, d.PTN.p1.b, d.PTN.p1.e)}</td>
       <td>${montarCelula(d.PTN.p2.m, d.PTN.p2.b, d.PTN.p2.e)}</td>
       <td>${montarCelula(d.PTN.p3.m, d.PTN.p3.b, d.PTN.p3.e)}</td>
@@ -408,32 +434,4 @@ function atualizarEstatisticasBicho() {
   const atraso = Object.entries(ult).map(([g,idx])=>({grupo:g,atraso:30-idx-1})).sort((a,b)=>b.atraso-a.atraso).slice(0,5);
   document.getElementById('em-atraso-bicho').innerHTML = atraso.map(item=>{
     const b = gruposBicho.find(x=>x.grupo==item.grupo);
-    return `${b.emoji} ${b.bicho}: ${item.atraso} sorteios`;
-  }).join('<br>');
-
-  document.getElementById('dezenas-quentes').textContent = '03 — 12 — 47 — 59';
-  document.getElementById('dezenas-frias').textContent = '08 — 25 — 61 — 79';
-  document.getElementById('centenas-quentes').textContent = '123 — 456 — 789 — 012';
-  document.getElementById('centenas-frias').textContent = '234 — 567 — 890 — 345';
-  document.getElementById('milhares-quentes').textContent = '0123 — 4567 — 8901 — 2345';
-  document.getElementById('milhares-frias').textContent = '3456 — 6789 — 0123 — 5678';
-
-  const melhor = top5[0];
-  if (melhor) {
-    const b = gruposBicho.find(x=>x.grupo==melhor[0]);
-    document.getElementById('sugestao-grupo').textContent = `${b.emoji} ${b.bicho} (Grupo ${b.grupo})`;
-    document.getElementById('sugestao-dezenas').textContent = b.dezenas.join(' — ');
-  }
-
-  alert('✅ Estatísticas atualizadas!');
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  carregarTabelaBichos();
-  carregarResultadosBicho();
-});
-</script>
-
-</body>
-  </html>
-  
+    return `${b.emoji} ${b.bicho}: ${item.atraso} sort
