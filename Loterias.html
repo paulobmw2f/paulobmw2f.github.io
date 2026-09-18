@@ -49,15 +49,17 @@
     .tabela-grupos th { background: #003366; font-size: 12px; }
     .tabela-grupos td { background: #0055b8; }
 
-    /* ✅ TABELA — 1º ao 5º com Milhar + Bicho */
+    /* ✅ TABELA — TODAS AS COLUNAS 1º-5º IGUAIS */
     .tabela-resultados { width: 100%; border-collapse: collapse; margin: 8px 0 30px 0; }
     .tabela-resultados th, .tabela-resultados td { 
-      padding: 10px 4px; text-align: center; border: 2px solid #ffffff; 
-      font-size: 12px; font-weight: bold; color: #ffffff; line-height: 1.4;
+      padding: 8px 4px; text-align: center; border: 2px solid #ffffff; 
+      font-size: 12px; font-weight: bold; color: #ffffff; line-height: 1.5;
     }
-    .tabela-resultados th { background: #003366; color: #ffffff; font-size: 13px; padding: 12px 4px; }
-    .tabela-resultados td { background: #0055b8; }
-    .celula-milhar { font-size: 14px; font-weight: 900; }
+    .tabela-resultados th { background: #003366; color: #ffffff; font-size: 13px; padding: 10px 4px; }
+    .tabela-resultados td { background: #0055b8; vertical-align: middle; }
+    
+    /* ✅ FORMATO UNIFICADO — MILHAR + BICHO EM TODAS AS COLUNAS */
+    .celula-milhar { font-size: 15px; font-weight: 900; letter-spacing: 0.5px; }
     .celula-bicho { font-size: 11px; opacity: 0.95; margin-top: 2px; }
 
     .card-mais { background: #e6f9e6; border-left: 5px solid #2ecc71; padding: 12px 14px; border-radius: 8px; margin: 10px 0; color: #155724; }
@@ -138,7 +140,7 @@
       <button class="btn-bicho" onclick="gerarMegaSena()">🔄 Gerar Mega Sena</button>
     </div>
 
-    <!-- ✅ BICHO — TABELA 1º AO 5º COM MILHAR + BICHO -->
+    <!-- ✅ BICHO — TABELA 1º-5º TODOS COM MILHAR + BICHO -->
     <div id="bicho" class="aba bicho-body">
       <h2>🐾 JOGO DO BICHO – Análise Estatística</h2>
 
@@ -267,26 +269,65 @@ const gruposBicho = [
   {grupo:25, bicho:'Zebra', emoji:'🦓', dezenas:[97,98,99,0]}
 ];
 
-// ✅ DADOS — 1º ao 5º com Milhar + Bicho
+// ✅ FORMATO PADRÃO — MILHAR + EMOJI + BICHO
+function montarCelula(milhar, bicho, emoji) {
+  if (!milhar || milhar === '----') {
+    return `<div class="celula-milhar">—</div><div class="celula-bicho">—</div>`;
+  }
+  return `<div class="celula-milhar">${milhar}</div><div class="celula-bicho">${emoji} ${bicho}</div>`;
+}
+
+// ✅ DADOS COMPLETOS — 1º AO 5º COM FORMATO UNIFICADO
 const dadosFixos = {
   '16/09': { 
-    PT: {p1:{m:'0073',b:'🦚 Pavão'},p2:{m:'----',b:'—'},p3:{m:'----',b:'—'},p4:{m:'----',b:'—'},p5:{m:'----',b:'—'}},
-    PTN: {p1:{m:'0008',b:'🦅 Águia'},p2:{m:'----',b:'—'},p3:{m:'----',b:'—'},p4:{m:'----',b:'—'},p5:{m:'----',b:'—'}}
+    PT: {
+      p1: {m:'0073', b:'Pavão', e:'🦚'},
+      p2: {m:'----', b:'—', e:''},
+      p3: {m:'----', b:'—', e:''},
+      p4: {m:'----', b:'—', e:''},
+      p5: {m:'----', b:'—', e:''}
+    },
+    PTN: {
+      p1: {m:'0008', b:'Águia', e:'🦅'},
+      p2: {m:'----', b:'—', e:''},
+      p3: {m:'----', b:'—', e:''},
+      p4: {m:'----', b:'—', e:''},
+      p5: {m:'----', b:'—', e:''}
+    }
   },
   '17/09': { 
-    PT: {p1:{m:'0029',b:'🐫 Camelo'},p2:{m:'----',b:'—'},p3:{m:'----',b:'—'},p4:{m:'----',b:'—'},p5:{m:'----',b:'—'}},
-    PTN: {p1:{m:'0045',b:'🐘 Elefante'},p2:{m:'----',b:'—'},p3:{m:'----',b:'—'},p4:{m:'----',b:'—'},p5:{m:'----',b:'—'}}
+    PT: {
+      p1: {m:'0029', b:'Camelo', e:'🐫'},
+      p2: {m:'----', b:'—', e:''},
+      p3: {m:'----', b:'—', e:''},
+      p4: {m:'----', b:'—', e:''},
+      p5: {m:'----', b:'—', e:''}
+    },
+    PTN: {
+      p1: {m:'0045', b:'Elefante', e:'🐘'},
+      p2: {m:'----', b:'—', e:''},
+      p3: {m:'----', b:'—', e:''},
+      p4: {m:'----', b:'—', e:''},
+      p5: {m:'----', b:'—', e:''}
+    }
   },
   '18/09': { 
-    PT: {p1:{m:'----',b:'—'},p2:{m:'----',b:'—'},p3:{m:'----',b:'—'},p4:{m:'----',b:'—'},p5:{m:'----',b:'—'}},
-    PTN: {p1:{m:'----',b:'—'},p2:{m:'----',b:'—'},p3:{m:'----',b:'—'},p4:{m:'----',b:'—'},p5:{m:'----',b:'—'}}
+    PT: {
+      p1: {m:'----', b:'—', e:''},
+      p2: {m:'----', b:'—', e:''},
+      p3: {m:'----', b:'—', e:''},
+      p4: {m:'----', b:'—', e:''},
+      p5: {m:'----', b:'—', e:''}
+    },
+    PTN: {
+      p1: {m:'----', b:'—', e:''},
+      p2: {m:'----', b:'—', e:''},
+      p3: {m:'----', b:'—', e:''},
+      p4: {m:'----', b:'—', e:''},
+      p5: {m:'----', b:'—', e:''}
+    }
   }
 };
-
-function montarCelula(res) {
-  if (res.m === '----') return `<div class="celula-milhar">—</div><div class="celula-bicho">—</div>`;
-  return `<div class="celula-milhar">${res.m}</div><div class="celula-bicho">${res.b}</div>`;
-}
 
 function formatarData(data) {
   const d = data.getDate().toString().padStart(2,'0');
@@ -315,27 +356,31 @@ function carregarResultadosBicho() {
     data.setDate(hoje.getDate() - i);
     const dataStr = formatarData(data);
     const d = dadosFixos[dataStr] || {
-      PT:{p1:{m:'----',b:'—'},p2:{m:'----',b:'—'},p3:{m:'----',b:'—'},p4:{m:'----',b:'—'},p5:{m:'----',b:'—'}},
-      PTN:{p1:{m:'----',b:'—'},p2:{m:'----',b:'—'},p3:{m:'----',b:'—'},p4:{m:'----',b:'—'},p5:{m:'----',b:'—'}}
+      PT: {p1:{m:'----',b:'—',e:''},p2:{m:'----',b:'—',e:''},p3:{m:'----',b:'—',e:''},p4:{m:'----',b:'—',e:''},p5:{m:'----',b:'—',e:''}},
+      PTN: {p1:{m:'----',b:'—',e:''},p2:{m:'----',b:'—',e:''},p3:{m:'----',b:'—',e:''},p4:{m:'----',b:'—',e:''},p5:{m:'----',b:'—',e:''}}
     };
+    
+    // Linha PT
     const trPT = document.createElement('tr');
     trPT.innerHTML = `
       <td>${dataStr}</td><td>PT</td>
-      <td>${montarCelula(d.PT.p1)}</td>
-      <td>${montarCelula(d.PT.p2)}</td>
-      <td>${montarCelula(d.PT.p3)}</td>
-      <td>${montarCelula(d.PT.p4)}</td>
-      <td>${montarCelula(d.PT.p5)}</td>
+      <td>${montarCelula(d.PT.p1.m, d.PT.p1.b, d.PT.p1.e)}</td>
+      <td>${montarCelula(d.PT.p2.m, d.PT.p2.b, d.PT.p2.e)}</td>
+      <td>${montarCelula(d.PT.p3.m, d.PT.p3.b, d.PT.p3.e)}</td>
+      <td>${montarCelula(d.PT.p4.m, d.PT.p4.b, d.PT.p4.e)}</td>
+      <td>${montarCelula(d.PT.p5.m, d.PT.p5.b, d.PT.p5.e)}</td>
     `;
     tbody.appendChild(trPT);
+    
+    // Linha PTN
     const trPTN = document.createElement('tr');
     trPTN.innerHTML = `
       <td>${dataStr}</td><td>PTN</td>
-      <td>${montarCelula(d.PTN.p1)}</td>
-      <td>${montarCelula(d.PTN.p2)}</td>
-      <td>${montarCelula(d.PTN.p3)}</td>
-      <td>${montarCelula(d.PTN.p4)}</td>
-      <td>${montarCelula(d.PTN.p5)}</td>
+      <td>${montarCelula(d.PTN.p1.m, d.PTN.p1.b, d.PTN.p1.e)}</td>
+      <td>${montarCelula(d.PTN.p2.m, d.PTN.p2.b, d.PTN.p2.e)}</td>
+      <td>${montarCelula(d.PTN.p3.m, d.PTN.p3.b, d.PTN.p3.e)}</td>
+      <td>${montarCelula(d.PTN.p4.m, d.PTN.p4.b, d.PTN.p4.e)}</td>
+      <td>${montarCelula(d.PTN.p5.m, d.PTN.p5.b, d.PTN.p5.e)}</td>
     `;
     tbody.appendChild(trPTN);
   }
