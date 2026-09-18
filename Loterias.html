@@ -6,20 +6,32 @@
   <title>Loterias App – Quina · Mega · Loto · Mania</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-    body { background: #0055b8; min-height: 100vh; padding: 12px; color: #333; }
+    body { background: #0055b8; min-height: 100vh; padding: 12px; color: #333; padding-bottom: 60px; } /* Espaço para rodapé */
     .container { max-width: 500px; margin: 0 auto; }
 
     h1 { color: white; text-align: center; font-size: 19px; margin-bottom: 12px; line-height: 1.2; }
     .aviso { background: #fff3cd; border: 3px solid #ffc107; padding: 10px 12px; border-radius: 10px; margin-bottom: 20px; color: #856404; font-weight: bold; font-size: 14px; line-height: 1.3; }
-    .fonte-oficial { background: #e8f5e9; border: 2px solid #4caf50; padding: 10px; border-radius: 8px; margin: 12px 0; font-size: 13px; color: #2e7d32; text-align: center; }
-    .fonte-oficial a { color: #1b5e20; font-weight: bold; text-decoration: underline; }
+    
     .btn-site { width: 100%; padding: 12px; background: #0066e6; color: white; border: 3px solid #ffcc00; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-bottom: 12px; }
+    .btn-site:active { background: #0052b3; transform: scale(0.98); } /* Feedback de toque */
+    
     .btn-gerar { width: 100%; padding: 12px; background: #00aa00; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-bottom: 20px; }
+    .btn-gerar:active { background: #008800; transform: scale(0.98); } /* Feedback de toque */
 
     .botoes-loterias { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 20px; }
-    .btn-loto { padding: 10px 4px; border: none; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+    .btn-loto { 
+      padding: 10px 4px; 
+      border: none; 
+      border-radius: 8px; 
+      font-size: 13px; 
+      font-weight: bold; 
+      cursor: pointer; 
+      transition: all 0.15s;
+      -webkit-tap-highlight-color: transparent; /* Remove destaque azul no toque */
+    }
     .btn-loto.inativo { background: #e0e0e0; color: #444; }
     .btn-loto.ativo { background: #0066e6; color: white; border: 3px solid #ffcc00; }
+    .btn-loto:active { transform: scale(0.95); } /* Feedback de toque — confirma que clicou! */
 
     .conteudo { background: white; border-radius: 14px; padding: 18px; }
     .aba { display: none; }
@@ -66,11 +78,45 @@
     .card-mais h4, .card-atraso h4, .card-quentes h4, .card-frias h4 { font-size: 15px; margin-bottom: 6px; }
     .card-mais p, .card-atraso p, .card-quentes p, .card-frias p { font-size: 14px; line-height: 1.5; }
 
-    .btn-bicho { padding: 12px 18px; background: #0066e6; color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin: 20px 0; width: 100%; }
+    .btn-bicho { 
+      padding: 12px 18px; 
+      background: #0066e6; 
+      color: white; 
+      border: none; 
+      border-radius: 8px; 
+      font-size: 15px; 
+      font-weight: bold; 
+      cursor: pointer; 
+      margin: 20px 0; 
+      width: 100%;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-bicho:active { background: #0052b3; transform: scale(0.98); }
+
     .sugestao-final { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px; border-radius: 10px; margin-top: 25px; }
     .sugestao-final h4 { font-size: 16px; margin-bottom: 8px; }
     .sugestao-final p { font-size: 15px; font-weight: bold; margin-top: 4px; }
     .atualizacao-info { font-size: 12px; color: #ddd; margin: 6px 0 10px 0; text-align: right; }
+
+    /* ✅ RODAPÉ DISCRETO — FONTE DEU NO POSTE */
+    .rodape-fonte {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.25);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 11px;
+      text-align: center;
+      padding: 8px 0;
+      z-index: 10;
+    }
+    .rodape-fonte a {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .rodape-fonte a:active { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -85,20 +131,13 @@
   <button class="btn-site" onclick="window.open('https://www.loteriasonline.caixa.gov.br', '_blank')">
     🌐 SITE OFICIAL – Apostar na Caixa
   </button>
-
-  <!-- ✅ FONTE OFICIAL DEU NO POSTE -->
-  <div class="fonte-oficial">
-    📊 Fonte oficial de resultados Jogo do Bicho: 
-    <a href="https://www.deunoposte.com.br" target="_blank" rel="noopener">🔗 Deu no Poste</a>
-    <br>Atualize diariamente com os dados do site oficial.
-  </div>
   
   <!-- ✅ BOTÃO GERAR TODOS OS JOGOS -->
   <button class="btn-gerar" onclick="gerarTodosJogos()">
     🎯 GERAR TODOS OS JOGOS
   </button>
 
-  <!-- ✅ BOTÕES DAS LOTERIAS — ONCLICK DIRETO E GARANTIDO -->
+  <!-- ✅ BOTÕES DAS LOTERIAS — ONCLICK + FEEDBACK DE TOQUE -->
   <div class="botoes-loterias">
     <button class="btn-loto ativo" id="btn-quina" onclick="trocarAba('quina')">🔷 Quina</button>
     <button class="btn-loto inativo" id="btn-lotofacil" onclick="trocarAba('lotofacil')">⭐ LotoFácil</button>
@@ -140,15 +179,9 @@
       <button class="btn-bicho" onclick="gerarMegaSena()">🔄 Gerar Mega Sena</button>
     </div>
 
-    <!-- ✅ JOGO DO BICHO — COM FONTE OFICIAL + TABELA COMPLETA MILHAR+BICHO -->
+    <!-- ✅ JOGO DO BICHO — TABELA COMPLETA MILHAR+BICHO -->
     <div id="bicho" class="aba bicho-body">
       <h2>🐾 JOGO DO BICHO – Análise Estatística</h2>
-
-      <!-- ✅ LINK DIRETO PARA FONTE OFICIAL -->
-      <div class="fonte-oficial" style="background: rgba(255,255,255,0.15); border: 2px solid #81c784; color: #c8e6c9;">
-        📊 Resultados oficiais: <a href="https://www.deunoposte.com.br" target="_blank" style="color: #fff; font-weight: bold;">Deu no Poste</a>
-        <br>Confira e atualize os dados diariamente.
-      </div>
 
       <h3>📋 Tabela dos Grupos</h3>
       <table class="tabela-grupos" id="tabela-bichos">
@@ -216,23 +249,25 @@
   </div>
 </div>
 
-<!-- ✅ JAVASCRIPT — NO FINAL, CARREGA DEPOIS DA PÁGINA, 100% FUNCIONAL -->
-<script>
-console.log('🚀 Carregando funções...');
+<!-- ✅ RODAPÉ DISCRETO — FONTE DEU NO POSTE -->
+<div class="rodape-fonte">
+  📊 Fonte de resultados Jogo do Bicho: <a href="https://www.deunoposte.com.br" target="_blank" rel="noopener">Deu no Poste</a> — Atualize diariamente
+</div>
 
-// ✅ FUNÇÃO DE TROCA DE ABA — SIMPLES E GARANTIDA
+<!-- ✅ JAVASCRIPT — CARREGA NO FINAL, GARANTIDO E FUNCIONAL -->
+<script>
+// ✅ FUNÇÃO DE TROCA DE ABA — SIMPLES E DIRETA
 function trocarAba(nomeAba) {
-  console.log('🔄 Trocando aba para:', nomeAba);
-  // Esconde todas
+  // Esconde todas as abas
   document.querySelectorAll('.aba').forEach(aba => aba.classList.remove('ativa'));
-  // Mostra a selecionada
+  // Mostra a aba selecionada
   document.getElementById(nomeAba).classList.add('ativa');
-  // Reseta botões
+  // Reseta estilo dos botões
   document.querySelectorAll('.btn-loto').forEach(btn => {
     btn.classList.remove('ativo');
     btn.classList.add('inativo');
   });
-  // Ativa botão correto
+  // Ativa o botão clicado
   document.getElementById('btn-' + nomeAba).classList.add('ativo');
   document.getElementById('btn-' + nomeAba).classList.remove('inativo');
 }
@@ -247,7 +282,7 @@ function gerarNumeros(qtd, min, max) {
   return nums.sort((a, b) => a - b).map(n => n.toString().padStart(2, '0')).join(' — ');
 }
 
-// ✅ FUNÇÕES DE GERAÇÃO — TODAS TESTADAS
+// ✅ FUNÇÕES DE GERAÇÃO — TODAS DIRETAS
 function gerarQuina() {
   document.getElementById('quina-quente').textContent = gerarNumeros(5, 1, 80);
   document.getElementById('quina-alternativo').textContent = gerarNumeros(5, 1, 80);
@@ -315,7 +350,7 @@ function formatarData(data) {
   return `${dia}/${mes}`;
 }
 
-// ✅ DADOS — MILHAR + BICHO (atualize sempre com os dados do Deu no Poste!)
+// ✅ DADOS — MILHAR + BICHO (atualize com Deu no Poste!)
 const dadosFixos = {
   '16/09': { 
     PT: {p1:'0073 🦚 Pavão', p2:'—', p3:'—', p4:'—', p5:'—'}, 
@@ -380,7 +415,7 @@ function carregarResultadosBicho() {
   });
   const agora = new Date();
   document.getElementById('info-atualizacao').textContent = 
-    'Última atualização: ' + formatarData(agora) + ' | Fonte: Deu no Poste';
+    'Última atualização: ' + formatarData(agora);
 }
 
 let ultimaAtualizacaoEstat = null;
@@ -436,10 +471,4 @@ function atualizarEstatisticasBicho() {
   const contCen = {};
   sorteios30.forEach(s => contCen[s.centena] = (contCen[s.centena] || 0) + 1);
   const cenOrdenadas = Object.entries(contCen).sort((a, b) => b[1] - a[1]);
-  document.getElementById('centenas-quentes').textContent = cenOrdenadas.slice(0,4).map(c => c[0].toString().padStart(2,'0')).join(' — ');
-  document.getElementById('centenas-frias').textContent = cenOrdenadas.slice(-4).reverse().map(c => c[0].toString().padStart(2,'0')).join(' — ');
-
-  const contMil = {};
-  sorteios30.forEach(s => contMil[s.milhar] = (contMil[s.milhar] || 0) + 1);
-  const milOrdenadas = Object.entries(contMil).sort((a, b) => b[1] - a[1]);
-  do
+  document.getElementById('centenas-quentes').textContent = cenOrdenadas.slice(0,4).map(c => c[0].toString().padStart(2,'0')).join(' — ')
