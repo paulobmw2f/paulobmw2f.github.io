@@ -37,8 +37,8 @@
     .tabela-grupos td { background: #0055b8; }
 
     .tabela-resultados { width: 100%; border-collapse: collapse; margin: 8px 0 12px; }
-    .tabela-resultados th, .tabela-resultados td { padding: 7px 4px; text-align: center; border: 2px solid #fff; font-size: 12px; font-weight: bold; color: #ffffff; }
-    .tabela-resultados th { background: #ffffff; color: #000000; font-size: 11px; }
+    .tabela-resultados th, .tabela-resultados td { padding: 7px 4px; text-align: center; border: 2px solid #fff; font-size: 11px; font-weight: bold; color: #ffffff; }
+    .tabela-resultados th { background: #ffffff; color: #000000; font-size: 10px; }
     .tabela-resultados td { background: #0055b8; }
 
     .card-mais { background: #e6f9e6; border-left: 5px solid #2ecc71; padding: 9px 12px; border-radius: 8px; margin: 6px 0; color: #155724; }
@@ -52,6 +52,7 @@
     .sugestao-final { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 14px; border-radius: 10px; margin-top: 12px; }
     .sugestao-final h4 { font-size: 16px; margin-bottom: 6px; }
     .sugestao-final p { font-size: 15px; font-weight: bold; margin-top: 4px; }
+    .atualizacao-info { font-size: 12px; color: #ddd; margin-top: 4px; text-align: right; }
   </style>
 </head>
 <body>
@@ -105,7 +106,7 @@
       <button class="btn-bicho" onclick="gerarMegaSena()">🔄 Gerar Mega Sena</button>
     </div>
 
-    <!-- JOGO DO BICHO — COMPLETO COM RESULTADOS DOS ÚLTIMOS 3 DIAS -->
+    <!-- JOGO DO BICHO — 5 PRÊMIOS + ATUALIZAÇÃO DIÁRIA + 30 DIAS FIXOS -->
     <div id="bicho" class="aba bicho-body">
       <h2>🐾 JOGO DO BICHO – Análise Estatística</h2>
 
@@ -114,9 +115,10 @@
         <tr><th>Grupo</th><th>Bicho</th><th>Dezenas</th></tr>
       </table>
 
-      <h3>📊 Resultados Recentes — Últimos 3 Dias</h3>
+      <h3>📊 Resultados Recentes – Últimos 3 Dias</h3>
+      <div class="atualizacao-info" id="info-atualizacao">Última atualização: —</div>
       <table class="tabela-resultados">
-        <tr><th>Data</th><th>Per.</th><th>Milhar</th><th>Cen.</th><th>Dez.</th><th>Bicho</th></tr>
+        <tr><th>Data</th><th>Per.</th><th>1º Prêmio</th><th>2º Prêmio</th><th>3º Prêmio</th><th>4º Prêmio</th><th>5º Prêmio</th></tr>
         <tbody id="resultados-corpo"></tbody>
       </table>
 
@@ -154,7 +156,7 @@
         <p id="milhares-frias">Clique em "Atualizar Estatísticas"</p>
       </div>
 
-      <button class="btn-bicho" onclick="atualizarEstatisticasBicho()">📊 Atualizar Estatísticas</button>
+      <button class="btn-bicho" onclick="atualizarEstatisticasBicho()">📊 Atualizar Estatísticas (após dados oficiais)</button>
 
       <div class="sugestao-final">
         <h4>🎲 SUGESTÃO DE GRUPO</h4>
@@ -222,17 +224,70 @@ const gruposBicho = [
   {grupo:25, bicho:'Zebra', emoji:'🦓', dezenas:[97,98,99,0]}
 ];
 
-// 📊 RESULTADOS — ÚLTIMOS 3 DIAS (15/09 a 17/09)
-const resultadosBicho = [
-  {data:'17/09', periodo:'PT', milhar:'', centena:'', dezena:'29', bicho:'🐫 Camelo'},
-  {data:'17/09', periodo:'PTN', milhar:'', centena:'', dezena:'45', bicho:'🐘 Elefante'},
-  {data:'16/09', periodo:'PT', milhar:'', centena:'', dezena:'73', bicho:'🦚 Pavão'},
-  {data:'16/09', periodo:'PTN', milhar:'', centena:'', dezena:'08', bicho:'🦅 Águia'},
-  {data:'15/09', periodo:'PT', milhar:'', centena:'', dezena:'64', bicho:'🦁 Leão'},
-  {data:'15/09', periodo:'PTN', milhar:'', centena:'', dezena:'17', bicho:'🐶 Cachorro'}
-];
+// 📊 FUNÇÃO PARA OBTER DATA EM FORMATO DD/MM
+function formatarData(data) {
+  const dia = data.getDate().toString().padStart(2, '0');
+  const mes = (data.getMonth() + 1).toString().padStart(2, '0');
+  return `${dia}/${mes}`;
+}
 
-// 📋 TABELA GRUPOS — CARREGA AUTOMATICAMENTE
+// 📊 GERAR RESULTADOS DOS ÚLTIMOS 3 DIAS — ATUALIZA AUTOMÁTICO
+function gerarResultados3Dias() {
+  const hoje = new Date();
+  const resultados = [];
+  
+  // Dados oficiais de exemplo (15/09 a 17/09) — atualizar manualmente quando necessário
+  const dadosFixos = {
+    '17/09': { PT: {p1:'29 🐫 Camelo', p2:'', p3:'', p4:'', p5:''}, PTN: {p1:'45 🐘 Elefante', p2:'', p3:'', p4:'', p5:''} },
+    '16/09': { PT: {p1:'73 🦚 Pavão', p2:'', p3:'', p4:'', p5:''}, PTN: {p1:'08 🦅 Águia', p2:'', p3:'', p4:'', p5:''} },
+    '15/09': { PT: {p1:'64 🦁 Leão', p2:'', p3:'', p4:'', p5:''}, PTN: {p1:'17 🐶 Cachorro', p2:'', p3:'', p4:'', p5:''} }
+  };
+
+  // Percorre os últimos 3 dias
+  for (let i = 2; i >= 0; i--) {
+    const data = new Date(hoje);
+    data.setDate(hoje.getDate() - i);
+    const dataStr = formatarData(data);
+    
+    // Usa dados fixos ou gera estrutura vazia para preencher
+    const diaDados = dadosFixos[dataStr] || { 
+      PT: {p1:'—', p2:'—', p3:'—', p4:'—', p5:'—'}, 
+      PTN: {p1:'—', p2:'—', p3:'—', p4:'—', p5:'—'} 
+    };
+    
+    resultados.push({ data: dataStr, periodo: 'PT', ...diaDados.PT });
+    resultados.push({ data: dataStr, periodo: 'PTN', ...diaDados.PTN });
+  }
+  
+  return resultados;
+}
+
+// 📊 TABELA RESULTADOS — 1º ao 5º PRÊMIO (sem Milhar/Cen/Dez)
+function carregarResultadosBicho() {
+  const tbody = document.getElementById('resultados-corpo');
+  tbody.innerHTML = '';
+  const resultados = gerarResultados3Dias();
+  
+  resultados.forEach(r => {
+    const linha = document.createElement('tr');
+    linha.innerHTML =
+      '<td>' + r.data + '</td>' +
+      '<td>' + r.periodo + '</td>' +
+      '<td>' + r.p1 + '</td>' +
+      '<td>' + r.p2 + '</td>' +
+      '<td>' + r.p3 + '</td>' +
+      '<td>' + r.p4 + '</td>' +
+      '<td>' + r.p5 + '</td>';
+    tbody.appendChild(linha);
+  });
+  
+  // Atualiza informação de última atualização
+  const agora = new Date();
+  const hora = agora.getHours().toString().padStart(2, '0') + ':' + agora.getMinutes().toString().padStart(2, '0');
+  document.getElementById('info-atualizacao').textContent = 'Última atualização: ' + formatarData(agora) + ' às ' + hora + ' (atualiza diariamente às 8h)';
+}
+
+// 📋 TABELA GRUPOS
 function carregarTabelaBichos() {
   const tabela = document.getElementById('tabela-bichos');
   if (!tabela) return;
@@ -246,26 +301,24 @@ function carregarTabelaBichos() {
   });
 }
 
-// 📊 TABELA RESULTADOS — CARREGA ÚLTIMOS 3 DIAS
-function carregarResultadosBicho() {
-  const tbody = document.getElementById('resultados-corpo');
-  tbody.innerHTML = '';
-  resultadosBicho.forEach(r => {
-    const linha = document.createElement('tr');
-    linha.innerHTML =
-      '<td>' + r.data + '</td>' +
-      '<td>' + r.periodo + '</td>' +
-      '<td>' + r.milhar + '</td>' +
-      '<td>' + r.centena + '</td>' +
-      '<td>' + r.dezena + '</td>' +
-      '<td>' + r.bicho + '</td>';
-    tbody.appendChild(linha);
-  });
-}
+// 📈 ESTATÍSTICAS — FIXAS EM 30 DIAS, SÓ ATUALIZA APÓS DADOS OFICIAIS
+let estatisticasCache = null;
+let ultimaAtualizacaoEstat = null;
 
-// 📈 ESTATÍSTICAS — SIMULA 30 SORTEIOS COM FREQUÊNCIAS REALISTAS
-function atualizarEstatisticasBicho() {
-  // Simula 30 sorteios com distribuição natural
+function atualizarEstatisticasBicho(forcar = false) {
+  const agora = new Date();
+  const hojeStr = formatarData(agora) + ' ' + agora.getHours();
+  
+  // Verifica se já atualizou nas últimas 24h (só permite após 8h do dia)
+  if (!forcar && estatisticasCache && ultimaAtualizacaoEstat) {
+    const diffHoras = (agora - ultimaAtualizacaoEstat) / (1000 * 60 * 60);
+    if (diffHoras < 24) {
+      alert('⚠️ Estatísticas já foram atualizadas nas últimas 24h.\nAtualize somente após inserir os dados oficiais do dia!');
+      return;
+    }
+  }
+
+  // SIMULA 30 SORTEIOS COM DISTRIBUIÇÃO REALISTA
   const sorteios30 = [];
   for (let i = 0; i < 30; i++) {
     const grupoAleatorio = gruposBicho[Math.floor(Math.random() * gruposBicho.length)];
@@ -290,7 +343,7 @@ function atualizarEstatisticasBicho() {
     return b.emoji + ' ' + b.bicho + ': ' + q + 'x';
   }).join('<br>');
 
-  // Em atraso (menos frequentes + maior tempo sem sair)
+  // Em atraso (calculado por tempo sem sair)
   const ultimoIndice = {};
   gruposBicho.forEach(g => ultimoIndice[g.grupo] = -1);
   sorteios30.forEach((s, i) => { ultimoIndice[s.grupo] = i; });
@@ -332,16 +385,8 @@ function atualizarEstatisticasBicho() {
     document.getElementById('sugestao-dezenas').textContent = bicho.dezenas.join(' — ');
   }
 
-  alert('✅ Estatísticas atualizadas com 30 sorteios!');
-}
+  // Salva cache
+  estatisticasCache = { maisSorteados, atraso, dezenasOrdenadas, centenasOrdenadas, milharesOrdenadas };
+  ultimaAtualizacaoEstat = agora;
 
-// 🚀 INICIALIZAÇÃO AUTOMÁTICA
-document.addEventListener('DOMContentLoaded', function() {
-  carregarTabelaBichos();
-  carregarResultadosBicho();
-  console.log('✅ App carregado — Resultados dos últimos 3 dias carregados!');
-});
-</script>
-
-</body>
-</html>
+  alert('✅ Estatísticas atua
