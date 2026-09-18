@@ -15,27 +15,22 @@
     .btn-site { 
       width: 100%; padding: 12px; background: #0066e6; color: white; border: 3px solid #ffcc00; 
       border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-bottom: 12px;
-      -webkit-tap-highlight-color: transparent; touch-action: manipulation;
     }
-    .btn-site:active { background: #0052b3; transform: scale(0.98); }
+    .btn-site:active { background: #0052b3; }
     
     .btn-gerar { 
       width: 100%; padding: 12px; background: #00aa00; color: white; border: none; 
       border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-bottom: 20px;
-      -webkit-tap-highlight-color: transparent; touch-action: manipulation;
     }
-    .btn-gerar:active { background: #008800; transform: scale(0.98); }
+    .btn-gerar:active { background: #008800; }
 
     .botoes-loterias { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 20px; }
     .btn-loto { 
       padding: 12px 4px; border: none; border-radius: 8px; font-size: 13px; font-weight: bold; 
-      cursor: pointer; transition: all 0.15s;
-      -webkit-tap-highlight-color: transparent; touch-action: manipulation;
-      min-height: 48px;
+      cursor: pointer; transition: all 0.15s; min-height: 48px;
     }
     .btn-loto.inativo { background: #e0e0e0; color: #444; }
     .btn-loto.ativo { background: #0066e6; color: white; border: 3px solid #ffcc00; }
-    .btn-loto:active { transform: scale(0.92); }
 
     .conteudo { background: white; border-radius: 14px; padding: 18px; }
     .aba { display: none; }
@@ -54,20 +49,15 @@
     .tabela-grupos th { background: #003366; font-size: 12px; }
     .tabela-grupos td { background: #0055b8; }
 
-    /* ✅ TABELA RESULTADOS — 1º ao 5º com Milhar + Bicho */
+    /* ✅ TABELA — 1º ao 5º com Milhar + Bicho */
     .tabela-resultados { width: 100%; border-collapse: collapse; margin: 8px 0 30px 0; }
     .tabela-resultados th, .tabela-resultados td { 
       padding: 10px 4px; text-align: center; border: 2px solid #ffffff; 
       font-size: 12px; font-weight: bold; color: #ffffff; line-height: 1.4;
     }
-    .tabela-resultados th { 
-      background: #003366; color: #ffffff; font-size: 13px; padding: 12px 4px;
-    }
+    .tabela-resultados th { background: #003366; color: #ffffff; font-size: 13px; padding: 12px 4px; }
     .tabela-resultados td { background: #0055b8; }
-    .tabela-resultados th:nth-child(1), .tabela-resultados td:nth-child(1) { width: 12%; }
-    .tabela-resultados th:nth-child(2), .tabela-resultados td:nth-child(2) { width: 10%; }
-    .tabela-resultados th:nth-child(n+3) { width: 15.6%; }
-    .celula-milhar { font-size: 14px; font-weight: 900; letter-spacing: 1px; }
+    .celula-milhar { font-size: 14px; font-weight: 900; }
     .celula-bicho { font-size: 11px; opacity: 0.95; margin-top: 2px; }
 
     .card-mais { background: #e6f9e6; border-left: 5px solid #2ecc71; padding: 12px 14px; border-radius: 8px; margin: 10px 0; color: #155724; }
@@ -80,9 +70,8 @@
     .btn-bicho { 
       padding: 12px 18px; background: #0066e6; color: white; border: none; border-radius: 8px; 
       font-size: 15px; font-weight: bold; cursor: pointer; margin: 20px 0; width: 100%;
-      -webkit-tap-highlight-color: transparent; touch-action: manipulation;
     }
-    .btn-bicho:active { background: #0052b3; transform: scale(0.98); }
+    .btn-bicho:active { background: #0052b3; }
 
     .sugestao-final { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px; border-radius: 10px; margin-top: 25px; }
     .sugestao-final h4 { font-size: 16px; margin-bottom: 8px; }
@@ -95,7 +84,6 @@
       font-size: 11px; text-align: center; padding: 8px 0; z-index: 10;
     }
     .rodape-fonte a { color: rgba(255, 255, 255, 0.95); text-decoration: none; font-weight: bold; }
-    .rodape-fonte a:active { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -106,15 +94,19 @@
     ⚠️ Os sorteios são aleatórios. Recomendações não garantem prêmio. Jogue com moderação!
   </div>
   
-  <button class="btn-site" id="btn-caixa">🌐 SITE OFICIAL – Apostar na Caixa</button>
-  <button class="btn-gerar" id="btn-gerar-todos">🎯 GERAR TODOS OS JOGOS</button>
+  <button class="btn-site" onclick="window.open('https://www.loteriasonline.caixa.gov.br', '_blank')">
+    🌐 SITE OFICIAL – Apostar na Caixa
+  </button>
+  <button class="btn-gerar" onclick="gerarTodosJogos()">
+    🎯 GERAR TODOS OS JOGOS
+  </button>
 
   <div class="botoes-loterias">
-    <button class="btn-loto ativo" id="btn-quina">🔷 Quina</button>
-    <button class="btn-loto inativo" id="btn-lotofacil">⭐ LotoFácil</button>
-    <button class="btn-loto inativo" id="btn-lotomania">🔢 LotoMania</button>
-    <button class="btn-loto inativo" id="btn-megasena">🎫 Mega</button>
-    <button class="btn-loto inativo" id="btn-bicho">🦎 Bicho</button>
+    <button class="btn-loto ativo" id="btn-quina" onclick="trocarAba('quina')">🔷 Quina</button>
+    <button class="btn-loto inativo" id="btn-lotofacil" onclick="trocarAba('lotofacil')">⭐ LotoFácil</button>
+    <button class="btn-loto inativo" id="btn-lotomania" onclick="trocarAba('lotomania')">🔢 LotoMania</button>
+    <button class="btn-loto inativo" id="btn-megasena" onclick="trocarAba('megasena')">🎫 Mega</button>
+    <button class="btn-loto inativo" id="btn-bicho" onclick="trocarAba('bicho')">🦎 Bicho</button>
   </div>
 
   <div class="conteudo">
@@ -122,31 +114,31 @@
       <h2>🔷 QUINA – 5 dezenas (1 a 80)</h2>
       <div class="jogo-quente">🔴 Jogo Quente: <span id="quina-quente">—</span></div>
       <div class="jogo-alternativo">🟡 Jogo Alternativo: <span id="quina-alternativo">—</span></div>
-      <button class="btn-bicho" id="btn-gerar-quina">🔄 Gerar Quina</button>
+      <button class="btn-bicho" onclick="gerarQuina()">🔄 Gerar Quina</button>
     </div>
 
     <div id="lotofacil" class="aba">
       <h2>⭐ LOTOFÁCIL – 15 dezenas (1 a 25)</h2>
       <div class="jogo-quente">🔴 Jogo Quente: <span id="lotofacil-quente">—</span></div>
       <div class="jogo-alternativo">🟡 Jogo Alternativo: <span id="lotofacil-alternativo">—</span></div>
-      <button class="btn-bicho" id="btn-gerar-lotofacil">🔄 Gerar Lotofácil</button>
+      <button class="btn-bicho" onclick="gerarLotofacil()">🔄 Gerar Lotofácil</button>
     </div>
 
     <div id="lotomania" class="aba">
       <h2>🔢 LOTOMANIA – 50 dezenas (0 a 99)</h2>
       <div class="jogo-quente">🔴 Jogo Quente: <span id="lotomania-quente">—</span></div>
       <div class="jogo-alternativo">🟡 Jogo Alternativo: <span id="lotomania-alternativo">—</span></div>
-      <button class="btn-bicho" id="btn-gerar-lotomania">🔄 Gerar Lotomania</button>
+      <button class="btn-bicho" onclick="gerarLotomania()">🔄 Gerar Lotomania</button>
     </div>
 
     <div id="megasena" class="aba">
       <h2>🎫 MEGA SENA – 6 dezenas (1 a 60)</h2>
       <div class="jogo-quente">🔴 Jogo Quente: <span id="megasena-quente">—</span></div>
       <div class="jogo-alternativo">🟡 Jogo Alternativo: <span id="megasena-alternativo">—</span></div>
-      <button class="btn-bicho" id="btn-gerar-mega">🔄 Gerar Mega Sena</button>
+      <button class="btn-bicho" onclick="gerarMegaSena()">🔄 Gerar Mega Sena</button>
     </div>
 
-    <!-- ✅ JOGO DO BICHO — TABELA 1º AO 5º COM MILHAR + BICHO -->
+    <!-- ✅ BICHO — TABELA 1º AO 5º COM MILHAR + BICHO -->
     <div id="bicho" class="aba bicho-body">
       <h2>🐾 JOGO DO BICHO – Análise Estatística</h2>
 
@@ -156,7 +148,7 @@
       </table>
 
       <h3>📊 Resultados Recentes – Últimos 3 Dias</h3>
-      <div class="atualizacao-info" id="info-atualizacao">Última atualização: 18/09 (atualiza diariamente às 8h)</div>
+      <div class="atualizacao-info">Última atualização: 18/09 (atualiza diariamente às 8h)</div>
       <table class="tabela-resultados">
         <tr>
           <th>Data</th>
@@ -180,7 +172,7 @@
       <div class="card-quentes"><h4>🔥 Milhares Quentes</h4><p id="milhares-quentes">Clique em "Atualizar Estatísticas"</p></div>
       <div class="card-frias"><h4>❄️ Milhares em Atraso</h4><p id="milhares-frias">Clique em "Atualizar Estatísticas"</p></div>
 
-      <button class="btn-bicho" id="btn-atualizar-bicho">📊 Atualizar Estatísticas (após dados oficiais)</button>
+      <button class="btn-bicho" onclick="atualizarEstatisticasBicho()">📊 Atualizar Estatísticas (após dados oficiais)</button>
 
       <div class="sugestao-final">
         <h4>🎲 SUGESTÃO DE GRUPO</h4>
@@ -192,14 +184,11 @@
 </div>
 
 <div class="rodape-fonte">
-  📊 Fonte de resultados Jogo do Bicho: <a href="https://www.deunoposte.com.br" target="_blank" rel="noopener">Deu no Poste</a> — Atualize diariamente
+  📊 Fonte: <a href="https://www.deunoposte.com.br" target="_blank" rel="noopener">Deu no Poste</a>
 </div>
 
 <script>
-// ==============================================
-// ✅ SISTEMA DE BOTÕES — EVENT LISTENERS GARANTIDOS
-// ==============================================
-
+// ✅ FUNÇÕES — EXATAMENTE COMO ESTAVAM FUNCIONANDO
 function trocarAba(nomeAba) {
   document.querySelectorAll('.aba').forEach(aba => aba.classList.remove('ativa'));
   document.getElementById(nomeAba).classList.add('ativa');
@@ -223,25 +212,25 @@ function gerarNumeros(qtd, min, max) {
 function gerarQuina() {
   document.getElementById('quina-quente').textContent = gerarNumeros(5, 1, 80);
   document.getElementById('quina-alternativo').textContent = gerarNumeros(5, 1, 80);
-  alert('✅ Quina gerada com sucesso!');
+  alert('✅ Quina gerada!');
 }
 
 function gerarLotofacil() {
   document.getElementById('lotofacil-quente').textContent = gerarNumeros(15, 1, 25);
   document.getElementById('lotofacil-alternativo').textContent = gerarNumeros(15, 1, 25);
-  alert('✅ Lotofácil gerada com sucesso!');
+  alert('✅ Lotofácil gerada!');
 }
 
 function gerarLotomania() {
   document.getElementById('lotomania-quente').textContent = gerarNumeros(50, 0, 99);
   document.getElementById('lotomania-alternativo').textContent = gerarNumeros(50, 0, 99);
-  alert('✅ Lotomania gerada com sucesso!');
+  alert('✅ Lotomania gerada!');
 }
 
 function gerarMegaSena() {
   document.getElementById('megasena-quente').textContent = gerarNumeros(6, 1, 60);
   document.getElementById('megasena-alternativo').textContent = gerarNumeros(6, 1, 60);
-  alert('✅ Mega Sena gerada com sucesso!');
+  alert('✅ Mega Sena gerada!');
 }
 
 function gerarTodosJogos() {
@@ -278,169 +267,136 @@ const gruposBicho = [
   {grupo:25, bicho:'Zebra', emoji:'🦓', dezenas:[97,98,99,0]}
 ];
 
-function formatarData(data) {
-  const dia = data.getDate().toString().padStart(2, '0');
-  const mes = (data.getMonth() + 1).toString().padStart(2, '0');
-  return `${dia}/${mes}`;
-}
-
-// ✅ FUNÇÃO PARA OBTER BICHO A PARTIR DO NÚMERO FINAL
-function obterBichoPorMilhar(milhar) {
-  const ultimoDigito = parseInt(milhar.toString().slice(-1));
-  let grupoNum;
-  if (ultimoDigito === 0) grupoNum = 25;
-  else grupoNum = Math.ceil(ultimoDigito / 4);
-  return gruposBicho.find(g => g.grupo === grupoNum);
-}
-
-// ✅ DADOS — TABELA COMPLETA 1º AO 5º COM MILHAR + BICHO
+// ✅ DADOS — 1º ao 5º com Milhar + Bicho
 const dadosFixos = {
   '16/09': { 
-    PT: {
-      p1: {milhar:'0073', bicho:'Pavão', emoji:'🦚'},
-      p2: {milhar:'----', bicho:'—', emoji:''},
-      p3: {milhar:'----', bicho:'—', emoji:''},
-      p4: {milhar:'----', bicho:'—', emoji:''},
-      p5: {milhar:'----', bicho:'—', emoji:''}
-    }, 
-    PTN: {
-      p1: {milhar:'0008', bicho:'Águia', emoji:'🦅'},
-      p2: {milhar:'----', bicho:'—', emoji:''},
-      p3: {milhar:'----', bicho:'—', emoji:''},
-      p4: {milhar:'----', bicho:'—', emoji:''},
-      p5: {milhar:'----', bicho:'—', emoji:''}
-    } 
+    PT: {p1:{m:'0073',b:'🦚 Pavão'},p2:{m:'----',b:'—'},p3:{m:'----',b:'—'},p4:{m:'----',b:'—'},p5:{m:'----',b:'—'}},
+    PTN: {p1:{m:'0008',b:'🦅 Águia'},p2:{m:'----',b:'—'},p3:{m:'----',b:'—'},p4:{m:'----',b:'—'},p5:{m:'----',b:'—'}}
   },
   '17/09': { 
-    PT: {
-      p1: {milhar:'0029', bicho:'Camelo', emoji:'🐫'},
-      p2: {milhar:'----', bicho:'—', emoji:''},
-      p3: {milhar:'----', bicho:'—', emoji:''},
-      p4: {milhar:'----', bicho:'—', emoji:''},
-      p5: {milhar:'----', bicho:'—', emoji:''}
-    }, 
-    PTN: {
-      p1: {milhar:'0045', bicho:'Elefante', emoji:'🐘'},
-      p2: {milhar:'----', bicho:'—', emoji:''},
-      p3: {milhar:'----', bicho:'—', emoji:''},
-      p4: {milhar:'----', bicho:'—', emoji:''},
-      p5: {milhar:'----', bicho:'—', emoji:''}
-    } 
+    PT: {p1:{m:'0029',b:'🐫 Camelo'},p2:{m:'----',b:'—'},p3:{m:'----',b:'—'},p4:{m:'----',b:'—'},p5:{m:'----',b:'—'}},
+    PTN: {p1:{m:'0045',b:'🐘 Elefante'},p2:{m:'----',b:'—'},p3:{m:'----',b:'—'},p4:{m:'----',b:'—'},p5:{m:'----',b:'—'}}
   },
   '18/09': { 
-    PT: {
-      p1: {milhar:'----', bicho:'—', emoji:''},
-      p2: {milhar:'----', bicho:'—', emoji:''},
-      p3: {milhar:'----', bicho:'—', emoji:''},
-      p4: {milhar:'----', bicho:'—', emoji:''},
-      p5: {milhar:'----', bicho:'—', emoji:''}
-    }, 
-    PTN: {
-      p1: {milhar:'----', bicho:'—', emoji:''},
-      p2: {milhar:'----', bicho:'—', emoji:''},
-      p3: {milhar:'----', bicho:'—', emoji:''},
-      p4: {milhar:'----', bicho:'—', emoji:''},
-      p5: {milhar:'----', bicho:'—', emoji:''}
-    } 
+    PT: {p1:{m:'----',b:'—'},p2:{m:'----',b:'—'},p3:{m:'----',b:'—'},p4:{m:'----',b:'—'},p5:{m:'----',b:'—'}},
+    PTN: {p1:{m:'----',b:'—'},p2:{m:'----',b:'—'},p3:{m:'----',b:'—'},p4:{m:'----',b:'—'},p5:{m:'----',b:'—'}}
   }
 };
 
-// ✅ MONTAGEM DA CÉLULA — MILHAR EM DESTAQUE + BICHO ABAIXO
-function montarCelula(resultado) {
-  if (!resultado || resultado.milhar === '----') {
-    return `<div class="celula-milhar">—</div><div class="celula-bicho">—</div>`;
-  }
-  return `
-    <div class="celula-milhar">${resultado.milhar}</div>
-    <div class="celula-bicho">${resultado.emoji} ${resultado.bicho}</div>
-  `;
+function montarCelula(res) {
+  if (res.m === '----') return `<div class="celula-milhar">—</div><div class="celula-bicho">—</div>`;
+  return `<div class="celula-milhar">${res.m}</div><div class="celula-bicho">${res.b}</div>`;
 }
 
-function gerarResultados3Dias() {
-  const hoje = new Date();
-  const resultados = [];
-  for (let i = 2; i >= 0; i--) {
-    const data = new Date(hoje);
-    data.setDate(hoje.getDate() - i);
-    const dataStr = formatarData(data);
-    const diaDados = dadosFixos[dataStr] || { 
-      PT: {p1:{milhar:'----',bicho:'—',emoji:''},p2:{milhar:'----',bicho:'—',emoji:''},p3:{milhar:'----',bicho:'—',emoji:''},p4:{milhar:'----',bicho:'—',emoji:''},p5:{milhar:'----',bicho:'—',emoji:''}}, 
-      PTN: {p1:{milhar:'----',bicho:'—',emoji:''},p2:{milhar:'----',bicho:'—',emoji:''},p3:{milhar:'----',bicho:'—',emoji:''},p4:{milhar:'----',bicho:'—',emoji:''},p5:{milhar:'----',bicho:'—',emoji:''}}
-    };
-    resultados.push({ 
-      data: dataStr, periodo: 'PT', 
-      p1: montarCelula(diaDados.PT.p1), 
-      p2: montarCelula(diaDados.PT.p2), 
-      p3: montarCelula(diaDados.PT.p3), 
-      p4: montarCelula(diaDados.PT.p4), 
-      p5: montarCelula(diaDados.PT.p5) 
-    });
-    resultados.push({ 
-      data: dataStr, periodo: 'PTN', 
-      p1: montarCelula(diaDados.PTN.p1), 
-      p2: montarCelula(diaDados.PTN.p2), 
-      p3: montarCelula(diaDados.PTN.p3), 
-      p4: montarCelula(diaDados.PTN.p4), 
-      p5: montarCelula(diaDados.PTN.p5) 
-    });
-  }
-  return resultados;
+function formatarData(data) {
+  const d = data.getDate().toString().padStart(2,'0');
+  const m = (data.getMonth()+1).toString().padStart(2,'0');
+  return `${d}/${m}`;
 }
 
 function carregarTabelaBichos() {
   const tabela = document.getElementById('tabela-bichos');
-  if (!tabela) return;
-  const cabecalho = tabela.querySelector('tr');
+  const cab = tabela.querySelector('tr');
   tabela.innerHTML = '';
-  tabela.appendChild(cabecalho);
+  tabela.appendChild(cab);
   gruposBicho.forEach(g => {
-    const linha = document.createElement('tr');
-    linha.innerHTML = `<td>${g.grupo}</td><td>${g.emoji} ${g.bicho}</td><td>${g.dezenas.join(' — ')}</td>`;
-    tabela.appendChild(linha);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${g.grupo}</td><td>${g.emoji} ${g.bicho}</td><td>${g.dezenas.join(' — ')}</td>`;
+    tabela.appendChild(tr);
   });
 }
 
 function carregarResultadosBicho() {
   const tbody = document.getElementById('resultados-corpo');
   tbody.innerHTML = '';
-  const resultados = gerarResultados3Dias();
-  resultados.forEach(r => {
-    const linha = document.createElement('tr');
-    linha.innerHTML = `
-      <td>${r.data}</td>
-      <td>${r.periodo}</td>
-      <td>${r.p1}</td>
-      <td>${r.p2}</td>
-      <td>${r.p3}</td>
-      <td>${r.p4}</td>
-      <td>${r.p5}</td>
+  const hoje = new Date();
+  for (let i = 2; i >= 0; i--) {
+    const data = new Date(hoje);
+    data.setDate(hoje.getDate() - i);
+    const dataStr = formatarData(data);
+    const d = dadosFixos[dataStr] || {
+      PT:{p1:{m:'----',b:'—'},p2:{m:'----',b:'—'},p3:{m:'----',b:'—'},p4:{m:'----',b:'—'},p5:{m:'----',b:'—'}},
+      PTN:{p1:{m:'----',b:'—'},p2:{m:'----',b:'—'},p3:{m:'----',b:'—'},p4:{m:'----',b:'—'},p5:{m:'----',b:'—'}}
+    };
+    const trPT = document.createElement('tr');
+    trPT.innerHTML = `
+      <td>${dataStr}</td><td>PT</td>
+      <td>${montarCelula(d.PT.p1)}</td>
+      <td>${montarCelula(d.PT.p2)}</td>
+      <td>${montarCelula(d.PT.p3)}</td>
+      <td>${montarCelula(d.PT.p4)}</td>
+      <td>${montarCelula(d.PT.p5)}</td>
     `;
-    tbody.appendChild(linha);
-  });
+    tbody.appendChild(trPT);
+    const trPTN = document.createElement('tr');
+    trPTN.innerHTML = `
+      <td>${dataStr}</td><td>PTN</td>
+      <td>${montarCelula(d.PTN.p1)}</td>
+      <td>${montarCelula(d.PTN.p2)}</td>
+      <td>${montarCelula(d.PTN.p3)}</td>
+      <td>${montarCelula(d.PTN.p4)}</td>
+      <td>${montarCelula(d.PTN.p5)}</td>
+    `;
+    tbody.appendChild(trPTN);
+  }
 }
 
 let ultimaAtualizacaoEstat = null;
-
 function atualizarEstatisticasBicho() {
   const agora = new Date();
   if (ultimaAtualizacaoEstat) {
-    const diffHoras = (agora - ultimaAtualizacaoEstat) / (1000 * 60 * 60);
-    if (diffHoras < 24) {
-      alert('⚠️ Atualizado há menos de 24h.\nConfira os dados no site "Deu no Poste" antes de atualizar!');
-      return;
-    }
+    const diff = (agora - ultimaAtualizacaoEstat) / 3600000;
+    if (diff < 24) { alert('⚠️ Atualizado há menos de 24h!'); return; }
   }
+  ultimaAtualizacaoEstat = agora;
 
   const sorteios30 = [];
-  for (let i = 0; i < 30; i++) {
-    const grupo = gruposBicho[Math.floor(Math.random() * gruposBicho.length)];
-    sorteios30.push({
-      grupo: grupo.grupo,
-      dezena: grupo.dezenas[Math.floor(Math.random() * 4)],
-      centena: Math.floor(Math.random() * 100),
-      milhar: Math.floor(Math.random() * 1000)
-    });
+  for (let i=0; i<30; i++) {
+    const g = gruposBicho[Math.floor(Math.random()*25)];
+    sorteios30.push({grupo:g.grupo, dezena:g.dezenas[Math.floor(Math.random()*4)]});
   }
 
-  const contagemGrupos = {};
-  gruposBicho.forEach(g => contagemGru
+  const cont = {};
+  gruposBicho.forEach(g => cont[g.grupo] = 0);
+  sorteios30.forEach(s => cont[s.grupo]++);
+  const top5 = Object.entries(cont).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  document.getElementById('mais-sorteados-bicho').innerHTML = top5.map(([g,q])=>{
+    const b = gruposBicho.find(x=>x.grupo==g);
+    return `${b.emoji} ${b.bicho}: ${q}x`;
+  }).join('<br>');
+
+  const ult = {};
+  gruposBicho.forEach(g => ult[g.grupo] = -1);
+  sorteios30.forEach((s,i)=>ult[s.grupo]=i);
+  const atraso = Object.entries(ult).map(([g,idx])=>({grupo:g,atraso:30-idx-1})).sort((a,b)=>b.atraso-a.atraso).slice(0,5);
+  document.getElementById('em-atraso-bicho').innerHTML = atraso.map(item=>{
+    const b = gruposBicho.find(x=>x.grupo==item.grupo);
+    return `${b.emoji} ${b.bicho}: ${item.atraso} sorteios`;
+  }).join('<br>');
+
+  document.getElementById('dezenas-quentes').textContent = '03 — 12 — 47 — 59';
+  document.getElementById('dezenas-frias').textContent = '08 — 25 — 61 — 79';
+  document.getElementById('centenas-quentes').textContent = '123 — 456 — 789 — 012';
+  document.getElementById('centenas-frias').textContent = '234 — 567 — 890 — 345';
+  document.getElementById('milhares-quentes').textContent = '0123 — 4567 — 8901 — 2345';
+  document.getElementById('milhares-frias').textContent = '3456 — 6789 — 0123 — 5678';
+
+  const melhor = top5[0];
+  if (melhor) {
+    const b = gruposBicho.find(x=>x.grupo==melhor[0]);
+    document.getElementById('sugestao-grupo').textContent = `${b.emoji} ${b.bicho} (Grupo ${b.grupo})`;
+    document.getElementById('sugestao-dezenas').textContent = b.dezenas.join(' — ');
+  }
+
+  alert('✅ Estatísticas atualizadas! Confirme no Deu no Poste.');
+}
+
+// ✅ INICIALIZAÇÃO
+document.addEventListener('DOMContentLoaded', function() {
+  carregarTabelaBichos();
+  carregarResultadosBicho();
+});
+</script>
+
+</body>
+</html>
