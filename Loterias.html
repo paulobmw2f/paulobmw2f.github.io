@@ -14,8 +14,8 @@
     .btn-site { width: 100%; padding: 12px; background: #0066e6; color: white; border: 3px solid #ffcc00; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-bottom: 10px; }
     .btn-gerar { width: 100%; padding: 12px; background: #00aa00; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-bottom: 15px; }
 
-    .botoes-loterias { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 15px; }
-    .btn-loto { padding: 12px 6px; border: none; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+    .botoes-loterias { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 15px; }
+    .btn-loto { padding: 10px 4px; border: none; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
     .btn-loto.inativo { background: #e0e0e0; color: #444; }
     .btn-loto.ativo { background: #0066e6; color: white; border: 3px solid #ffcc00; }
 
@@ -37,8 +37,8 @@
     .tabela-grupos td { background: #0055b8; }
 
     .tabela-resultados { width: 100%; border-collapse: collapse; margin: 8px 0 12px; }
-    .tabela-resultados th, .tabela-resultados td { padding: 7px 4px; text-align: center; border: 2px solid #fff; font-size: 11px; font-weight: bold; color: #ffffff; }
-    .tabela-resultados th { background: #ffffff; color: #000000; font-size: 10px; }
+    .tabela-resultados th, .tabela-resultados td { padding: 6px 3px; text-align: center; border: 2px solid #fff; font-size: 10px; font-weight: bold; color: #ffffff; }
+    .tabela-resultados th { background: #ffffff; color: #000000; font-size: 9px; }
     .tabela-resultados td { background: #0055b8; }
 
     .card-mais { background: #e6f9e6; border-left: 5px solid #2ecc71; padding: 9px 12px; border-radius: 8px; margin: 6px 0; color: #155724; }
@@ -62,19 +62,28 @@
   <div class="aviso">
     ⚠️ Os sorteios são aleatórios. Recomendações não garantem prêmio. Jogue com moderação!
   </div>
-  <button class="btn-site" onclick="window.open('https://www.loteriasonline.caixa.gov.br', '_blank')">🌐 SITE OFICIAL – Apostar na Caixa</button>
-  <button class="btn-gerar" onclick="gerarTodosJogos()">🎯 GERAR TODOS OS JOGOS</button>
+  
+  <!-- ✅ BOTÃO SITE OFICIAL -->
+  <button class="btn-site" onclick="window.open('https://www.loteriasonline.caixa.gov.br', '_blank')">
+    🌐 SITE OFICIAL – Apostar na Caixa
+  </button>
+  
+  <!-- ✅ BOTÃO GERAR TODOS OS JOGOS -->
+  <button class="btn-gerar" onclick="gerarTodosJogos()">
+    🎯 GERAR TODOS OS JOGOS
+  </button>
 
+  <!-- ✅ BOTÕES DAS LOTERIAS -->
   <div class="botoes-loterias">
-    <button class="btn-loto ativo" onclick="mostrarAba('quina')">🔷 Quina</button>
-    <button class="btn-loto inativo" onclick="mostrarAba('lotofacil')">⭐ Lotofácil</button>
-    <button class="btn-loto inativo" onclick="mostrarAba('lotomania')">🔢 Lotomania</button>
-    <button class="btn-loto inativo" onclick="mostrarAba('megasena')">🎫 Mega Sena</button>
-    <button class="btn-loto inativo" onclick="mostrarAba('bicho')">🦎 Jogo do Bicho</button>
+    <button class="btn-loto ativo" id="btn-quina" onclick="mostrarAba('quina')">🔷 Quina</button>
+    <button class="btn-loto inativo" id="btn-lotofacil" onclick="mostrarAba('lotofacil')">⭐ LotoFácil</button>
+    <button class="btn-loto inativo" id="btn-lotomania" onclick="mostrarAba('lotomania')">🔢 LotoMania</button>
+    <button class="btn-loto inativo" id="btn-megasena" onclick="mostrarAba('megasena')">🎫 Mega</button>
+    <button class="btn-loto inativo" id="btn-bicho" onclick="mostrarAba('bicho')">🦎 Bicho</button>
   </div>
 
   <div class="conteudo">
-    <!-- QUINA -->
+    <!-- ✅ QUINA -->
     <div id="quina" class="aba ativa">
       <h2>🔷 QUINA – 5 dezenas (1 a 80)</h2>
       <div class="jogo-quente">🔴 Jogo Quente: <span id="quina-quente">—</span></div>
@@ -82,7 +91,7 @@
       <button class="btn-bicho" onclick="gerarQuina()">🔄 Gerar Quina</button>
     </div>
 
-    <!-- LOTOFÁCIL -->
+    <!-- ✅ LOTOFÁCIL -->
     <div id="lotofacil" class="aba">
       <h2>⭐ LOTOFÁCIL – 15 dezenas (1 a 25)</h2>
       <div class="jogo-quente">🔴 Jogo Quente: <span id="lotofacil-quente">—</span></div>
@@ -90,7 +99,7 @@
       <button class="btn-bicho" onclick="gerarLotofacil()">🔄 Gerar Lotofácil</button>
     </div>
 
-    <!-- LOTOMANIA -->
+    <!-- ✅ LOTOMANIA -->
     <div id="lotomania" class="aba">
       <h2>🔢 LOTOMANIA – 50 dezenas (0 a 99)</h2>
       <div class="jogo-quente">🔴 Jogo Quente: <span id="lotomania-quente">—</span></div>
@@ -98,7 +107,7 @@
       <button class="btn-bicho" onclick="gerarLotomania()">🔄 Gerar Lotomania</button>
     </div>
 
-    <!-- MEGA SENA -->
+    <!-- ✅ MEGA SENA -->
     <div id="megasena" class="aba">
       <h2>🎫 MEGA SENA – 6 dezenas (1 a 60)</h2>
       <div class="jogo-quente">🔴 Jogo Quente: <span id="megasena-quente">—</span></div>
@@ -106,7 +115,7 @@
       <button class="btn-bicho" onclick="gerarMegaSena()">🔄 Gerar Mega Sena</button>
     </div>
 
-    <!-- JOGO DO BICHO — 5 PRÊMIOS + ATUALIZAÇÃO DIÁRIA + 30 DIAS FIXOS -->
+    <!-- ✅ JOGO DO BICHO – 5 PRÊMIOS + ATUALIZAÇÃO DIÁRIA -->
     <div id="bicho" class="aba bicho-body">
       <h2>🐾 JOGO DO BICHO – Análise Estatística</h2>
 
@@ -118,7 +127,7 @@
       <h3>📊 Resultados Recentes – Últimos 3 Dias</h3>
       <div class="atualizacao-info" id="info-atualizacao">Última atualização: —</div>
       <table class="tabela-resultados">
-        <tr><th>Data</th><th>Per.</th><th>1º Prêmio</th><th>2º Prêmio</th><th>3º Prêmio</th><th>4º Prêmio</th><th>5º Prêmio</th></tr>
+        <tr><th>Data</th><th>Per.</th><th>1º</th><th>2º</th><th>3º</th><th>4º</th><th>5º</th></tr>
         <tbody id="resultados-corpo"></tbody>
       </table>
 
@@ -169,33 +178,76 @@
 </div>
 
 <script>
-// 🧭 NAVEGAÇÃO
+// ==========================================
+// ✅ FUNÇÃO DE NAVEGAÇÃO — CORRIGIDA
+// ==========================================
 function mostrarAba(nomeAba) {
-  document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
+  // Esconde todas as abas
+  document.querySelectorAll('.aba').forEach(aba => aba.classList.remove('ativa'));
+  // Mostra a aba selecionada
   document.getElementById(nomeAba).classList.add('ativa');
-  const botoes = document.querySelectorAll('.btn-loto');
-  const nomes = ['quina','lotofacil','lotomania','megasena','bicho'];
-  botoes.forEach((btn, i) => {
-    nomes[i] === nomeAba ? (btn.classList.add('ativo'), btn.classList.remove('inativo')) : (btn.classList.remove('ativo'), btn.classList.add('inativo'));
+  
+  // Reseta todos os botões
+  document.querySelectorAll('.btn-loto').forEach(btn => {
+    btn.classList.remove('ativo');
+    btn.classList.add('inativo');
   });
+  // Ativa o botão selecionado
+  const btnAtivo = document.getElementById('btn-' + nomeAba);
+  if (btnAtivo) {
+    btnAtivo.classList.add('ativo');
+    btnAtivo.classList.remove('inativo');
+  }
+  console.log('✅ Aba aberta:', nomeAba);
 }
 
-// 🎲 GERAR JOGOS
+// ==========================================
+// ✅ FUNÇÕES DE GERAÇÃO DE JOGOS — CORRIGIDAS
+// ==========================================
 function gerarNumeros(qtd, min, max) {
   let nums = [];
   while(nums.length < qtd) {
-    let n = Math.floor(Math.random()*(max-min+1)) + min;
-    if(!nums.includes(n)) nums.push(n);
+    let n = Math.floor(Math.random() * (max - min + 1)) + min;
+    if (!nums.includes(n)) nums.push(n);
   }
-  return nums.sort((a,b)=>a-b).join(' — ');
+  return nums.sort((a, b) => a - b).map(n => n.toString().padStart(2, '0')).join(' — ');
 }
-function gerarQuina() { document.getElementById('quina-quente').textContent = gerarNumeros(5,1,80); document.getElementById('quina-alternativo').textContent = gerarNumeros(5,1,80); }
-function gerarLotofacil() { document.getElementById('lotofacil-quente').textContent = gerarNumeros(15,1,25); document.getElementById('lotofacil-alternativo').textContent = gerarNumeros(15,1,25); }
-function gerarLotomania() { document.getElementById('lotomania-quente').textContent = gerarNumeros(50,0,99); document.getElementById('lotomania-alternativo').textContent = gerarNumeros(50,0,99); }
-function gerarMegaSena() { document.getElementById('megasena-quente').textContent = gerarNumeros(6,1,60); document.getElementById('megasena-alternativo').textContent = gerarNumeros(6,1,60); }
-function gerarTodosJogos() { gerarQuina(); gerarLotofacil(); gerarLotomania(); gerarMegaSena(); alert('✅ Todos os jogos gerados!'); }
 
-// 🐾 DADOS BICHO
+function gerarQuina() {
+  document.getElementById('quina-quente').textContent = gerarNumeros(5, 1, 80);
+  document.getElementById('quina-alternativo').textContent = gerarNumeros(5, 1, 80);
+  alert('✅ Quina gerada!');
+}
+
+function gerarLotofacil() {
+  document.getElementById('lotofacil-quente').textContent = gerarNumeros(15, 1, 25);
+  document.getElementById('lotofacil-alternativo').textContent = gerarNumeros(15, 1, 25);
+  alert('✅ Lotofácil gerada!');
+}
+
+function gerarLotomania() {
+  document.getElementById('lotomania-quente').textContent = gerarNumeros(50, 0, 99);
+  document.getElementById('lotomania-alternativo').textContent = gerarNumeros(50, 0, 99);
+  alert('✅ Lotomania gerada!');
+}
+
+function gerarMegaSena() {
+  document.getElementById('megasena-quente').textContent = gerarNumeros(6, 1, 60);
+  document.getElementById('megasena-alternativo').textContent = gerarNumeros(6, 1, 60);
+  alert('✅ Mega Sena gerada!');
+}
+
+function gerarTodosJogos() {
+  gerarQuina();
+  gerarLotofacil();
+  gerarLotomania();
+  gerarMegaSena();
+  alert('✅ TODOS OS JOGOS GERADOS COM SUCESSO! 🎉');
+}
+
+// ==========================================
+// 🐾 DADOS DO JOGO DO BICHO
+// ==========================================
 const gruposBicho = [
   {grupo:1, bicho:'Avestruz', emoji:'🐦', dezenas:[1,2,3,4]},
   {grupo:2, bicho:'Águia', emoji:'🦅', dezenas:[5,6,7,8]},
@@ -224,70 +276,39 @@ const gruposBicho = [
   {grupo:25, bicho:'Zebra', emoji:'🦓', dezenas:[97,98,99,0]}
 ];
 
-// 📊 FUNÇÃO PARA OBTER DATA EM FORMATO DD/MM
+// Formatar data
 function formatarData(data) {
   const dia = data.getDate().toString().padStart(2, '0');
   const mes = (data.getMonth() + 1).toString().padStart(2, '0');
   return `${dia}/${mes}`;
 }
 
-// 📊 GERAR RESULTADOS DOS ÚLTIMOS 3 DIAS — ATUALIZA AUTOMÁTICO
+// 📊 Resultados fixos — últimos 3 dias com 5 prêmios
+const dadosFixos = {
+  '17/09': { PT: {p1:'29 🐫 Camelo', p2:'—', p3:'—', p4:'—', p5:'—'}, PTN: {p1:'45 🐘 Elefante', p2:'—', p3:'—', p4:'—', p5:'—'} },
+  '16/09': { PT: {p1:'73 🦚 Pavão', p2:'—', p3:'—', p4:'—', p5:'—'}, PTN: {p1:'08 🦅 Águia', p2:'—', p3:'—', p4:'—', p5:'—'} },
+  '15/09': { PT: {p1:'64 🦁 Leão', p2:'—', p3:'—', p4:'—', p5:'—'}, PTN: {p1:'17 🐶 Cachorro', p2:'—', p3:'—', p4:'—', p5:'—'} }
+};
+
+// Gerar resultados dos últimos 3 dias
 function gerarResultados3Dias() {
   const hoje = new Date();
   const resultados = [];
-  
-  // Dados oficiais de exemplo (15/09 a 17/09) — atualizar manualmente quando necessário
-  const dadosFixos = {
-    '17/09': { PT: {p1:'29 🐫 Camelo', p2:'', p3:'', p4:'', p5:''}, PTN: {p1:'45 🐘 Elefante', p2:'', p3:'', p4:'', p5:''} },
-    '16/09': { PT: {p1:'73 🦚 Pavão', p2:'', p3:'', p4:'', p5:''}, PTN: {p1:'08 🦅 Águia', p2:'', p3:'', p4:'', p5:''} },
-    '15/09': { PT: {p1:'64 🦁 Leão', p2:'', p3:'', p4:'', p5:''}, PTN: {p1:'17 🐶 Cachorro', p2:'', p3:'', p4:'', p5:''} }
-  };
-
-  // Percorre os últimos 3 dias
   for (let i = 2; i >= 0; i--) {
     const data = new Date(hoje);
     data.setDate(hoje.getDate() - i);
     const dataStr = formatarData(data);
-    
-    // Usa dados fixos ou gera estrutura vazia para preencher
     const diaDados = dadosFixos[dataStr] || { 
       PT: {p1:'—', p2:'—', p3:'—', p4:'—', p5:'—'}, 
       PTN: {p1:'—', p2:'—', p3:'—', p4:'—', p5:'—'} 
     };
-    
     resultados.push({ data: dataStr, periodo: 'PT', ...diaDados.PT });
     resultados.push({ data: dataStr, periodo: 'PTN', ...diaDados.PTN });
   }
-  
   return resultados;
 }
 
-// 📊 TABELA RESULTADOS — 1º ao 5º PRÊMIO (sem Milhar/Cen/Dez)
-function carregarResultadosBicho() {
-  const tbody = document.getElementById('resultados-corpo');
-  tbody.innerHTML = '';
-  const resultados = gerarResultados3Dias();
-  
-  resultados.forEach(r => {
-    const linha = document.createElement('tr');
-    linha.innerHTML =
-      '<td>' + r.data + '</td>' +
-      '<td>' + r.periodo + '</td>' +
-      '<td>' + r.p1 + '</td>' +
-      '<td>' + r.p2 + '</td>' +
-      '<td>' + r.p3 + '</td>' +
-      '<td>' + r.p4 + '</td>' +
-      '<td>' + r.p5 + '</td>';
-    tbody.appendChild(linha);
-  });
-  
-  // Atualiza informação de última atualização
-  const agora = new Date();
-  const hora = agora.getHours().toString().padStart(2, '0') + ':' + agora.getMinutes().toString().padStart(2, '0');
-  document.getElementById('info-atualizacao').textContent = 'Última atualização: ' + formatarData(agora) + ' às ' + hora + ' (atualiza diariamente às 8h)';
-}
-
-// 📋 TABELA GRUPOS
+// 📋 Carregar tabela de grupos
 function carregarTabelaBichos() {
   const tabela = document.getElementById('tabela-bichos');
   if (!tabela) return;
@@ -296,42 +317,60 @@ function carregarTabelaBichos() {
   tabela.appendChild(cabecalho);
   gruposBicho.forEach(g => {
     const linha = document.createElement('tr');
-    linha.innerHTML = '<td>' + g.grupo + '</td><td>' + g.emoji + ' ' + g.bicho + '</td><td>' + g.dezenas.join(' — ') + '</td>';
+    linha.innerHTML = `<td>${g.grupo}</td><td>${g.emoji} ${g.bicho}</td><td>${g.dezenas.join(' — ')}</td>`;
     tabela.appendChild(linha);
   });
 }
 
-// 📈 ESTATÍSTICAS — FIXAS EM 30 DIAS, SÓ ATUALIZA APÓS DADOS OFICIAIS
-let estatisticasCache = null;
+// 📊 Carregar resultados — 1º ao 5º prêmio
+function carregarResultadosBicho() {
+  const tbody = document.getElementById('resultados-corpo');
+  tbody.innerHTML = '';
+  const resultados = gerarResultados3Dias();
+  resultados.forEach(r => {
+    const linha = document.createElement('tr');
+    linha.innerHTML = `
+      <td>${r.data}</td>
+      <td>${r.periodo}</td>
+      <td>${r.p1}</td>
+      <td>${r.p2}</td>
+      <td>${r.p3}</td>
+      <td>${r.p4}</td>
+      <td>${r.p5}</td>
+    `;
+    tbody.appendChild(linha);
+  });
+  const agora = new Date();
+  document.getElementById('info-atualizacao').textContent = 
+    'Última atualização: ' + formatarData(agora) + ' (atualiza diariamente às 8h)';
+}
+
+// 📈 Estatísticas — 30 dias, bloqueio de 24h
 let ultimaAtualizacaoEstat = null;
 
-function atualizarEstatisticasBicho(forcar = false) {
+function atualizarEstatisticasBicho() {
   const agora = new Date();
-  const hojeStr = formatarData(agora) + ' ' + agora.getHours();
-  
-  // Verifica se já atualizou nas últimas 24h (só permite após 8h do dia)
-  if (!forcar && estatisticasCache && ultimaAtualizacaoEstat) {
+  if (ultimaAtualizacaoEstat) {
     const diffHoras = (agora - ultimaAtualizacaoEstat) / (1000 * 60 * 60);
     if (diffHoras < 24) {
-      alert('⚠️ Estatísticas já foram atualizadas nas últimas 24h.\nAtualize somente após inserir os dados oficiais do dia!');
+      alert('⚠️ Atualizado há menos de 24h.\nAtualize somente com dados oficiais novos!');
       return;
     }
   }
 
-  // SIMULA 30 SORTEIOS COM DISTRIBUIÇÃO REALISTA
+  // Simula 30 sorteios realistas
   const sorteios30 = [];
   for (let i = 0; i < 30; i++) {
-    const grupoAleatorio = gruposBicho[Math.floor(Math.random() * gruposBicho.length)];
-    const dezenaAleatoria = grupoAleatorio.dezenas[Math.floor(Math.random() * 4)];
+    const grupo = gruposBicho[Math.floor(Math.random() * gruposBicho.length)];
     sorteios30.push({
-      grupo: grupoAleatorio.grupo,
-      dezena: dezenaAleatoria,
+      grupo: grupo.grupo,
+      dezena: grupo.dezenas[Math.floor(Math.random() * 4)],
       centena: Math.floor(Math.random() * 100),
       milhar: Math.floor(Math.random() * 1000)
     });
   }
 
-  // Contagem de grupos
+  // Contagem grupos
   const contagemGrupos = {};
   gruposBicho.forEach(g => contagemGrupos[g.grupo] = 0);
   sorteios30.forEach(s => contagemGrupos[s.grupo]++);
@@ -340,53 +379,59 @@ function atualizarEstatisticasBicho(forcar = false) {
   const maisSorteados = Object.entries(contagemGrupos).sort((a, b) => b[1] - a[1]).slice(0, 5);
   document.getElementById('mais-sorteados-bicho').innerHTML = maisSorteados.map(([g, q]) => {
     const b = gruposBicho.find(x => x.grupo == g);
-    return b.emoji + ' ' + b.bicho + ': ' + q + 'x';
+    return `${b.emoji} ${b.bicho}: ${q}x`;
   }).join('<br>');
 
-  // Em atraso (calculado por tempo sem sair)
+  // Em atraso
   const ultimoIndice = {};
   gruposBicho.forEach(g => ultimoIndice[g.grupo] = -1);
   sorteios30.forEach((s, i) => { ultimoIndice[s.grupo] = i; });
   const atraso = Object.entries(ultimoIndice)
-    .map(([g, idx]) => ({ grupo: g, atraso: 30 - idx - 1, qtde: contagemGrupos[g] }))
-    .sort((a, b) => b.atraso - a.atraso)
-    .slice(0, 5);
+    .map(([g, idx]) => ({ grupo: g, atraso: 30 - idx - 1 }))
+    .sort((a, b) => b.atraso - a.atraso).slice(0, 5);
   document.getElementById('em-atraso-bicho').innerHTML = atraso.map(item => {
     const b = gruposBicho.find(x => x.grupo == item.grupo);
-    return b.emoji + ' ' + b.bicho + ': ' + item.atraso + ' sorteios';
+    return `${b.emoji} ${b.bicho}: ${item.atraso} sorteios`;
   }).join('<br>');
 
-  // Dezenas Quentes/Frias
-  const contagemDezenas = {};
-  sorteios30.forEach(s => { contagemDezenas[s.dezena] = (contagemDezenas[s.dezena] || 0) + 1; });
-  const dezenasOrdenadas = Object.entries(contagemDezenas).sort((a, b) => b[1] - a[1]);
-  document.getElementById('dezenas-quentes').textContent = dezenasOrdenadas.slice(0, 4).map(d => d[0].toString().padStart(2, '0')).join(' — ');
-  document.getElementById('dezenas-frias').textContent = dezenasOrdenadas.slice(-4).reverse().map(d => d[0].toString().padStart(2, '0')).join(' — ');
+  // Dezenas
+  const contDez = {};
+  sorteios30.forEach(s => contDez[s.dezena] = (contDez[s.dezena] || 0) + 1);
+  const dezOrdenadas = Object.entries(contDez).sort((a, b) => b[1] - a[1]);
+  document.getElementById('dezenas-quentes').textContent = dezOrdenadas.slice(0,4).map(d => d[0].toString().padStart(2,'0')).join(' — ');
+  document.getElementById('dezenas-frias').textContent = dezOrdenadas.slice(-4).reverse().map(d => d[0].toString().padStart(2,'0')).join(' — ');
 
-  // Centenas Quentes/Frias
-  const contagemCentenas = {};
-  sorteios30.forEach(s => { const c = s.centena; contagemCentenas[c] = (contagemCentenas[c] || 0) + 1; });
-  const centenasOrdenadas = Object.entries(contagemCentenas).sort((a, b) => b[1] - a[1]);
-  document.getElementById('centenas-quentes').textContent = centenasOrdenadas.slice(0, 4).map(c => c[0].toString().padStart(2, '0')).join(' — ');
-  document.getElementById('centenas-frias').textContent = centenasOrdenadas.slice(-4).reverse().map(c => c[0].toString().padStart(2, '0')).join(' — ');
+  // Centenas
+  const contCen = {};
+  sorteios30.forEach(s => contCen[s.centena] = (contCen[s.centena] || 0) + 1);
+  const cenOrdenadas = Object.entries(contCen).sort((a, b) => b[1] - a[1]);
+  document.getElementById('centenas-quentes').textContent = cenOrdenadas.slice(0,4).map(c => c[0].toString().padStart(2,'0')).join(' — ');
+  document.getElementById('centenas-frias').textContent = cenOrdenadas.slice(-4).reverse().map(c => c[0].toString().padStart(2,'0')).join(' — ');
 
-  // Milhares Quentes/Frias
-  const contagemMilhares = {};
-  sorteios30.forEach(s => { const m = s.milhar; contagemMilhares[m] = (contagemMilhares[m] || 0) + 1; });
-  const milharesOrdenadas = Object.entries(contagemMilhares).sort((a, b) => b[1] - a[1]);
-  document.getElementById('milhares-quentes').textContent = milharesOrdenadas.slice(0, 4).map(m => m[0].toString().padStart(3, '0')).join(' — ');
-  document.getElementById('milhares-frias').textContent = milharesOrdenadas.slice(-4).reverse().map(m => m[0].toString().padStart(3, '0')).join(' — ');
+  // Milhares
+  const contMil = {};
+  sorteios30.forEach(s => contMil[s.milhar] = (contMil[s.milhar] || 0) + 1);
+  const milOrdenadas = Object.entries(contMil).sort((a, b) => b[1] - a[1]);
+  document.getElementById('milhares-quentes').textContent = milOrdenadas.slice(0,4).map(m => m[0].toString().padStart(3,'0')).join(' — ');
+  document.getElementById('milhares-frias').textContent = milOrdenadas.slice(-4).reverse().map(m => m[0].toString().padStart(3,'0')).join(' — ');
 
-  // Sugestão de Grupo
-  const melhorGrupo = maisSorteados[0];
-  if (melhorGrupo) {
-    const bicho = gruposBicho.find(x => x.grupo == melhorGrupo[0]);
-    document.getElementById('sugestao-grupo').textContent = bicho.emoji + ' ' + bicho.bicho + ' (Grupo ' + bicho.grupo + ')';
+  // Sugestão
+  const melhor = maisSorteados[0];
+  if (melhor) {
+    const bicho = gruposBicho.find(x => x.grupo == melhor[0]);
+    document.getElementById('sugestao-grupo').textContent = `${bicho.emoji} ${bicho.bicho} (Grupo ${bicho.grupo})`;
     document.getElementById('sugestao-dezenas').textContent = bicho.dezenas.join(' — ');
   }
 
-  // Salva cache
-  estatisticasCache = { maisSorteados, atraso, dezenasOrdenadas, centenasOrdenadas, milharesOrdenadas };
   ultimaAtualizacaoEstat = agora;
+  alert('✅ Estatísticas atualizadas! Bloqueado por 24h.');
+}
 
-  alert('✅ Estatísticas atua
+// ⏰ Atualização diária automática às 8h
+function verificarAtualizacaoDiaria() {
+  const agora = new Date();
+  const ultimaData = localStorage.getItem('ultimaAtualizacaoResultados');
+  const hoje = formatarData(agora);
+  if (agora.getHours() >= 8 && ultimaData !== hoje) {
+    carregarResultadosBicho();
+    localStorage.setItem('ultimaAtualizacaoResultados', hoje)
