@@ -8,44 +8,57 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
     body { background: #0055b8; min-height: 100vh; padding: 20px; color: #333; }
     .container { max-width: 500px; margin: 0 auto; }
-    
+
     /* ===== TÍTULO ===== */
     h1 { color: white; text-align: center; font-size: 22px; margin-bottom: 20px; line-height: 1.3; }
-    
+
     /* ===== AVISO ===== */
     .aviso { background: #fff3cd; border: 3px solid #ffc107; padding: 15px; border-radius: 12px; margin-bottom: 20px; color: #856404; font-weight: bold; font-size: 16px; line-height: 1.4; }
-    
+
     /* ===== BOTÕES PRINCIPAIS ===== */
     .btn-site { width: 100%; padding: 15px; background: #0066e6; color: white; border: 3px solid #ffcc00; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; margin-bottom: 15px; }
     .btn-gerar { width: 100%; padding: 15px; background: #00aa00; color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; margin-bottom: 25px; }
-    
-    /* ===== BOTÕES DAS LOTERIAS ===== */
+
+    /* ===== BOTÕES DAS LOTERIAS — SEM DUPLICAÇÃO ===== */
     .botoes-loterias { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 25px; }
     .btn-loto { padding: 15px 10px; border: none; border-radius: 12px; font-size: 17px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
     .btn-loto.inativo { background: #e0e0e0; color: #444; }
     .btn-loto.ativo { background: #0066e6; color: white; border: 3px solid #ffcc00; }
-    
+
     /* ===== ÁREA DE CONTEÚDO ===== */
     .conteudo { background: white; border-radius: 16px; padding: 25px; }
     .aba { display: none; }
     .aba.ativa { display: block; }
     h2 { font-size: 24px; color: #0055b8; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-    
+
     /* ===== JOGOS ===== */
     .jogo-quente { background: #ffebee; border-left: 5px solid #f44336; padding: 15px; border-radius: 10px; margin-bottom: 15px; font-size: 18px; font-weight: bold; }
     .jogo-alternativo { background: #e8f5e9; border-left: 5px solid #4caf50; padding: 15px; border-radius: 10px; font-size: 18px; font-weight: bold; }
-    
-    /* ===== TABELAS JOGO DO BICHO ===== */
-    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-    table th, table td { padding: 12px 8px; text-align: center; border: 1px solid #fff; font-size: 15px; }
-    table th { background: #003366; color: white; font-weight: bold; }
-    table td { background: #0055b8; color: white; }
-    .btn-bicho { padding: 12px 20px; background: #0066e6; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin: 10px 10px 10px 0; }
-    
-    /* ===== ESTATÍSTICAS & CARDS ===== */
-    .card { background: #f0f7ff; padding: 15px; border-radius: 10px; margin: 12px 0; border-left: 4px solid #0066e6; }
-    .card h4 { margin-bottom: 8px; color: #0055b8; font-size: 16px; }
-    .sugestao-final { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; margin-top: 20px; }
+
+    /* ===== JOGO DO BICHO — LAYOUT EXATO DA FOTO ===== */
+    .bicho-body { background: #0055b8; color: white; padding: 0; }
+    .bicho-body h2, .bicho-body h3 { color: white; margin: 20px 0 10px; }
+
+    /* TABELA GRUPOS — FUNDO AZUL, LETRA BRANCA */
+    .tabela-grupos { width: 100%; border-collapse: collapse; margin: 15px 0; }
+    .tabela-grupos th, .tabela-grupos td { padding: 14px 8px; text-align: center; border: 2px solid #fff; font-size: 16px; font-weight: bold; color: #ffffff; }
+    .tabela-grupos th { background: #003366; }
+    .tabela-grupos td { background: #0055b8; }
+
+    /* TABELA RESULTADOS — CABEÇALHO BRANCO, FUNDO AZUL, LETRA BRANCA */
+    .tabela-resultados { width: 100%; border-collapse: collapse; margin: 15px 0; }
+    .tabela-resultados th, .tabela-resultados td { padding: 14px 8px; text-align: center; border: 2px solid #fff; font-size: 15px; font-weight: bold; color: #ffffff; }
+    .tabela-resultados th { background: #ffffff; color: #000000; }
+    .tabela-resultados td { background: #0055b8; }
+
+    /* CARDS DE ESTATÍSTICAS — CORES EXATAS DA FOTO */
+    .card-mais { background: #e6f9e6; border-left: 5px solid #2ecc71; padding: 15px; border-radius: 10px; margin: 12px 0; color: #155724; }
+    .card-atraso { background: #fff3cd; border-left: 5px solid #ffc107; padding: 15px; border-radius: 10px; margin: 12px 0; color: #856404; }
+    .card-quentes { background: #ffebee; border-left: 5px solid #f44336; padding: 15px; border-radius: 10px; margin: 12px 0; color: #c62828; }
+    .card-frias { background: #e3f2fd; border-left: 5px solid #2196f3; padding: 15px; border-radius: 10px; margin: 12px 0; color: #0d47a1; }
+
+    .btn-bicho { padding: 14px 24px; background: #0066e6; color: white; border: none; border-radius: 10px; font-size: 17px; font-weight: bold; cursor: pointer; margin: 15px 0; width: 100%; }
+    .sugestao-final { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; margin-top: 25px; }
     .sugestao-final p { font-size: 20px; font-weight: bold; margin-top: 10px; }
   </style>
 </head>
@@ -72,12 +85,11 @@
     🎯 GERAR TODOS OS JOGOS
   </button>
 
-  <!-- ===== BOTÕES DAS LOTERIAS ===== -->
+  <!-- ===== BOTÕES DAS LOTERIAS — APENAS UM MEGA SENA ===== -->
   <div class="botoes-loterias">
     <button class="btn-loto ativo" onclick="mostrarAba('quina')">🔷 Quina</button>
     <button class="btn-loto inativo" onclick="mostrarAba('lotofacil')">⭐ Lotofácil</button>
     <button class="btn-loto inativo" onclick="mostrarAba('lotomania')">🔢 Lotomania</button>
-    <button class="btn-loto inativo" onclick="mostrarAba('mega')">🎰 Mega</button>
     <button class="btn-loto inativo" onclick="mostrarAba('megasena')">🎫 Mega Sena</button>
     <button class="btn-loto inativo" onclick="mostrarAba('bicho')">🦎 Jogo do Bicho</button>
   </div>
@@ -116,17 +128,7 @@
     </div>
 
     <!-- ====================================== -->
-    <!-- ABA: MEGA -->
-    <!-- ====================================== -->
-    <div id="mega" class="aba">
-      <h2>🎰 MEGA – 6 dezenas (1 a 60)</h2>
-      <div class="jogo-quente">🔴 Jogo Quente: <span id="mega-quente">—</span></div>
-      <div class="jogo-alternativo">🟡 Jogo Alternativo: <span id="mega-alternativo">—</span></div>
-      <button class="btn-bicho" onclick="gerarMega()">🔄 Gerar Mega</button>
-    </div>
-
-    <!-- ====================================== -->
-    <!-- ABA: MEGA SENA -->
+    <!-- ABA: MEGA SENA — ÚNICO BOTÃO ===== -->
     <!-- ====================================== -->
     <div id="megasena" class="aba">
       <h2>🎫 MEGA SENA – 6 dezenas (1 a 60)</h2>
@@ -136,40 +138,40 @@
     </div>
 
     <!-- ====================================== -->
-    <!-- ABA: JOGO DO BICHO ✅ INTEGRADO NO SEU LAYOUT -->
+    <!-- ABA: JOGO DO BICHO — LAYOUT EXATO DA FOTO -->
     <!-- ====================================== -->
-    <div id="bicho" class="aba">
-      <h2>🦎 JOGO DO BICHO – Análise Estatística</h2>
+    <div id="bicho" class="aba bicho-body">
+      <h2>🐾 JOGO DO BICHO – Análise Estatística</h2>
 
       <!-- TABELA COMPLETA DOS GRUPOS -->
-      <h3 style="margin:15px 0 10px; font-size:18px; color:#0055b8;">📋 Tabela Completa dos Grupos</h3>
-      <table id="tabela-bichos">
+      <h3>📋 Tabela Completa dos Grupos</h3>
+      <table class="tabela-grupos" id="tabela-bichos">
         <tr><th>Grupo</th><th>Bicho</th><th>Dezenas</th></tr>
       </table>
 
       <!-- RESULTADOS RECENTES -->
-      <h3 style="margin:25px 0 10px; font-size:18px; color:#0055b8;">📊 Resultados Recentes</h3>
-      <table>
+      <h3>📊 Resultados Recentes</h3>
+      <table class="tabela-resultados">
         <tr><th>Data</th><th>Período</th><th>Milhar</th><th>Centena</th><th>Dezena</th><th>Bicho</th></tr>
         <tbody id="resultados-corpo"></tbody>
       </table>
       <button class="btn-bicho" onclick="carregarResultadosBicho()">🔄 Carregar Resultados de Exemplo</button>
 
-      <!-- ESTATÍSTICAS -->
-      <h3 style="margin:25px 0 10px; font-size:18px; color:#0055b8;">📈 Estatísticas</h3>
-      <div class="card">
+      <!-- ESTATÍSTICAS — CARDs CORES EXATAS DA FOTO -->
+      <h3>📈 Estatísticas – Últimos 30 Sorteios</h3>
+      <div class="card-mais">
         <h4>✅ Mais Sorteados</h4>
         <p id="mais-sorteados-bicho">Clique em "Atualizar Estatísticas"</p>
       </div>
-      <div class="card">
+      <div class="card-atraso">
         <h4>⏳ Em Atraso</h4>
         <p id="em-atraso-bicho">Clique em "Atualizar Estatísticas"</p>
       </div>
-      <div class="card">
+      <div class="card-quentes">
         <h4>🔥 Dezenas Quentes</h4>
         <p id="quentes-bicho">Clique em "Atualizar Estatísticas"</p>
       </div>
-      <div class="card">
+      <div class="card-frias">
         <h4>❄️ Dezenas Frias</h4>
         <p id="frias-bicho">Clique em "Atualizar Estatísticas"</p>
       </div>
@@ -188,17 +190,14 @@
 
 <script>
 // =========================================================
-// 🧭 NAVEGAÇÃO DAS ABAS — FUNCIONA PERFEITAMENTE
+// 🧭 NAVEGAÇÃO — SEM DUPLICAÇÃO
 // =========================================================
 function mostrarAba(nomeAba) {
-  // Esconde todas as abas
   document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
-  // Mostra a aba selecionada
   document.getElementById(nomeAba).classList.add('ativa');
-  
-  // Reseta botões
+
   const botoes = document.querySelectorAll('.btn-loto');
-  const nomes = ['quina','lotofacil','lotomania','mega','megasena','bicho'];
+  const nomes = ['quina','lotofacil','lotomania','megasena','bicho'];
   botoes.forEach((btn, i) => {
     if (nomes[i] === nomeAba) {
       btn.classList.add('ativo'); btn.classList.remove('inativo');
@@ -209,7 +208,7 @@ function mostrarAba(nomeAba) {
 }
 
 // =========================================================
-// 🎲 FUNÇÕES DE GERAÇÃO DE JOGOS — LOTERIAS
+// 🎲 GERAR NÚMEROS — LOTERIAS
 // =========================================================
 function gerarNumeros(qtd, min, max) {
   let nums = [];
@@ -232,21 +231,17 @@ function gerarLotomania() {
   document.getElementById('lotomania-quente').textContent = gerarNumeros(50,0,99);
   document.getElementById('lotomania-alternativo').textContent = gerarNumeros(50,0,99);
 }
-function gerarMega() {
-  document.getElementById('mega-quente').textContent = gerarNumeros(6,1,60);
-  document.getElementById('mega-alternativo').textContent = gerarNumeros(6,1,60);
-}
 function gerarMegaSena() {
   document.getElementById('megasena-quente').textContent = gerarNumeros(6,1,60);
   document.getElementById('megasena-alternativo').textContent = gerarNumeros(6,1,60);
 }
 function gerarTodosJogos() {
-  gerarQuina(); gerarLotofacil(); gerarLotomania(); gerarMega(); gerarMegaSena();
+  gerarQuina(); gerarLotofacil(); gerarLotomania(); gerarMegaSena();
   alert('✅ Todos os jogos gerados com sucesso!');
 }
 
 // =========================================================
-// 🐾 DADOS DO JOGO DO BICHO
+// 🐾 DADOS JOGO DO BICHO
 // =========================================================
 const gruposBicho = [
   {grupo:1, bicho:'Avestruz', emoji:'🐦', dezenas:[1,2,3,4]},
@@ -278,19 +273,18 @@ const gruposBicho = [
 let resultadosBicho = [];
 
 // =========================================================
-// 📋 TABELA GRUPOS — CARREGA AUTOMÁTICO
+// 📋 TABELA GRUPOS — CARREGA SOZINHA
 // =========================================================
 function carregarTabelaBichos() {
   const tabela = document.getElementById('tabela-bichos');
   if (!tabela) return;
-  // Mantém cabeçalho, apaga o resto
   const cabecalho = tabela.querySelector('tr');
   tabela.innerHTML = '';
   tabela.appendChild(cabecalho);
-  
+
   gruposBicho.forEach(g => {
     const linha = document.createElement('tr');
-    linha.innerHTML = 
+    linha.innerHTML =
       '<td>' + g.grupo + '</td>' +
       '<td>' + g.emoji + ' ' + g.bicho + '</td>' +
       '<td>' + g.dezenas.join(' — ') + '</td>';
@@ -313,7 +307,7 @@ function carregarResultadosBicho() {
   tbody.innerHTML = '';
   resultadosBicho.forEach(r => {
     const linha = document.createElement('tr');
-    linha.innerHTML = 
+    linha.innerHTML =
       '<td>' + r.data + '</td>' +
       '<td>' + r.periodo + '</td>' +
       '<td>' + r.milhar + '</td>' +
@@ -330,7 +324,7 @@ function carregarResultadosBicho() {
 // =========================================================
 function atualizarEstatisticasBicho() {
   if (resultadosBicho.length === 0) { alert('⚠️ Carregue os resultados primeiro!'); return; }
-  
+
   const contagem = {};
   gruposBicho.forEach(g => contagem[g.grupo] = 0);
   resultadosBicho.forEach(r => {
