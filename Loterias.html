@@ -574,10 +574,11 @@ function carregarTabelaBichos() {
   gruposBicho.forEach(g => {
     const dezenasFormatadas = g.dezenas.join(' — ');
     tabela.innerHTML += '<tr>' +
-      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + g.grupo + '</td>' +
-      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + g.emoji + ' ' + g.bicho + '</td>' +
-      '<td style="background-color: #0055b8; color: #fff; padding: 8px; border: 1px solid #ddd;">' + dezenasFormatadas + '</td>' +
-    '</tr>';
+  '<td style="background-color: #0055b8; color: #fff; padding: 6px; border: 1px solid #ccc;">' + g.grupo + '</td>' +
+  '<td style="background-color: #0055b8; color: #fff; padding: 6px; border: 1px solid #ccc;">' + g.emoji + ' ' + g.bicho + '</td>' +
+  '<td style="background-color: #0055b8; color: #fff; padding: 6px; border: 1px solid #ccc;">' + dezenasFormatadas + '</td>' +
+'</tr>';
+
   });
 }
 
