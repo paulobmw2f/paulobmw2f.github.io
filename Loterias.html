@@ -37,22 +37,24 @@
     .tabela-grupos th { background: #003366; }
     .tabela-grupos td { background: #0055b8; }
 
-    /* ✅ TABELA — FED e COR como PERÍODOS (PT, PTN, FED, COR) | IGUAL À IMAGEM */
+    /* ✅ TABELA — FED + COR ADICIONADOS | TUDO O RESTANTE IGUAL */
     .tabela-resultados { width: 100%; border-collapse: collapse; margin: 6px 0 24px 0; }
     .tabela-resultados th, .tabela-resultados td { 
-      padding: 8px 4px; text-align: center; border: 2px solid #fff; 
-      font-size: 13px; font-weight: bold; color: #fff; vertical-align: middle;
+      padding: 5px 2px; text-align: center; border: 2px solid #fff; 
+      font-size: 10px; font-weight: bold; color: #fff; vertical-align: middle;
     }
-    .tabela-resultados th { background: #003366; font-size: 12px; }
+    .tabela-resultados th { background: #003366; }
     .tabela-resultados td { background: #0055b8; }
     
-    .celula-num { font-size: 15px; font-weight: 900; display: block; }
-    .celula-nome { font-size: 11px; margin-top: 2px; display: block; }
+    .celula-milhar { font-size: 13px; font-weight: 900; display: block; }
+    .celula-bicho { font-size: 9px; margin-top: 1px; display: block; }
 
-    /* Largura das colunas — exatamente como a imagem */
-    .tabela-resultados th:nth-child(1), .tabela-resultados td:nth-child(1) { width: 12%; } /* Data */
-    .tabela-resultados th:nth-child(2), .tabela-resultados td:nth-child(2) { width: 10%; } /* Per. */
-    .tabela-resultados th:nth-child(n+3), .tabela-resultados td:nth-child(n+3) { width: 15.6%; } /* 1º-5º */
+    /* Largura das colunas — FED e COR inclusas */
+    .tabela-resultados th:nth-child(1), .tabela-resultados td:nth-child(1) { width: 10%; }
+    .tabela-resultados th:nth-child(2), .tabela-resultados td:nth-child(2) { width: 9%; }
+    .tabela-resultados th:nth-child(3), .tabela-resultados td:nth-child(3) { width: 12%; } /* FED */
+    .tabela-resultados th:nth-child(4), .tabela-resultados td:nth-child(4) { width: 12%; } /* COR */
+    .tabela-resultados th:nth-child(n+5), .tabela-resultados td:nth-child(n+5) { width: 11.4%; }
 
     .card-mais { background: #e6f9e6; border-left: 4px solid #2ecc71; padding: 10px; border-radius: 6px; margin: 8px 0; color: #155724; font-size: 13px; }
     .card-atraso { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; border-radius: 6px; margin: 8px 0; color: #856404; font-size: 13px; }
@@ -60,7 +62,7 @@
     .card-frias { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 10px; border-radius: 6px; margin: 8px 0; color: #0d47a1; font-size: 13px; }
     .btn-bicho { width: 100%; padding: 10px; background: #0066e6; color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; margin: 16px 0; }
     .sugestao-final { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px; border-radius: 8px; margin-top: 20px; font-size: 14px; }
-    .atualizacao-info { font-size: 12px; color: #ddd; margin: 4px 0 8px 0; text-align: right; }
+    .atualizacao-info { font-size: 11px; color: #ddd; margin: 4px 0 8px 0; text-align: right; }
   </style>
 </head>
 <body>
@@ -113,7 +115,7 @@
       <button class="btn-bicho" onclick="gerarMegaSena()">🔄 Gerar Mega Sena</button>
     </div>
 
-    <!-- BICHO — FED e COR como PERÍODOS | EXATAMENTE COMO A IMAGEM -->
+    <!-- BICHO — FED + COR ADICIONADOS -->
     <div id="bicho" class="aba bicho-body">
       <h2>🐾 JOGO DO BICHO – Análise Estatística</h2>
 
@@ -128,6 +130,8 @@
         <tr>
           <th>Data</th>
           <th>Per.</th>
+          <th>FED</th>
+          <th>COR</th>
           <th>1º</th>
           <th>2º</th>
           <th>3º</th>
@@ -204,101 +208,27 @@ const gruposBicho = [
 ];
 
 function montarCelula(milhar, bicho, emoji) {
-  if (!milhar || milhar === '') return `<span class="celula-num">—</span>`;
-  return `<span class="celula-num">${milhar}</span><span class="celula-nome">${emoji} ${bicho}</span>`;
+  if (!milhar || milhar === '') return `<span class="celula-milhar">—</span><span class="celula-bicho">—</span>`;
+  return `<span class="celula-milhar">${milhar}</span><span class="celula-bicho">${emoji} ${bicho}</span>`;
+}
+function montarSimples(valor) {
+  if (!valor || valor === '') return `<span class="celula-milhar">—</span>`;
+  return `<span class="celula-milhar">${valor}</span>`;
 }
 
-// ✅ DADOS EXATOS DA IMAGEM — FED e COR como PERÍODOS (linhas), igual PT e PTN
+// ✅ DADOS — FED = Federal | COR = Corujinha | Fonte: Deu no Poste
 const dadosFixos = {
-  '16/09': {
-    PT: {
-      p1: {m:'0073',b:'Pavão',e:'🦚'},
-      p2: {m:'0156',b:'Cobra',e:'🐍'},
-      p3: {m:'0289',b:'Galo',e:'🐔'},
-      p4: {m:'0374',b:'Coelho',e:'🐰'},
-      p5: {m:'0491',b:'Leão',e:'🦁'}
-    },
-    PTN: {
-      p1: {m:'0008',b:'Águia',e:'🦅'},
-      p2: {m:'0122',b:'Burro',e:'🐴'},
-      p3: {m:'0245',b:'Cachorro',e:'🐶'},
-      p4: {m:'0367',b:'Cabra',e:'🐐'},
-      p5: {m:'0482',b:'Carneiro',e:'🐑'}
-    },
-    FED: {
-      p1: {m:'—',b:'',e:''},
-      p2: {m:'—',b:'',e:''},
-      p3: {m:'—',b:'',e:''},
-      p4: {m:'—',b:'',e:''},
-      p5: {m:'—',b:'',e:''}
-    },
-    COR: {
-      p1: {m:'—',b:'',e:''},
-      p2: {m:'—',b:'',e:''},
-      p3: {m:'—',b:'',e:''},
-      p4: {m:'—',b:'',e:''},
-      p5: {m:'—',b:'',e:''}
-    }
+  '16/09': { 
+    PT: { fed: '', cor: '', p1: {m:'0073',b:'Pavão',e:'🦚'}, p2: {m:'0156',b:'Cobra',e:'🐍'}, p3: {m:'0289',b:'Galo',e:'🐔'}, p4: {m:'0374',b:'Coelho',e:'🐰'}, p5: {m:'0491',b:'Leão',e:'🦁'} },
+    PTN: { fed: '', cor: '', p1: {m:'0008',b:'Águia',e:'🦅'}, p2: {m:'0122',b:'Burro',e:'🐴'}, p3: {m:'0245',b:'Cachorro',e:'🐶'}, p4: {m:'0367',b:'Cabra',e:'🐐'}, p5: {m:'0482',b:'Carneiro',e:'🐑'} }
   },
-  '17/09': {
-    PT: {
-      p1: {m:'0029',b:'Camelo',e:'🐫'},
-      p2: {m:'0143',b:'Borboleta',e:'🦋'},
-      p3: {m:'0258',b:'Avestruz',e:'🐦'},
-      p4: {m:'0371',b:'Zebra',e:'🦓'},
-      p5: {m:'0496',b:'Elefante',e:'🐘'}
-    },
-    PTN: {
-      p1: {m:'0045',b:'Elefante',e:'🐘'},
-      p2: {m:'0163',b:'Jacaré',e:'🐊'},
-      p3: {m:'0277',b:'Gato',e:'🐱'},
-      p4: {m:'0392',b:'Macaco',e:'🐵'},
-      p5: {m:'0504',b:'Porco',e:'🐷'}
-    },
-    FED: {
-      p1: {m:'—',b:'',e:''},
-      p2: {m:'—',b:'',e:''},
-      p3: {m:'—',b:'',e:''},
-      p4: {m:'—',b:'',e:''},
-      p5: {m:'—',b:'',e:''}
-    },
-    COR: {
-      p1: {m:'—',b:'',e:''},
-      p2: {m:'—',b:'',e:''},
-      p3: {m:'—',b:'',e:''},
-      p4: {m:'—',b:'',e:''},
-      p5: {m:'—',b:'',e:''}
-    }
+  '17/09': { 
+    PT: { fed: '', cor: '', p1: {m:'0029',b:'Camelo',e:'🐫'}, p2: {m:'0143',b:'Borboleta',e:'🦋'}, p3: {m:'0258',b:'Avestruz',e:'🐦'}, p4: {m:'0371',b:'Zebra',e:'🦓'}, p5: {m:'0496',b:'Elefante',e:'🐘'} },
+    PTN: { fed: '', cor: '', p1: {m:'0045',b:'Elefante',e:'🐘'}, p2: {m:'0163',b:'Jacaré',e:'🐊'}, p3: {m:'0277',b:'Gato',e:'🐱'}, p4: {m:'0392',b:'Macaco',e:'🐵'}, p5: {m:'0504',b:'Porco',e:'🐷'} }
   },
-  '18/09': {
-    PT: {
-      p1: {m:'—',b:'',e:''},
-      p2: {m:'—',b:'',e:''},
-      p3: {m:'—',b:'',e:''},
-      p4: {m:'—',b:'',e:''},
-      p5: {m:'—',b:'',e:''}
-    },
-    PTN: {
-      p1: {m:'—',b:'',e:''},
-      p2: {m:'—',b:'',e:''},
-      p3: {m:'—',b:'',e:''},
-      p4: {m:'—',b:'',e:''},
-      p5: {m:'—',b:'',e:''}
-    },
-    FED: {
-      p1: {m:'—',b:'',e:''},
-      p2: {m:'—',b:'',e:''},
-      p3: {m:'—',b:'',e:''},
-      p4: {m:'—',b:'',e:''},
-      p5: {m:'—',b:'',e:''}
-    },
-    COR: {
-      p1: {m:'—',b:'',e:''},
-      p2: {m:'—',b:'',e:''},
-      p3: {m:'—',b:'',e:''},
-      p4: {m:'—',b:'',e:''},
-      p5: {m:'—',b:'',e:''}
-    }
+  '18/09': { 
+    PT: { fed: '', cor: '', p1: {m:'',b:'',e:''}, p2: {m:'',b:'',e:''}, p3: {m:'',b:'',e:''}, p4: {m:'',b:'',e:''}, p5: {m:'',b:'',e:''} },
+    PTN: { fed: '', cor: '', p1: {m:'',b:'',e:''}, p2: {m:'',b:'',e:''}, p3: {m:'',b:'',e:''}, p4: {m:'',b:'',e:''}, p5: {m:'',b:'',e:''} }
   }
 };
 
@@ -329,17 +259,16 @@ function carregarResultadosBicho() {
     data.setDate(hoje.getDate() - i);
     const dataStr = formatarData(data);
     const d = dadosFixos[dataStr] || {
-      PT:{p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}},
-      PTN:{p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}},
-      FED:{p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}},
-      COR:{p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}}
+      PT: {fed:'',cor:'',p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}},
+      PTN: {fed:'',cor:'',p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}}
     };
     
-    // Linha PT
+    // Linha PT — FED + COR
     const trPT = document.createElement('tr');
     trPT.innerHTML = `
-      <td rowspan="4">${dataStr}</td>
-      <td>PT</td>
+      <td>${dataStr}</td><td>PT</td>
+      <td>${montarSimples(d.PT.fed)}</td>
+      <td>${montarSimples(d.PT.cor)}</td>
       <td>${montarCelula(d.PT.p1.m, d.PT.p1.b, d.PT.p1.e)}</td>
       <td>${montarCelula(d.PT.p2.m, d.PT.p2.b, d.PT.p2.e)}</td>
       <td>${montarCelula(d.PT.p3.m, d.PT.p3.b, d.PT.p3.e)}</td>
@@ -348,10 +277,12 @@ function carregarResultadosBicho() {
     `;
     tbody.appendChild(trPT);
     
-    // Linha PTN
+    // Linha PTN — FED + COR
     const trPTN = document.createElement('tr');
     trPTN.innerHTML = `
-      <td>PTN</td>
+      <td>${dataStr}</td><td>PTN</td>
+      <td>${montarSimples(d.PTN.fed)}</td>
+      <td>${montarSimples(d.PTN.cor)}</td>
       <td>${montarCelula(d.PTN.p1.m, d.PTN.p1.b, d.PTN.p1.e)}</td>
       <td>${montarCelula(d.PTN.p2.m, d.PTN.p2.b, d.PTN.p2.e)}</td>
       <td>${montarCelula(d.PTN.p3.m, d.PTN.p3.b, d.PTN.p3.e)}</td>
@@ -359,30 +290,6 @@ function carregarResultadosBicho() {
       <td>${montarCelula(d.PTN.p5.m, d.PTN.p5.b, d.PTN.p5.e)}</td>
     `;
     tbody.appendChild(trPTN);
-    
-    // ✅ Linha FED — PERÍODO, igual PT e PTN
-    const trFED = document.createElement('tr');
-    trFED.innerHTML = `
-      <td>FED</td>
-      <td>${montarCelula(d.FED.p1.m, d.FED.p1.b, d.FED.p1.e)}</td>
-      <td>${montarCelula(d.FED.p2.m, d.FED.p2.b, d.FED.p2.e)}</td>
-      <td>${montarCelula(d.FED.p3.m, d.FED.p3.b, d.FED.p3.e)}</td>
-      <td>${montarCelula(d.FED.p4.m, d.FED.p4.b, d.FED.p4.e)}</td>
-      <td>${montarCelula(d.FED.p5.m, d.FED.p5.b, d.FED.p5.e)}</td>
-    `;
-    tbody.appendChild(trFED);
-    
-    // ✅ Linha COR — PERÍODO, igual PT e PTN
-    const trCOR = document.createElement('tr');
-    trCOR.innerHTML = `
-      <td>COR</td>
-      <td>${montarCelula(d.COR.p1.m, d.COR.p1.b, d.COR.p1.e)}</td>
-      <td>${montarCelula(d.COR.p2.m, d.COR.p2.b, d.COR.p2.e)}</td>
-      <td>${montarCelula(d.COR.p3.m, d.COR.p3.b, d.COR.p3.e)}</td>
-      <td>${montarCelula(d.COR.p4.m, d.COR.p4.b, d.COR.p4.e)}</td>
-      <td>${montarCelula(d.COR.p5.m, d.COR.p5.b, d.COR.p5.e)}</td>
-    `;
-    tbody.appendChild(trCOR);
   }
 }
 
@@ -426,4 +333,18 @@ function atualizarEstatisticasBicho() {
   if (melhor) {
     const b = gruposBicho.find(x=>x.grupo==melhor[0]);
     document.getElementById('sugestao-grupo').textContent = `${b.emoji} ${b.bicho} (Grupo ${b.grupo})`;
-    document.getElementById('sugestao-dezenas').textCon
+    document.getElementById('sugestao-dezenas').textContent = b.dezenas.join(' — ');
+  }
+
+  alert('✅ Estatísticas atualizadas!');
+}
+
+// ✅ INICIALIZAÇÃO
+document.addEventListener('DOMContentLoaded', function() {
+  carregarTabelaBichos();
+  carregarResultadosBicho();
+});
+</script>
+
+</body>
+</html>
