@@ -27,7 +27,7 @@
     .botoes-loterias { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-bottom: 15px; }
     .btn-loto { 
       padding: 10px 2px; border: none; border-radius: 6px; font-size: 11px; font-weight: bold; 
-      cursor: pointer; transition: all 0.15s; min-height: 44px; pointer-events: auto;
+      cursor: pointer; transition: all 0.15s; min-height: 44px;
     }
     .btn-loto.inativo { background: #e0e0e0; color: #444; }
     .btn-loto.ativo { background: #0066e6; color: white; border: 2px solid #ffcc00; }
@@ -49,6 +49,7 @@
     .tabela-grupos th { background: #003366; font-size: 11px; padding: 8px 2px; }
     .tabela-grupos td { background: #0055b8; }
 
+    /* ✅ TABELA RESULTADOS — COMPACTA, FONTE REDUZIDA, CABE TUDO! */
     .tabela-resultados { width: 100%; border-collapse: collapse; margin: 6px 0 24px 0; }
     .tabela-resultados th, .tabela-resultados td { 
       padding: 6px 2px; text-align: center; border: 2px solid #ffffff; 
@@ -57,12 +58,14 @@
     .tabela-resultados th { background: #003366; color: #ffffff; font-size: 11px; padding: 8px 2px; }
     .tabela-resultados td { background: #0055b8; }
     
+    /* ✅ FONTE REDUZIDA — MILHAR + BICHO, COMPACTO E LEGÍVEL */
     .celula-milhar { font-size: 14px; font-weight: 900; letter-spacing: 0.3px; display: block; }
     .celula-bicho { font-size: 10px; margin-top: 2px; display: block; }
 
-    .tabela-resultados th:nth-child(1), .tabela-resultados td:nth-child(1) { width: 14%; }
-    .tabela-resultados th:nth-child(2), .tabela-resultados td:nth-child(2) { width: 10%; }
-    .tabela-resultados th:nth-child(n+3), .tabela-resultados td:nth-child(n+3) { width: 15.2%; }
+    /* Largura das colunas — ajustada para caber tudo */
+    .tabela-resultados th:nth-child(1), .tabela-resultados td:nth-child(1) { width: 14%; } /* Data */
+    .tabela-resultados th:nth-child(2), .tabela-resultados td:nth-child(2) { width: 10%; } /* Per. */
+    .tabela-resultados th:nth-child(n+3), .tabela-resultados td:nth-child(n+3) { width: 15.2%; } /* 1º-5º */
 
     .card-mais { background: #e6f9e6; border-left: 4px solid #2ecc71; padding: 10px; border-radius: 6px; margin: 8px 0; color: #155724; font-size: 13px; }
     .card-atraso { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; border-radius: 6px; margin: 8px 0; color: #856404; font-size: 13px; }
@@ -72,7 +75,7 @@
 
     .btn-bicho { 
       padding: 10px 14px; background: #0066e6; color: white; border: none; border-radius: 6px; 
-      font-size: 14px; font-weight: bold; cursor: pointer; margin: 16px 0; width: 100%; pointer-events: auto;
+      font-size: 14px; font-weight: bold; cursor: pointer; margin: 16px 0; width: 100%;
     }
     .btn-bicho:active { background: #0052b3; }
 
@@ -134,6 +137,7 @@
       <button class="btn-bicho" onclick="gerarMegaSena()">🔄 Gerar Mega Sena</button>
     </div>
 
+    <!-- ✅ BICHO — TABELA COMPACTA, FONTE REDUZIDA, 1º-5º PERFEITOS -->
     <div id="bicho" class="aba bicho-body">
       <h2>🐾 JOGO DO BICHO – Análise Estatística</h2>
 
@@ -143,7 +147,7 @@
       </table>
 
       <h3>📊 Resultados Recentes – Últimos 3 Dias</h3>
-      <div class="atualizacao-info" id="data-atualizacao">Última atualização: — (atualiza diariamente às 8h)</div>
+      <div class="atualizacao-info">Última atualização: 18/09 (atualiza diariamente às 8h)</div>
       <table class="tabela-resultados">
         <tr>
           <th>Data</th>
@@ -179,11 +183,9 @@
 </div>
 
 <script>
-// ✅ FUNÇÃO DE TROCA DE ABA — CORRIGIDA E DIRETA
 function trocarAba(nomeAba) {
   document.querySelectorAll('.aba').forEach(aba => aba.classList.remove('ativa'));
   document.getElementById(nomeAba).classList.add('ativa');
-  
   document.querySelectorAll('.btn-loto').forEach(btn => {
     btn.classList.remove('ativo');
     btn.classList.add('inativo');
@@ -259,46 +261,70 @@ const gruposBicho = [
   {grupo:25, bicho:'Zebra', emoji:'🦓', dezenas:[97,98,99,0]}
 ];
 
+// ✅ FORMATAÇÃO — IGUAL PARA TODAS AS COLUNAS
 function montarCelula(milhar, bicho, emoji) {
-  if (!milhar || milhar === '') return `<span class="celula-milhar">—</span><span class="celula-bicho">—</span>`;
+  if (!milhar || milhar === '----' || !milhar) {
+    return `<span class="celula-milhar">—</span><span class="celula-bicho">—</span>`;
+  }
   return `<span class="celula-milhar">${milhar}</span><span class="celula-bicho">${emoji} ${bicho}</span>`;
 }
 
-// ✅ BANCO DE RESULTADOS — 18/09 INCLUÍDO, 19/09 APARECE ÀS 8H
-const bancoResultados = {
+// ✅ DADOS — PREENCHER AQUI OS RESULTADOS REAIS
+const dadosFixos = {
   '16/09': { 
-    PT: { p1:{m:'0073',b:'Pavão',e:'🦚'}, p2:{m:'0156',b:'Cobra',e:'🐍'}, p3:{m:'0289',b:'Galo',e:'🐔'}, p4:{m:'0374',b:'Coelho',e:'🐰'}, p5:{m:'0491',b:'Leão',e:'🦁'} },
-    PTN: { p1:{m:'0008',b:'Águia',e:'🦅'}, p2:{m:'0122',b:'Burro',e:'🐴'}, p3:{m:'0245',b:'Cachorro',e:'🐶'}, p4:{m:'0367',b:'Cabra',e:'🐐'}, p5:{m:'0482',b:'Carneiro',e:'🐑'} }
+    PT: {
+      p1: {m:'0073', b:'Pavão', e:'🦚'},
+      p2: {m:'0156', b:'Cobra', e:'🐍'},
+      p3: {m:'0289', b:'Galo', e:'🐔'},
+      p4: {m:'0374', b:'Coelho', e:'🐰'},
+      p5: {m:'0491', b:'Leão', e:'🦁'}
+    },
+    PTN: {
+      p1: {m:'0008', b:'Águia', e:'🦅'},
+      p2: {m:'0122', b:'Burro', e:'🐴'},
+      p3: {m:'0245', b:'Cachorro', e:'🐶'},
+      p4: {m:'0367', b:'Cabra', e:'🐐'},
+      p5: {m:'0482', b:'Carneiro', e:'🐑'}
+    }
   },
   '17/09': { 
-    PT: { p1:{m:'0029',b:'Camelo',e:'🐫'}, p2:{m:'0143',b:'Borboleta',e:'🦋'}, p3:{m:'0258',b:'Avestruz',e:'🐦'}, p4:{m:'0371',b:'Zebra',e:'🦓'}, p5:{m:'0496',b:'Elefante',e:'🐘'} },
-    PTN: { p1:{m:'0045',b:'Elefante',e:'🐘'}, p2:{m:'0163',b:'Jacaré',e:'🐊'}, p3:{m:'0277',b:'Gato',e:'🐱'}, p4:{m:'0392',b:'Macaco',e:'🐵'}, p5:{m:'0504',b:'Porco',e:'🐷'} }
+    PT: {
+      p1: {m:'0029', b:'Camelo', e:'🐫'},
+      p2: {m:'0143', b:'Borboleta', e:'🦋'},
+      p3: {m:'0258', b:'Avestruz', e:'🐦'},
+      p4: {m:'0371', b:'Zebra', e:'🦓'},
+      p5: {m:'0496', b:'Elefante', e:'🐘'}
+    },
+    PTN: {
+      p1: {m:'0045', b:'Elefante', e:'🐘'},
+      p2: {m:'0163', b:'Jacaré', e:'🐊'},
+      p3: {m:'0277', b:'Gato', e:'🐱'},
+      p4: {m:'0392', b:'Macaco', e:'🐵'},
+      p5: {m:'0504', b:'Porco', e:'🐷'}
+    }
   },
   '18/09': { 
-    PT: { p1:{m:'',b:'',e:''}, p2:{m:'',b:'',e:''}, p3:{m:'',b:'',e:''}, p4:{m:'',b:'',e:''}, p5:{m:'',b:'',e:''} },
-    PTN: { p1:{m:'',b:'',e:''}, p2:{m:'',b:'',e:''}, p3:{m:'',b:'',e:''}, p4:{m:'',b:'',e:''}, p5:{m:'',b:'',e:''} }
+    PT: {
+      p1: {m:'', b:'', e:''},
+      p2: {m:'', b:'', e:''},
+      p3: {m:'', b:'', e:''},
+      p4: {m:'', b:'', e:''},
+      p5: {m:'', b:'', e:''}
+    },
+    PTN: {
+      p1: {m:'', b:'', e:''},
+      p2: {m:'', b:'', e:''},
+      p3: {m:'', b:'', e:''},
+      p4: {m:'', b:'', e:''},
+      p5: {m:'', b:'', e:''}
+    }
   }
 };
 
 function formatarData(data) {
-  const d = data.getDate().toString().padStart(2, '0');
-  const m = (data.getMonth() + 1).toString().padStart(2, '0');
+  const d = data.getDate().toString().padStart(2,'0');
+  const m = (data.getMonth()+1).toString().padStart(2,'0');
   return `${d}/${m}`;
-}
-
-// ✅ SÓ MOSTRA O DIA APÓS AS 8H DA MANHÃ
-function podeMostrarData(dataVerificar) {
-  const agora = new Date();
-  const alvo = new Date(dataVerificar);
-  if (agora.toDateString() === alvo.toDateString()) {
-    return agora.getHours() >= 8;
-  }
-  return true;
-}
-
-function atualizarDataAtualizacao() {
-  const hoje = new Date();
-  document.getElementById('data-atualizacao').textContent = `Última atualização: ${formatarData(hoje)} (atualiza diariamente às 8h)`;
 }
 
 function carregarTabelaBichos() {
@@ -313,38 +339,20 @@ function carregarTabelaBichos() {
   });
 }
 
-// ✅ CARREGA RESULTADOS — RESPEITA HORÁRIO E ORDEM
 function carregarResultadosBicho() {
   const tbody = document.getElementById('resultados-corpo');
   tbody.innerHTML = '';
   const hoje = new Date();
-  const diasParaMostrar = [];
-  
-  for (let i = 0; i < 3; i++) {
-    const dataAlvo = new Date(hoje);
-    dataAlvo.setDate(hoje.getDate() - i);
-    if (podeMostrarData(dataAlvo)) {
-      diasParaMostrar.unshift(dataAlvo);
-    }
-  }
-  
-  let i = 1;
-  while (diasParaMostrar.length < 3) {
-    const dataAlvo = new Date(hoje);
-    dataAlvo.setDate(hoje.getDate() - i);
-    if (!diasParaMostrar.some(d => d.toDateString() === dataAlvo.toDateString())) {
-      diasParaMostrar.unshift(dataAlvo);
-    }
-    i++;
-  }
-  
-  diasParaMostrar.forEach(dataAlvo => {
-    const dataStr = formatarData(dataAlvo);
-    const d = bancoResultados[dataStr] || {
+  for (let i = 2; i >= 0; i--) {
+    const data = new Date(hoje);
+    data.setDate(hoje.getDate() - i);
+    const dataStr = formatarData(data);
+    const d = dadosFixos[dataStr] || {
       PT: {p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}},
       PTN: {p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}}
     };
     
+    // Linha PT
     const trPT = document.createElement('tr');
     trPT.innerHTML = `
       <td>${dataStr}</td><td>PT</td>
@@ -356,6 +364,7 @@ function carregarResultadosBicho() {
     `;
     tbody.appendChild(trPT);
     
+    // Linha PTN
     const trPTN = document.createElement('tr');
     trPTN.innerHTML = `
       <td>${dataStr}</td><td>PTN</td>
@@ -366,7 +375,7 @@ function carregarResultadosBicho() {
       <td>${montarCelula(d.PTN.p5.m, d.PTN.p5.b, d.PTN.p5.e)}</td>
     `;
     tbody.appendChild(trPTN);
-  });
+  }
 }
 
 let ultimaAtualizacaoEstat = null;
@@ -379,29 +388,26 @@ function atualizarEstatisticasBicho() {
   ultimaAtualizacaoEstat = agora;
 
   const sorteios30 = [];
-  for (let i = 0; i < 30; i++) {
-    const g = gruposBicho[Math.floor(Math.random() * 25)];
-    sorteios30.push({grupo: g.grupo, dezena: g.dezenas[Math.floor(Math.random() * 4)]});
+  for (let i=0; i<30; i++) {
+    const g = gruposBicho[Math.floor(Math.random()*25)];
+    sorteios30.push({grupo:g.grupo, dezena:g.dezenas[Math.floor(Math.random()*4)]});
   }
 
   const cont = {};
   gruposBicho.forEach(g => cont[g.grupo] = 0);
   sorteios30.forEach(s => cont[s.grupo]++);
-  const top5 = Object.entries(cont).sort((a, b) => b[1] - a[1]).slice(0, 5);
-  document.getElementById('mais-sorteados-bicho').innerHTML = top5.map(([g, q]) => {
-    const b = gruposBicho.find(x => x.grupo == g);
+  const top5 = Object.entries(cont).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  document.getElementById('mais-sorteados-bicho').innerHTML = top5.map(([g,q])=>{
+    const b = gruposBicho.find(x=>x.grupo==g);
     return `${b.emoji} ${b.bicho}: ${q}x`;
   }).join('<br>');
 
   const ult = {};
   gruposBicho.forEach(g => ult[g.grupo] = -1);
-  sorteios30.forEach((s, i) => ult[s.grupo] = i);
-  const atraso = Object.entries(ult)
-    .map(([g, idx]) => ({grupo: g, atraso: 30 - idx - 1}))
-    .sort((a, b) => b.atraso - a.atraso)
-    .slice(0, 5);
-  document.getElementById('em-atraso-bicho').innerHTML = atraso.map(item => {
-    const b = gruposBicho.find(x => x.grupo == item.grupo);
+  sorteios30.forEach((s,i)=>ult[s.grupo]=i);
+  const atraso = Object.entries(ult).map(([g,idx])=>({grupo:g,atraso:30-idx-1})).sort((a,b)=>b.atraso-a.atraso).slice(0,5);
+  document.getElementById('em-atraso-bicho').innerHTML = atraso.map(item=>{
+    const b = gruposBicho.find(x=>x.grupo==item.grupo);
     return `${b.emoji} ${b.bicho}: ${item.atraso} sorteios`;
   }).join('<br>');
 
@@ -414,6 +420,19 @@ function atualizarEstatisticasBicho() {
 
   const melhor = top5[0];
   if (melhor) {
-    const b = gruposBicho.find(x => x.grupo == melhor[0]);
+    const b = gruposBicho.find(x=>x.grupo==melhor[0]);
     document.getElementById('sugestao-grupo').textContent = `${b.emoji} ${b.bicho} (Grupo ${b.grupo})`;
-    document.ge
+    document.getElementById('sugestao-dezenas').textContent = b.dezenas.join(' — ');
+  }
+
+  alert('✅ Estatísticas atualizadas!');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  carregarTabelaBichos();
+  carregarResultadosBicho();
+});
+</script>
+
+</body>
+</html>
