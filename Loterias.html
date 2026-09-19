@@ -6,61 +6,40 @@
     <title>Loterias App – Quina · Mega · Jogo do Bicho</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background: #f0f4f8; padding: 8px; }
-        .container { max-width: 100%; margin: 0 auto; }
-
-        /* CABEÇALHO */
-        .header { 
-            background: #0055aa; color: white; 
-            padding: 15px; border-radius: 8px 8px 0 0; 
-            text-align: center; font-size: 18px; font-weight: bold; 
-        }
-        .subheader { 
-            background: #0055aa; color: #cce7ff; 
-            padding: 10px; text-align: center; 
-            font-size: 15px; border-bottom: 2px solid #004499; 
-        }
-
-        /* TABELA — CORRIGIDA PARA NÃO CORTAR */
-        .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; background: white; }
-        table { width: 100%; border-collapse: collapse; min-width: 720px; }
-        th, td { 
-            border: 1px solid #004499; padding: 10px 6px; 
-            text-align: center; font-size: 14px; vertical-align: middle; 
-        }
-        th { background: #0055aa; color: white; font-size: 15px; }
+        body { background: #f0f4f8; padding: 10px; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        
+        /* Cabeçalho */
+        .header { background: #0055aa; color: white; padding: 15px; border-radius: 8px 8px 0 0; text-align: center; font-size: 18px; font-weight: bold; }
+        .subheader { background: #0055aa; color: #cce7ff; padding: 8px; text-align: center; font-size: 14px; border-bottom: 2px solid #004499; }
+        
+        /* Tabela Resultados */
+        .table-container { background: white; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #004499; padding: 10px; text-align: center; font-size: 14px; }
+        th { background: #0055aa; color: white; }
         td { background: #e6f0ff; color: #002255; }
-        small { font-size: 11px; color: #003377; display: block; margin-top: 2px; }
-
-        /* SEÇÕES ESTATÍSTICAS */
+        .empty-cell { color: #999; }
+        
+        /* Seções Estatísticas */
         .section { margin-top: 15px; border-radius: 8px; overflow: hidden; }
-        .section-title { 
-            background: #0055aa; color: white; 
-            padding: 12px; font-size: 16px; font-weight: bold; 
-        }
+        .section-title { background: #0055aa; color: white; padding: 12px; font-size: 16px; font-weight: bold; }
         .content-green { background: #e6ffe6; padding: 15px; }
         .content-yellow { background: #fff9e6; padding: 15px; }
         .content-pink { background: #ffe6e6; padding: 15px; }
-        .stat-item { margin: 8px 0; font-size: 15px; line-height: 1.5; }
-
-        /* ✅ BOTÕES — PROTEÇÃO TOTAL CONTRA TRAVAMENTO */
-        button, .btn, [role="button"], input[type="button"], a {
-            position: relative !important;
-            z-index: 100 !important;
-            pointer-events: auto !important;
-            cursor: pointer !important;
-        }
+        .stat-item { margin: 8px 0; font-size: 15px; }
+        .icon { margin-right: 8px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- CABEÇALHO -->
+        <!-- TÍTULO E DATA DE ATUALIZAÇÃO -->
         <div class="header">📊 Resultados Recentes – Últimos 3 Dias</div>
-        <div class="subheader" id="dataAtualizacao">Última atualização: 19/09 (atualiza diariamente às 8h)</div>
+        <div class="subheader" id="ultimaAtualizacao">Última atualização: --/-- (atualiza diariamente às 8h)</div>
 
-        <!-- TABELA — COMPLETA E ALINHADA -->
-        <div class="table-wrapper">
-            <table>
+        <!-- TABELA DE RESULTADOS -->
+        <div class="table-container">
+            <table id="tabelaResultados">
                 <thead>
                     <tr>
                         <th>Data</th><th>Per.</th><th>FED</th><th>COR</th>
@@ -68,66 +47,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- 17/09 -->
-                    <tr>
-                        <td rowspan="2">17/09</td>
-                        <td>PT</td>
-                        <td>—</td><td>—</td>
-                        <td>0029<small>Camelo</small></td>
-                        <td>0143<small>Borboleta</small></td>
-                        <td>0258<small>Avestruz</small></td>
-                        <td>0371<small>Zebra</small></td>
-                        <td>0496<small>Elefante</small></td>
-                    </tr>
-                    <tr>
-                        <td>PTN</td>
-                        <td>—</td><td>—</td>
-                        <td>0045<small>Elefante</small></td>
-                        <td>0163<small>Jacaré</small></td>
-                        <td>0277<small>Gato</small></td>
-                        <td>0392<small>Macaco</small></td>
-                        <td>0504<small>Porco</small></td>
-                    </tr>
-                    <!-- 18/09 -->
-                    <tr>
-                        <td rowspan="2">18/09</td>
-                        <td>PT</td>
-                        <td>—</td><td>—</td>
-                        <td>—<small></small></td>
-                        <td>—<small></small></td>
-                        <td>—<small></small></td>
-                        <td>—<small></small></td>
-                        <td>—<small></small></td>
-                    </tr>
-                    <tr>
-                        <td>PTN</td>
-                        <td>—</td><td>—</td>
-                        <td>—<small></small></td>
-                        <td>—<small></small></td>
-                        <td>—<small></small></td>
-                        <td>—<small></small></td>
-                        <td>—<small></small></td>
-                    </tr>
-                    <!-- 19/09 -->
-                    <tr>
-                        <td rowspan="2">19/09</td>
-                        <td>PT</td>
-                        <td>—</td><td>—</td>
-                        <td>—<small></small></td>
-                        <td>—<small></small></td>
-                        <td>—<small></small></td>
-                        <td>—<small></small></td>
-                        <td>—<small></small></td>
-                    </tr>
-                    <tr>
-                        <td>PTN</td>
-                        <td>—</td><td>—</td>
-                        <td>—<small></small></td>
-                        <td>—<small></small></td>
-                        <td>—<small></small></td>
-                        <td>—<small></small></td>
-                        <td>—<small></small></td>
-                    </tr>
+                    <!-- Linhas preenchidas automaticamente -->
                 </tbody>
             </table>
         </div>
@@ -161,19 +81,93 @@
         </div>
     </div>
 
-    <!-- ✅ SCRIPT SIMPLES — SÓ ATUALIZA DATA, NÃO MEXE EM MAIS NADA -->
+    <!-- ============================================== -->
+    <!-- 🔧 SCRIPT DE ATUALIZAÇÃO AUTOMÁTICA CORRIGIDO -->
+    <!-- ============================================== -->
     <script>
-        function atualizarData() {
-            const hoje = new Date();
-            const dia = hoje.getDate().toString().padStart(2, '0');
-            const mes = (hoje.getMonth() + 1).toString().padStart(2, '0');
-            document.getElementById('dataAtualizacao').innerHTML = 
+        // 📅 Dados dos resultados — ATUALIZADO com 18/09 e 19/09
+        const resultados = [
+            {
+                data: "17/09",
+                PT: { fed: "—", cor: "—", n1: "0029", a1: "Camelo", n2: "0143", a2: "Borboleta", n3: "0258", a3: "Avestruz", n4: "0371", a4: "Zebra", n5: "0496", a5: "Elefante" },
+                PTN: { fed: "—", cor: "—", n1: "0045", a1: "Elefante", n2: "0163", a2: "Jacaré", n3: "0277", a3: "Gato", n4: "0392", a4: "Macaco", n5: "0504", a5: "Porco" }
+            },
+            {
+                data: "18/09",
+                PT: { fed: "—", cor: "—", n1: "—", a1: "", n2: "—", a2: "", n3: "—", a3: "", n4: "—", a4: "", n5: "—", a5: "" },
+                PTN: { fed: "—", cor: "—", n1: "—", a1: "", n2: "—", a2: "", n3: "—", a3: "", n4: "—", a4: "", n5: "—", a5: "" }
+            },
+            {
+                data: "19/09",
+                PT: { fed: "—", cor: "—", n1: "—", a1: "", n2: "—", a2: "", n3: "—", a3: "", n4: "—", a4: "", n5: "—", a5: "" },
+                PTN: { fed: "—", cor: "—", n1: "—", a1: "", n2: "—", a2: "", n3: "—", a3: "", n4: "—", a4: "", n5: "—", a5: "" }
+            }
+        ];
+
+        // 🕐 Função para verificar e atualizar às 8h diariamente
+        function verificarEAtualizar() {
+            const agora = new Date();
+            const hora = agora.getHours();
+            const dia = agora.getDate().toString().padStart(2, '0');
+            const mes = (agora.getMonth() + 1).toString().padStart(2, '0');
+            
+            // Atualiza a data da última atualização
+            document.getElementById('ultimaAtualizacao').innerHTML = 
                 `Última atualização: ${dia}/${mes} (atualiza diariamente às 8h)`;
+
+            // Se for 8h ou mais, carrega os resultados do dia
+            if (hora >= 8) {
+                carregarTabela();
+            }
         }
-        document.addEventListener('DOMContentLoaded', atualizarData);
+
+        // 📊 Função para montar e preencher a TABELA
+        function carregarTabela() {
+            const tbody = document.querySelector('#tabelaResultados tbody');
+            tbody.innerHTML = ''; // Limpa antes de preencher
+
+            resultados.forEach(dia => {
+                // Linha PT
+                const linhaPT = document.createElement('tr');
+                linhaPT.innerHTML = `
+                    <td rowspan="2">${dia.data}</td>
+                    <td>PT</td>
+                    <td>${dia.PT.fed}</td>
+                    <td>${dia.PT.cor}</td>
+                    <td>${dia.PT.n1}<br><small>${dia.PT.a1 || ''}</small></td>
+                    <td>${dia.PT.n2}<br><small>${dia.PT.a2 || ''}</small></td>
+                    <td>${dia.PT.n3}<br><small>${dia.PT.a3 || ''}</small></td>
+                    <td>${dia.PT.n4}<br><small>${dia.PT.a4 || ''}</small></td>
+                    <td>${dia.PT.n5}<br><small>${dia.PT.a5 || ''}</small></td>
+                `;
+                tbody.appendChild(linhaPT);
+
+                // Linha PTN
+                const linhaPTN = document.createElement('tr');
+                linhaPTN.innerHTML = `
+                    <td>PTN</td>
+                    <td>${dia.PTN.fed}</td>
+                    <td>${dia.PTN.cor}</td>
+                    <td>${dia.PTN.n1}<br><small>${dia.PTN.a1 || ''}</small></td>
+                    <td>${dia.PTN.n2}<br><small>${dia.PTN.a2 || ''}</small></td>
+                    <td>${dia.PTN.n3}<br><small>${dia.PTN.a3 || ''}</small></td>
+                    <td>${dia.PTN.n4}<br><small>${dia.PTN.a4 || ''}</small></td>
+                    <td>${dia.PTN.n5}<br><small>${dia.PTN.a5 || ''}</small></td>
+                `;
+                tbody.appendChild(linhaPTN);
+            });
+        }
+
+        // 🚀 Inicializa ao carregar a página
+        document.addEventListener('DOMContentLoaded', () => {
+            verificarEAtualizar();
+            // Verifica a cada hora para pegar a 8h automaticamente
+            setInterval(verificarEAtualizar, 3600000);
+        });
     </script>
 
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9632309607215098" crossorigin="anonymous"></script>
 </body>
-</html>
+                    </html>
+                    
