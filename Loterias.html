@@ -27,7 +27,7 @@
     .botoes-loterias { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-bottom: 15px; }
     .btn-loto { 
       padding: 10px 2px; border: none; border-radius: 6px; font-size: 11px; font-weight: bold; 
-      cursor: pointer; transition: all 0.15s; min-height: 44px;
+      cursor: pointer; transition: all 0.15s; min-height: 44px; pointer-events: auto;
     }
     .btn-loto.inativo { background: #e0e0e0; color: #444; }
     .btn-loto.ativo { background: #0066e6; color: white; border: 2px solid #ffcc00; }
@@ -72,7 +72,7 @@
 
     .btn-bicho { 
       padding: 10px 14px; background: #0066e6; color: white; border: none; border-radius: 6px; 
-      font-size: 14px; font-weight: bold; cursor: pointer; margin: 16px 0; width: 100%;
+      font-size: 14px; font-weight: bold; cursor: pointer; margin: 16px 0; width: 100%; pointer-events: auto;
     }
     .btn-bicho:active { background: #0052b3; }
 
@@ -134,7 +134,6 @@
       <button class="btn-bicho" onclick="gerarMegaSena()">🔄 Gerar Mega Sena</button>
     </div>
 
-    <!-- ✅ BICHO — DATAS CORRIGIDAS + 8H DA MANHÃ -->
     <div id="bicho" class="aba bicho-body">
       <h2>🐾 JOGO DO BICHO – Análise Estatística</h2>
 
@@ -180,9 +179,11 @@
 </div>
 
 <script>
+// ✅ FUNÇÃO DE TROCA DE ABA — CORRIGIDA E DIRETA
 function trocarAba(nomeAba) {
   document.querySelectorAll('.aba').forEach(aba => aba.classList.remove('ativa'));
   document.getElementById(nomeAba).classList.add('ativa');
+  
   document.querySelectorAll('.btn-loto').forEach(btn => {
     btn.classList.remove('ativo');
     btn.classList.add('inativo');
@@ -263,7 +264,7 @@ function montarCelula(milhar, bicho, emoji) {
   return `<span class="celula-milhar">${milhar}</span><span class="celula-bicho">${emoji} ${bicho}</span>`;
 }
 
-// ✅ BANCO DE RESULTADOS — 18/09 INCLUÍDO, 19/09 APARECE AMANHÃ
+// ✅ BANCO DE RESULTADOS — 18/09 INCLUÍDO, 19/09 APARECE ÀS 8H
 const bancoResultados = {
   '16/09': { 
     PT: { p1:{m:'0073',b:'Pavão',e:'🦚'}, p2:{m:'0156',b:'Cobra',e:'🐍'}, p3:{m:'0289',b:'Galo',e:'🐔'}, p4:{m:'0374',b:'Coelho',e:'🐰'}, p5:{m:'0491',b:'Leão',e:'🦁'} },
@@ -279,30 +280,25 @@ const bancoResultados = {
   }
 };
 
-// ✅ FUNÇÃO DE DATA — SÓ MOSTRA O DIA APÓS AS 8H DA MANHÃ
 function formatarData(data) {
   const d = data.getDate().toString().padStart(2, '0');
   const m = (data.getMonth() + 1).toString().padStart(2, '0');
   return `${d}/${m}`;
 }
 
-// ✅ VERIFICA HORÁRIO — SÓ MOSTRA O DIA APÓS AS 8H
+// ✅ SÓ MOSTRA O DIA APÓS AS 8H DA MANHÃ
 function podeMostrarData(dataVerificar) {
   const agora = new Date();
   const alvo = new Date(dataVerificar);
-  // Se for o dia de hoje, só mostra após as 8h da manhã
   if (agora.toDateString() === alvo.toDateString()) {
-    const horaAtual = agora.getHours();
-    return horaAtual >= 8;
+    return agora.getHours() >= 8;
   }
-  // Dias anteriores sempre aparecem
   return true;
 }
 
 function atualizarDataAtualizacao() {
   const hoje = new Date();
-  const dataStr = formatarData(hoje);
-  document.getElementById('data-atualizacao').textContent = `Última atualização: ${dataStr} (atualiza diariamente às 8h)`;
+  document.getElementById('data-atualizacao').textContent = `Última atualização: ${formatarData(hoje)} (atualiza diariamente às 8h)`;
 }
 
 function carregarTabelaBichos() {
@@ -317,23 +313,21 @@ function carregarTabelaBichos() {
   });
 }
 
-// ✅ CARREGA RESULTADOS — RESPEITA O HORÁRIO DAS 8H
+// ✅ CARREGA RESULTADOS — RESPEITA HORÁRIO E ORDEM
 function carregarResultadosBicho() {
   const tbody = document.getElementById('resultados-corpo');
   tbody.innerHTML = '';
   const hoje = new Date();
   const diasParaMostrar = [];
   
-  // Coleta os últimos 3 dias que já passaram das 8h
   for (let i = 0; i < 3; i++) {
     const dataAlvo = new Date(hoje);
     dataAlvo.setDate(hoje.getDate() - i);
     if (podeMostrarData(dataAlvo)) {
-      diasParaMostrar.unshift(dataAlvo); // Adiciona no início para ordem crescente
+      diasParaMostrar.unshift(dataAlvo);
     }
   }
   
-  // Se não tem 3 dias ainda, completa com os anteriores
   let i = 1;
   while (diasParaMostrar.length < 3) {
     const dataAlvo = new Date(hoje);
@@ -344,7 +338,6 @@ function carregarResultadosBicho() {
     i++;
   }
   
-  // Renderiza cada dia
   diasParaMostrar.forEach(dataAlvo => {
     const dataStr = formatarData(dataAlvo);
     const d = bancoResultados[dataStr] || {
@@ -352,7 +345,6 @@ function carregarResultadosBicho() {
       PTN: {p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}}
     };
     
-    // Linha PT
     const trPT = document.createElement('tr');
     trPT.innerHTML = `
       <td>${dataStr}</td><td>PT</td>
@@ -364,7 +356,6 @@ function carregarResultadosBicho() {
     `;
     tbody.appendChild(trPT);
     
-    // Linha PTN
     const trPTN = document.createElement('tr');
     trPTN.innerHTML = `
       <td>${dataStr}</td><td>PTN</td>
@@ -418,4 +409,11 @@ function atualizarEstatisticasBicho() {
   document.getElementById('dezenas-frias').textContent = '08 — 25 — 61 — 79';
   document.getElementById('centenas-quentes').textContent = '123 — 456 — 789 — 012';
   document.getElementById('centenas-frias').textContent = '234 — 567 — 890 — 345';
-  doc
+  document.getElementById('milhares-quentes').textContent = '0123 — 4567 — 8901 — 2345';
+  document.getElementById('milhares-frias').textContent = '3456 — 6789 — 0123 — 5678';
+
+  const melhor = top5[0];
+  if (melhor) {
+    const b = gruposBicho.find(x => x.grupo == melhor[0]);
+    document.getElementById('sugestao-grupo').textContent = `${b.emoji} ${b.bicho} (Grupo ${b.grupo})`;
+    document.ge
