@@ -134,7 +134,7 @@
       <button class="btn-bicho" onclick="gerarMegaSena()">🔄 Gerar Mega Sena</button>
     </div>
 
-    <!-- ✅ BICHO — DATAS DINÂMICAS + 1º-5º COMPLETO + ESTATÍSTICAS CORRIGIDAS -->
+    <!-- ✅ BICHO — DATAS CORRIGIDAS + 8H DA MANHÃ -->
     <div id="bicho" class="aba bicho-body">
       <h2>🐾 JOGO DO BICHO – Análise Estatística</h2>
 
@@ -263,7 +263,7 @@ function montarCelula(milhar, bicho, emoji) {
   return `<span class="celula-milhar">${milhar}</span><span class="celula-bicho">${emoji} ${bicho}</span>`;
 }
 
-// ✅ BANCO DE RESULTADOS — PREENCHER AQUI NOVOS VALORES
+// ✅ BANCO DE RESULTADOS — 18/09 INCLUÍDO, 19/09 APARECE AMANHÃ
 const bancoResultados = {
   '16/09': { 
     PT: { p1:{m:'0073',b:'Pavão',e:'🦚'}, p2:{m:'0156',b:'Cobra',e:'🐍'}, p3:{m:'0289',b:'Galo',e:'🐔'}, p4:{m:'0374',b:'Coelho',e:'🐰'}, p5:{m:'0491',b:'Leão',e:'🦁'} },
@@ -279,10 +279,24 @@ const bancoResultados = {
   }
 };
 
+// ✅ FUNÇÃO DE DATA — SÓ MOSTRA O DIA APÓS AS 8H DA MANHÃ
 function formatarData(data) {
   const d = data.getDate().toString().padStart(2, '0');
   const m = (data.getMonth() + 1).toString().padStart(2, '0');
   return `${d}/${m}`;
+}
+
+// ✅ VERIFICA HORÁRIO — SÓ MOSTRA O DIA APÓS AS 8H
+function podeMostrarData(dataVerificar) {
+  const agora = new Date();
+  const alvo = new Date(dataVerificar);
+  // Se for o dia de hoje, só mostra após as 8h da manhã
+  if (agora.toDateString() === alvo.toDateString()) {
+    const horaAtual = agora.getHours();
+    return horaAtual >= 8;
+  }
+  // Dias anteriores sempre aparecem
+  return true;
 }
 
 function atualizarDataAtualizacao() {
@@ -303,17 +317,36 @@ function carregarTabelaBichos() {
   });
 }
 
-// ✅ DATAS DINÂMICAS + 1º-5º COMPLETO
+// ✅ CARREGA RESULTADOS — RESPEITA O HORÁRIO DAS 8H
 function carregarResultadosBicho() {
   const tbody = document.getElementById('resultados-corpo');
   tbody.innerHTML = '';
   const hoje = new Date();
+  const diasParaMostrar = [];
   
-  for (let i = 2; i >= 0; i--) {
+  // Coleta os últimos 3 dias que já passaram das 8h
+  for (let i = 0; i < 3; i++) {
     const dataAlvo = new Date(hoje);
     dataAlvo.setDate(hoje.getDate() - i);
+    if (podeMostrarData(dataAlvo)) {
+      diasParaMostrar.unshift(dataAlvo); // Adiciona no início para ordem crescente
+    }
+  }
+  
+  // Se não tem 3 dias ainda, completa com os anteriores
+  let i = 1;
+  while (diasParaMostrar.length < 3) {
+    const dataAlvo = new Date(hoje);
+    dataAlvo.setDate(hoje.getDate() - i);
+    if (!diasParaMostrar.some(d => d.toDateString() === dataAlvo.toDateString())) {
+      diasParaMostrar.unshift(dataAlvo);
+    }
+    i++;
+  }
+  
+  // Renderiza cada dia
+  diasParaMostrar.forEach(dataAlvo => {
     const dataStr = formatarData(dataAlvo);
-    
     const d = bancoResultados[dataStr] || {
       PT: {p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}},
       PTN: {p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}}
@@ -342,11 +375,10 @@ function carregarResultadosBicho() {
       <td>${montarCelula(d.PTN.p5.m, d.PTN.p5.b, d.PTN.p5.e)}</td>
     `;
     tbody.appendChild(trPTN);
-  }
+  });
 }
 
 let ultimaAtualizacaoEstat = null;
-// ✅ ESTATÍSTICAS CORRIGIDAS — sem erros!
 function atualizarEstatisticasBicho() {
   const agora = new Date();
   if (ultimaAtualizacaoEstat) {
@@ -361,7 +393,6 @@ function atualizarEstatisticasBicho() {
     sorteios30.push({grupo: g.grupo, dezena: g.dezenas[Math.floor(Math.random() * 4)]});
   }
 
-  // Mais Sorteados
   const cont = {};
   gruposBicho.forEach(g => cont[g.grupo] = 0);
   sorteios30.forEach(s => cont[s.grupo]++);
@@ -371,7 +402,6 @@ function atualizarEstatisticasBicho() {
     return `${b.emoji} ${b.bicho}: ${q}x`;
   }).join('<br>');
 
-  // Em Atraso
   const ult = {};
   gruposBicho.forEach(g => ult[g.grupo] = -1);
   sorteios30.forEach((s, i) => ult[s.grupo] = i);
@@ -384,32 +414,8 @@ function atualizarEstatisticasBicho() {
     return `${b.emoji} ${b.bicho}: ${item.atraso} sorteios`;
   }).join('<br>');
 
-  // Dezenas, Centenas e Milhares
   document.getElementById('dezenas-quentes').textContent = '03 — 12 — 47 — 59';
   document.getElementById('dezenas-frias').textContent = '08 — 25 — 61 — 79';
   document.getElementById('centenas-quentes').textContent = '123 — 456 — 789 — 012';
   document.getElementById('centenas-frias').textContent = '234 — 567 — 890 — 345';
-  document.getElementById('milhares-quentes').textContent = '0123 — 4567 — 8901 — 2345';
-  document.getElementById('milhares-frias').textContent = '3456 — 6789 — 0123 — 5678';
-
-  // Sugestão de Grupo
-  const melhor = top5[0];
-  if (melhor) {
-    const b = gruposBicho.find(x => x.grupo == melhor[0]);
-    document.getElementById('sugestao-grupo').textContent = `${b.emoji} ${b.bicho} (Grupo ${b.grupo})`;
-    document.getElementById('sugestao-dezenas').textContent = b.dezenas.join(' — ');
-  }
-
-  alert('✅ Estatísticas atualizadas!');
-}
-
-// ✅ INICIALIZAÇÃO AUTOMÁTICA
-document.addEventListener('DOMContentLoaded', function() {
-  carregarTabelaBichos();
-  carregarResultadosBicho();
-  atualizarDataAtualizacao();
-});
-</script>
-
-</body>
-</html>
+  doc
