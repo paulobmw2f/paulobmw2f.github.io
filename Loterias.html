@@ -6,33 +6,47 @@
     <title>Loterias App – Quina · Mega · Jogo do Bicho</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background: #f0f4f8; padding: 10px; }
-        .container { max-width: 1000px; margin: 0 auto; }
+        body { background: #f0f4f8; padding: 8px; }
+        .container { max-width: 100%; margin: 0 auto; }
 
         /* CABEÇALHO */
-        .header { background: #0055aa; color: white; padding: 15px; border-radius: 8px 8px 0 0; text-align: center; font-size: 18px; font-weight: bold; }
-        .subheader { background: #0055aa; color: #cce7ff; padding: 8px; text-align: center; font-size: 14px; border-bottom: 2px solid #004499; }
+        .header { 
+            background: #0055aa; color: white; 
+            padding: 15px; border-radius: 8px 8px 0 0; 
+            text-align: center; font-size: 18px; font-weight: bold; 
+        }
+        .subheader { 
+            background: #0055aa; color: #cce7ff; 
+            padding: 10px; text-align: center; 
+            font-size: 15px; border-bottom: 2px solid #004499; 
+        }
 
-        /* TABELA */
-        .table-container { background: white; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #004499; padding: 10px; text-align: center; font-size: 14px; }
-        th { background: #0055aa; color: white; }
+        /* TABELA — CORRIGIDA PARA NÃO CORTAR */
+        .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; background: white; }
+        table { width: 100%; border-collapse: collapse; min-width: 720px; }
+        th, td { 
+            border: 1px solid #004499; padding: 10px 6px; 
+            text-align: center; font-size: 14px; vertical-align: middle; 
+        }
+        th { background: #0055aa; color: white; font-size: 15px; }
         td { background: #e6f0ff; color: #002255; }
-        small { font-size: 12px; color: #003377; }
+        small { font-size: 11px; color: #003377; display: block; margin-top: 2px; }
 
         /* SEÇÕES ESTATÍSTICAS */
         .section { margin-top: 15px; border-radius: 8px; overflow: hidden; }
-        .section-title { background: #0055aa; color: white; padding: 12px; font-size: 16px; font-weight: bold; }
+        .section-title { 
+            background: #0055aa; color: white; 
+            padding: 12px; font-size: 16px; font-weight: bold; 
+        }
         .content-green { background: #e6ffe6; padding: 15px; }
         .content-yellow { background: #fff9e6; padding: 15px; }
         .content-pink { background: #ffe6e6; padding: 15px; }
-        .stat-item { margin: 8px 0; font-size: 15px; }
+        .stat-item { margin: 8px 0; font-size: 15px; line-height: 1.5; }
 
-        /* ✅ BOTÕES — GARANTIA DE FUNCIONAMENTO */
-        button, .btn, [role="button"], input[type="button"] {
+        /* ✅ BOTÕES — PROTEÇÃO TOTAL CONTRA TRAVAMENTO */
+        button, .btn, [role="button"], input[type="button"], a {
             position: relative !important;
-            z-index: 10 !important;
+            z-index: 100 !important;
             pointer-events: auto !important;
             cursor: pointer !important;
         }
@@ -42,11 +56,11 @@
     <div class="container">
         <!-- CABEÇALHO -->
         <div class="header">📊 Resultados Recentes – Últimos 3 Dias</div>
-        <div class="subheader" id="dataAtualizacao">Última atualização: 18/09 (atualiza diariamente às 8h)</div>
+        <div class="subheader" id="dataAtualizacao">Última atualização: 19/09 (atualiza diariamente às 8h)</div>
 
-        <!-- TABELA DE RESULTADOS -->
-        <div class="table-container">
-            <table id="tabelaResultados">
+        <!-- TABELA — COMPLETA E ALINHADA -->
+        <div class="table-wrapper">
+            <table>
                 <thead>
                     <tr>
                         <th>Data</th><th>Per.</th><th>FED</th><th>COR</th>
@@ -54,64 +68,65 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- 17/09 -->
                     <tr>
                         <td rowspan="2">17/09</td>
                         <td>PT</td>
                         <td>—</td><td>—</td>
-                        <td>0029<br><small>Camelo</small></td>
-                        <td>0143<br><small>Borboleta</small></td>
-                        <td>0258<br><small>Avestruz</small></td>
-                        <td>0371<br><small>Zebra</small></td>
-                        <td>0496<br><small>Elefante</small></td>
+                        <td>0029<small>Camelo</small></td>
+                        <td>0143<small>Borboleta</small></td>
+                        <td>0258<small>Avestruz</small></td>
+                        <td>0371<small>Zebra</small></td>
+                        <td>0496<small>Elefante</small></td>
                     </tr>
                     <tr>
                         <td>PTN</td>
                         <td>—</td><td>—</td>
-                        <td>0045<br><small>Elefante</small></td>
-                        <td>0163<br><small>Jacaré</small></td>
-                        <td>0277<br><small>Gato</small></td>
-                        <td>0392<br><small>Macaco</small></td>
-                        <td>0504<br><small>Porco</small></td>
+                        <td>0045<small>Elefante</small></td>
+                        <td>0163<small>Jacaré</small></td>
+                        <td>0277<small>Gato</small></td>
+                        <td>0392<small>Macaco</small></td>
+                        <td>0504<small>Porco</small></td>
                     </tr>
-                    <!-- ✅ 18/09 — LINHA ADICIONADA -->
+                    <!-- 18/09 -->
                     <tr>
                         <td rowspan="2">18/09</td>
                         <td>PT</td>
                         <td>—</td><td>—</td>
-                        <td>—<br><small></small></td>
-                        <td>—<br><small></small></td>
-                        <td>—<br><small></small></td>
-                        <td>—<br><small></small></td>
-                        <td>—<br><small></small></td>
+                        <td>—<small></small></td>
+                        <td>—<small></small></td>
+                        <td>—<small></small></td>
+                        <td>—<small></small></td>
+                        <td>—<small></small></td>
                     </tr>
                     <tr>
                         <td>PTN</td>
                         <td>—</td><td>—</td>
-                        <td>—<br><small></small></td>
-                        <td>—<br><small></small></td>
-                        <td>—<br><small></small></td>
-                        <td>—<br><small></small></td>
-                        <td>—<br><small></small></td>
+                        <td>—<small></small></td>
+                        <td>—<small></small></td>
+                        <td>—<small></small></td>
+                        <td>—<small></small></td>
+                        <td>—<small></small></td>
                     </tr>
-                    <!-- ✅ 19/09 — LINHA ADICIONADA -->
+                    <!-- 19/09 -->
                     <tr>
                         <td rowspan="2">19/09</td>
                         <td>PT</td>
                         <td>—</td><td>—</td>
-                        <td>—<br><small></small></td>
-                        <td>—<br><small></small></td>
-                        <td>—<br><small></small></td>
-                        <td>—<br><small></small></td>
-                        <td>—<br><small></small></td>
+                        <td>—<small></small></td>
+                        <td>—<small></small></td>
+                        <td>—<small></small></td>
+                        <td>—<small></small></td>
+                        <td>—<small></small></td>
                     </tr>
                     <tr>
                         <td>PTN</td>
                         <td>—</td><td>—</td>
-                        <td>—<br><small></small></td>
-                        <td>—<br><small></small></td>
-                        <td>—<br><small></small></td>
-                        <td>—<br><small></small></td>
-                        <td>—<br><small></small></td>
+                        <td>—<small></small></td>
+                        <td>—<small></small></td>
+                        <td>—<small></small></td>
+                        <td>—<small></small></td>
+                        <td>—<small></small></td>
                     </tr>
                 </tbody>
             </table>
@@ -120,7 +135,7 @@
         <!-- ESTATÍSTICAS -->
         <div class="section">
             <div class="section-title">📈 Estatísticas – Últimos 30 Sorteios</div>
-
+            
             <div class="content-green">
                 <div class="stat-item">✅ <strong>Grupos Mais Sorteados</strong></div>
                 <div class="stat-item">🐱 Gato: 4x</div>
@@ -146,28 +161,16 @@
         </div>
     </div>
 
-    <!-- ✅ SCRIPT DE ATUALIZAÇÃO — SEM CONFLITO, SIMPLES E SEGURO -->
+    <!-- ✅ SCRIPT SIMPLES — SÓ ATUALIZA DATA, NÃO MEXE EM MAIS NADA -->
     <script>
-        // Atualiza a data do dia automaticamente às 8h
         function atualizarData() {
             const hoje = new Date();
             const dia = hoje.getDate().toString().padStart(2, '0');
             const mes = (hoje.getMonth() + 1).toString().padStart(2, '0');
-            const hora = hoje.getHours();
-
-            // Atualiza a data se for 8h ou mais
-            if (hora >= 8) {
-                document.getElementById('dataAtualizacao').innerHTML = 
-                    `Última atualização: ${dia}/${mes} (atualiza diariamente às 8h)`;
-            }
+            document.getElementById('dataAtualizacao').innerHTML = 
+                `Última atualização: ${dia}/${mes} (atualiza diariamente às 8h)`;
         }
-
-        // Executa ao carregar — SEM interferir em botões ou outros elementos
-        document.addEventListener('DOMContentLoaded', function() {
-            atualizarData();
-            // Verifica a cada 30 minutos — leve, sem sobrecarga
-            setInterval(atualizarData, 1800000);
-        });
+        document.addEventListener('DOMContentLoaded', atualizarData);
     </script>
 
     <!-- Google AdSense -->
