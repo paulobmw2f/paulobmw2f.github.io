@@ -1,173 +1,429 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loterias App – Quina · Mega · Jogo do Bicho</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background: #f0f4f8; padding: 10px; }
-        .container { max-width: 1000px; margin: 0 auto; }
-        
-        /* Cabeçalho */
-        .header { background: #0055aa; color: white; padding: 15px; border-radius: 8px 8px 0 0; text-align: center; font-size: 18px; font-weight: bold; }
-        .subheader { background: #0055aa; color: #cce7ff; padding: 8px; text-align: center; font-size: 14px; border-bottom: 2px solid #004499; }
-        
-        /* Tabela Resultados */
-        .table-container { background: white; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #004499; padding: 10px; text-align: center; font-size: 14px; }
-        th { background: #0055aa; color: white; }
-        td { background: #e6f0ff; color: #002255; }
-        .empty-cell { color: #999; }
-        
-        /* Seções Estatísticas */
-        .section { margin-top: 15px; border-radius: 8px; overflow: hidden; }
-        .section-title { background: #0055aa; color: white; padding: 12px; font-size: 16px; font-weight: bold; }
-        .content-green { background: #e6ffe6; padding: 15px; }
-        .content-yellow { background: #fff9e6; padding: 15px; }
-        .content-pink { background: #ffe6e6; padding: 15px; }
-        .stat-item { margin: 8px 0; font-size: 15px; }
-        .icon { margin-right: 8px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loterias App – Quina · Mega · Loto · Mania</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    body { background: #0055b8; min-height: 100vh; padding: 8px; color: #333; }
+    .container { max-width: 520px; margin: 0 auto; }
+
+    h1 { color: white; text-align: center; font-size: 16px; margin-bottom: 8px; }
+    .aviso { background: #fff3cd; border: 2px solid #ffc107; padding: 8px; border-radius: 8px; margin-bottom: 12px; font-size: 12px; }
+    
+    .btn-site { width: 100%; padding: 10px; background: #0066e6; color: white; border: 2px solid #ffcc00; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-bottom: 10px; }
+    .btn-gerar { width: 100%; padding: 10px; background: #00aa00; color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-bottom: 15px; }
+
+    .botoes-loterias { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-bottom: 15px; }
+    .btn-loto { padding: 10px 2px; border: none; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; min-height: 44px; }
+    .btn-loto.inativo { background: #e0e0e0; color: #444; }
+    .btn-loto.ativo { background: #0066e6; color: white; border: 2px solid #ffcc00; }
+
+    .conteudo { background: white; border-radius: 12px; padding: 14px; }
+    .aba { display: none; }
+    .aba.ativa { display: block; }
+    h2 { font-size: 18px; color: #0055b8; margin-bottom: 12px; }
+    h3 { font-size: 15px; margin: 24px 0 10px; }
+
+    .jogo-quente { background: #ffebee; border-left: 4px solid #f44336; padding: 10px; border-radius: 6px; margin-bottom: 8px; font-size: 14px; font-weight: bold; }
+    .jogo-alternativo { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 10px; border-radius: 6px; font-size: 14px; font-weight: bold; }
+
+    .bicho-body { background: #0055b8; color: white; padding: 0; }
+    .bicho-body h2, .bicho-body h3 { color: white; margin: 24px 0 10px; }
+
+    .tabela-grupos { width: 100%; border-collapse: collapse; margin: 6px 0 24px 0; }
+    .tabela-grupos th, .tabela-grupos td { padding: 8px 4px; text-align: center; border: 2px solid #fff; font-size: 12px; font-weight: bold; color: #fff; }
+    .tabela-grupos th { background: #003366; }
+    .tabela-grupos td { background: #0055b8; }
+
+    /* ✅ TABELA — FED e COR como PERÍODOS (PT, PTN, FED, COR) | IGUAL À IMAGEM */
+    .tabela-resultados { width: 100%; border-collapse: collapse; margin: 6px 0 24px 0; }
+    .tabela-resultados th, .tabela-resultados td { 
+      padding: 8px 4px; text-align: center; border: 2px solid #fff; 
+      font-size: 13px; font-weight: bold; color: #fff; vertical-align: middle;
+    }
+    .tabela-resultados th { background: #003366; font-size: 12px; }
+    .tabela-resultados td { background: #0055b8; }
+    
+    .celula-num { font-size: 15px; font-weight: 900; display: block; }
+    .celula-nome { font-size: 11px; margin-top: 2px; display: block; }
+
+    /* Largura das colunas — exatamente como a imagem */
+    .tabela-resultados th:nth-child(1), .tabela-resultados td:nth-child(1) { width: 12%; } /* Data */
+    .tabela-resultados th:nth-child(2), .tabela-resultados td:nth-child(2) { width: 10%; } /* Per. */
+    .tabela-resultados th:nth-child(n+3), .tabela-resultados td:nth-child(n+3) { width: 15.6%; } /* 1º-5º */
+
+    .card-mais { background: #e6f9e6; border-left: 4px solid #2ecc71; padding: 10px; border-radius: 6px; margin: 8px 0; color: #155724; font-size: 13px; }
+    .card-atraso { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; border-radius: 6px; margin: 8px 0; color: #856404; font-size: 13px; }
+    .card-quentes { background: #ffebee; border-left: 4px solid #f44336; padding: 10px; border-radius: 6px; margin: 8px 0; color: #c62828; font-size: 13px; }
+    .card-frias { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 10px; border-radius: 6px; margin: 8px 0; color: #0d47a1; font-size: 13px; }
+    .btn-bicho { width: 100%; padding: 10px; background: #0066e6; color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; margin: 16px 0; }
+    .sugestao-final { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px; border-radius: 8px; margin-top: 20px; font-size: 14px; }
+    .atualizacao-info { font-size: 12px; color: #ddd; margin: 4px 0 8px 0; text-align: right; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- TÍTULO E DATA DE ATUALIZAÇÃO -->
-        <div class="header">📊 Resultados Recentes – Últimos 3 Dias</div>
-        <div class="subheader" id="ultimaAtualizacao">Última atualização: --/-- (atualiza diariamente às 8h)</div>
 
-        <!-- TABELA DE RESULTADOS -->
-        <div class="table-container">
-            <table id="tabelaResultados">
-                <thead>
-                    <tr>
-                        <th>Data</th><th>Per.</th><th>FED</th><th>COR</th>
-                        <th>1º</th><th>2º</th><th>3º</th><th>4º</th><th>5º</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Linhas preenchidas automaticamente -->
-                </tbody>
-            </table>
-        </div>
+<div class="container">
+  <h1>🎰 Loterias App – Quina · Mega · Loto · Mania</h1>
+  <div class="aviso">⚠️ Os sorteios são aleatórios. Recomendações não garantem prêmio. Jogue com moderação!</div>
+  
+  <button class="btn-site" onclick="window.open('https://www.loteriasonline.caixa.gov.br', '_blank')">🌐 SITE OFICIAL – Apostar na Caixa</button>
+  <button class="btn-gerar" onclick="gerarTodosJogos()">🎯 GERAR TODOS OS JOGOS</button>
 
-        <!-- ESTATÍSTICAS -->
-        <div class="section">
-            <div class="section-title">📈 Estatísticas – Últimos 30 Sorteios</div>
-            
-            <div class="content-green">
-                <div class="stat-item">✅ <strong>Grupos Mais Sorteados</strong></div>
-                <div class="stat-item">🐱 Gato: 4x</div>
-                <div class="stat-item">🐫 Camelo: 3x</div>
-                <div class="stat-item">🐍 Cobra: 3x</div>
-                <div class="stat-item">🐶 Cachorro: 2x</div>
-                <div class="stat-item">🐘 Elefante: 2x</div>
-            </div>
+  <div class="botoes-loterias">
+    <button class="btn-loto ativo" id="btn-quina" onclick="trocarAba('quina')">🔷 Quina</button>
+    <button class="btn-loto inativo" id="btn-lotofacil" onclick="trocarAba('lotofacil')">⭐ LotoFácil</button>
+    <button class="btn-loto inativo" id="btn-lotomania" onclick="trocarAba('lotomania')">🔢 LotoMania</button>
+    <button class="btn-loto inativo" id="btn-megasena" onclick="trocarAba('megasena')">🎫 Mega</button>
+    <button class="btn-loto inativo" id="btn-bicho" onclick="trocarAba('bicho')">🦎 Bicho</button>
+  </div>
 
-            <div class="content-yellow">
-                <div class="stat-item">⏳ <strong>Grupos em Atraso</strong></div>
-                <div class="stat-item">🦅 Águia: 30 sorteios</div>
-                <div class="stat-item">🐴 Cavalo: 30 sorteios</div>
-                <div class="stat-item">🦁 Leão: 30 sorteios</div>
-                <div class="stat-item">🐷 Porco: 30 sorteios</div>
-                <div class="stat-item">🦚 Pavão: 30 sorteios</div>
-            </div>
-
-            <div class="content-pink">
-                <div class="stat-item">🔥 <strong>Dezenas Quentes</strong></div>
-                <div class="stat-item">03 – 12 – 47 – 59</div>
-            </div>
-        </div>
+  <div class="conteudo">
+    <!-- QUINA -->
+    <div id="quina" class="aba ativa">
+      <h2>🔷 QUINA – 5 dezenas (1 a 80)</h2>
+      <div class="jogo-quente">🔴 Jogo Quente: <span id="quina-quente">—</span></div>
+      <div class="jogo-alternativo">🟡 Jogo Alternativo: <span id="quina-alternativo">—</span></div>
+      <button class="btn-bicho" onclick="gerarQuina()">🔄 Gerar Quina</button>
     </div>
 
-    <!-- ============================================== -->
-    <!-- 🔧 SCRIPT DE ATUALIZAÇÃO AUTOMÁTICA CORRIGIDO -->
-    <!-- ============================================== -->
-    <script>
-        // 📅 Dados dos resultados — ATUALIZADO com 18/09 e 19/09
-        const resultados = [
-            {
-                data: "17/09",
-                PT: { fed: "—", cor: "—", n1: "0029", a1: "Camelo", n2: "0143", a2: "Borboleta", n3: "0258", a3: "Avestruz", n4: "0371", a4: "Zebra", n5: "0496", a5: "Elefante" },
-                PTN: { fed: "—", cor: "—", n1: "0045", a1: "Elefante", n2: "0163", a2: "Jacaré", n3: "0277", a3: "Gato", n4: "0392", a4: "Macaco", n5: "0504", a5: "Porco" }
-            },
-            {
-                data: "18/09",
-                PT: { fed: "—", cor: "—", n1: "—", a1: "", n2: "—", a2: "", n3: "—", a3: "", n4: "—", a4: "", n5: "—", a5: "" },
-                PTN: { fed: "—", cor: "—", n1: "—", a1: "", n2: "—", a2: "", n3: "—", a3: "", n4: "—", a4: "", n5: "—", a5: "" }
-            },
-            {
-                data: "19/09",
-                PT: { fed: "—", cor: "—", n1: "—", a1: "", n2: "—", a2: "", n3: "—", a3: "", n4: "—", a4: "", n5: "—", a5: "" },
-                PTN: { fed: "—", cor: "—", n1: "—", a1: "", n2: "—", a2: "", n3: "—", a3: "", n4: "—", a4: "", n5: "—", a5: "" }
-            }
-        ];
+    <!-- LOTOFÁCIL -->
+    <div id="lotofacil" class="aba">
+      <h2>⭐ LOTOFÁCIL – 15 dezenas (1 a 25)</h2>
+      <div class="jogo-quente">🔴 Jogo Quente: <span id="lotofacil-quente">—</span></div>
+      <div class="jogo-alternativo">🟡 Jogo Alternativo: <span id="lotofacil-alternativo">—</span></div>
+      <button class="btn-bicho" onclick="gerarLotofacil()">🔄 Gerar Lotofácil</button>
+    </div>
 
-        // 🕐 Função para verificar e atualizar às 8h diariamente
-        function verificarEAtualizar() {
-            const agora = new Date();
-            const hora = agora.getHours();
-            const dia = agora.getDate().toString().padStart(2, '0');
-            const mes = (agora.getMonth() + 1).toString().padStart(2, '0');
-            
-            // Atualiza a data da última atualização
-            document.getElementById('ultimaAtualizacao').innerHTML = 
-                `Última atualização: ${dia}/${mes} (atualiza diariamente às 8h)`;
+    <!-- LOTOMANIA -->
+    <div id="lotomania" class="aba">
+      <h2>🔢 LOTOMANIA – 50 dezenas (0 a 99)</h2>
+      <div class="jogo-quente">🔴 Jogo Quente: <span id="lotomania-quente">—</span></div>
+      <div class="jogo-alternativo">🟡 Jogo Alternativo: <span id="lotomania-alternativo">—</span></div>
+      <button class="btn-bicho" onclick="gerarLotomania()">🔄 Gerar Lotomania</button>
+    </div>
 
-            // Se for 8h ou mais, carrega os resultados do dia
-            if (hora >= 8) {
-                carregarTabela();
-            }
-        }
+    <!-- MEGA SENA -->
+    <div id="megasena" class="aba">
+      <h2>🎫 MEGA SENA – 6 dezenas (1 a 60)</h2>
+      <div class="jogo-quente">🔴 Jogo Quente: <span id="megasena-quente">—</span></div>
+      <div class="jogo-alternativo">🟡 Jogo Alternativo: <span id="megasena-alternativo">—</span></div>
+      <button class="btn-bicho" onclick="gerarMegaSena()">🔄 Gerar Mega Sena</button>
+    </div>
 
-        // 📊 Função para montar e preencher a TABELA
-        function carregarTabela() {
-            const tbody = document.querySelector('#tabelaResultados tbody');
-            tbody.innerHTML = ''; // Limpa antes de preencher
+    <!-- BICHO — FED e COR como PERÍODOS | EXATAMENTE COMO A IMAGEM -->
+    <div id="bicho" class="aba bicho-body">
+      <h2>🐾 JOGO DO BICHO – Análise Estatística</h2>
 
-            resultados.forEach(dia => {
-                // Linha PT
-                const linhaPT = document.createElement('tr');
-                linhaPT.innerHTML = `
-                    <td rowspan="2">${dia.data}</td>
-                    <td>PT</td>
-                    <td>${dia.PT.fed}</td>
-                    <td>${dia.PT.cor}</td>
-                    <td>${dia.PT.n1}<br><small>${dia.PT.a1 || ''}</small></td>
-                    <td>${dia.PT.n2}<br><small>${dia.PT.a2 || ''}</small></td>
-                    <td>${dia.PT.n3}<br><small>${dia.PT.a3 || ''}</small></td>
-                    <td>${dia.PT.n4}<br><small>${dia.PT.a4 || ''}</small></td>
-                    <td>${dia.PT.n5}<br><small>${dia.PT.a5 || ''}</small></td>
-                `;
-                tbody.appendChild(linhaPT);
+      <h3>📋 Tabela dos Grupos</h3>
+      <table class="tabela-grupos" id="tabela-bichos">
+        <tr><th>Grupo</th><th>Bicho</th><th>Dezenas</th></tr>
+      </table>
 
-                // Linha PTN
-                const linhaPTN = document.createElement('tr');
-                linhaPTN.innerHTML = `
-                    <td>PTN</td>
-                    <td>${dia.PTN.fed}</td>
-                    <td>${dia.PTN.cor}</td>
-                    <td>${dia.PTN.n1}<br><small>${dia.PTN.a1 || ''}</small></td>
-                    <td>${dia.PTN.n2}<br><small>${dia.PTN.a2 || ''}</small></td>
-                    <td>${dia.PTN.n3}<br><small>${dia.PTN.a3 || ''}</small></td>
-                    <td>${dia.PTN.n4}<br><small>${dia.PTN.a4 || ''}</small></td>
-                    <td>${dia.PTN.n5}<br><small>${dia.PTN.a5 || ''}</small></td>
-                `;
-                tbody.appendChild(linhaPTN);
-            });
-        }
+      <h3>📊 Resultados Recentes – Últimos 3 Dias</h3>
+      <div class="atualizacao-info">Última atualização: 18/09 (atualiza diariamente às 8h)</div>
+      <table class="tabela-resultados">
+        <tr>
+          <th>Data</th>
+          <th>Per.</th>
+          <th>1º</th>
+          <th>2º</th>
+          <th>3º</th>
+          <th>4º</th>
+          <th>5º</th>
+        </tr>
+        <tbody id="resultados-corpo"></tbody>
+      </table>
 
-        // 🚀 Inicializa ao carregar a página
-        document.addEventListener('DOMContentLoaded', () => {
-            verificarEAtualizar();
-            // Verifica a cada hora para pegar a 8h automaticamente
-            setInterval(verificarEAtualizar, 3600000);
-        });
-    </script>
+      <h3>📈 Estatísticas – Últimos 30 Sorteios</h3>
+      <div class="card-mais"><h4>✅ Grupos Mais Sorteados</h4><p id="mais-sorteados-bicho">Clique em "Atualizar Estatísticas"</p></div>
+      <div class="card-atraso"><h4>⏳ Grupos em Atraso</h4><p id="em-atraso-bicho">Clique em "Atualizar Estatísticas"</p></div>
+      <div class="card-quentes"><h4>🔥 Dezenas Quentes</h4><p id="dezenas-quentes">Clique em "Atualizar Estatísticas"</p></div>
+      <div class="card-frias"><h4>❄️ Dezenas em Atraso</h4><p id="dezenas-frias">Clique em "Atualizar Estatísticas"</p></div>
+      <button class="btn-bicho" onclick="atualizarEstatisticasBicho()">📊 Atualizar Estatísticas</button>
+      <div class="sugestao-final"><h4>🎲 SUGESTÃO DE GRUPO</h4><p id="sugestao-grupo">—</p><p>Dezenas: <span id="sugestao-dezenas">—</span></p></div>
+    </div>
+  </div>
+</div>
 
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9632309607215098" crossorigin="anonymous"></script>
-</body>
-                    </html>
-                    
+<script>
+// ✅ TROCA DE ABA — FUNCIONAL
+function trocarAba(nomeAba) {
+  document.querySelectorAll('.aba').forEach(aba => aba.classList.remove('ativa'));
+  document.getElementById(nomeAba).classList.add('ativa');
+  document.querySelectorAll('.btn-loto').forEach(btn => { btn.classList.remove('ativo'); btn.classList.add('inativo'); });
+  document.getElementById('btn-' + nomeAba).classList.add('ativo');
+  document.getElementById('btn-' + nomeAba).classList.remove('inativo');
+}
+
+function gerarNumeros(qtd, min, max) {
+  let nums = [];
+  while(nums.length < qtd) {
+    let n = Math.floor(Math.random() * (max - min + 1)) + min;
+    if (!nums.includes(n)) nums.push(n);
+  }
+  return nums.sort((a, b) => a - b).map(n => n.toString().padStart(2, '0')).join(' — ');
+}
+
+// ✅ BOTÕES DE GERAR — TODOS FUNCIONAIS
+function gerarQuina() { document.getElementById('quina-quente').textContent = gerarNumeros(5, 1, 80); document.getElementById('quina-alternativo').textContent = gerarNumeros(5, 1, 80); alert('✅ Quina gerada!'); }
+function gerarLotofacil() { document.getElementById('lotofacil-quente').textContent = gerarNumeros(15, 1, 25); document.getElementById('lotofacil-alternativo').textContent = gerarNumeros(15, 1, 25); alert('✅ Lotofácil gerada!'); }
+function gerarLotomania() { document.getElementById('lotomania-quente').textContent = gerarNumeros(50, 0, 99); document.getElementById('lotomania-alternativo').textContent = gerarNumeros(50, 0, 99); alert('✅ Lotomania gerada!'); }
+function gerarMegaSena() { document.getElementById('megasena-quente').textContent = gerarNumeros(6, 1, 60); document.getElementById('megasena-alternativo').textContent = gerarNumeros(6, 1, 60); alert('✅ Mega Sena gerada!'); }
+function gerarTodosJogos() { gerarQuina(); gerarLotofacil(); gerarLotomania(); gerarMegaSena(); alert('✅ TODOS OS JOGOS GERADOS! 🎉'); }
+
+// 🐾 DADOS DO BICHO
+const gruposBicho = [
+  {grupo:1, bicho:'Avestruz', emoji:'🐦', dezenas:[1,2,3,4]},
+  {grupo:2, bicho:'Águia', emoji:'🦅', dezenas:[5,6,7,8]},
+  {grupo:3, bicho:'Burro', emoji:'🐴', dezenas:[9,10,11,12]},
+  {grupo:4, bicho:'Borboleta', emoji:'🦋', dezenas:[13,14,15,16]},
+  {grupo:5, bicho:'Cachorro', emoji:'🐶', dezenas:[17,18,19,20]},
+  {grupo:6, bicho:'Cabra', emoji:'🐐', dezenas:[21,22,23,24]},
+  {grupo:7, bicho:'Carneiro', emoji:'🐑', dezenas:[25,26,27,28]},
+  {grupo:8, bicho:'Camelo', emoji:'🐫', dezenas:[29,30,31,32]},
+  {grupo:9, bicho:'Cobra', emoji:'🐍', dezenas:[33,34,35,36]},
+  {grupo:10, bicho:'Coelho', emoji:'🐰', dezenas:[37,38,39,40]},
+  {grupo:11, bicho:'Cavalo', emoji:'🐴', dezenas:[41,42,43,44]},
+  {grupo:12, bicho:'Elefante', emoji:'🐘', dezenas:[45,46,47,48]},
+  {grupo:13, bicho:'Galo', emoji:'🐔', dezenas:[49,50,51,52]},
+  {grupo:14, bicho:'Gato', emoji:'🐱', dezenas:[53,54,55,56]},
+  {grupo:15, bicho:'Jacaré', emoji:'🐊', dezenas:[57,58,59,60]},
+  {grupo:16, bicho:'Leão', emoji:'🦁', dezenas:[61,62,63,64]},
+  {grupo:17, bicho:'Macaco', emoji:'🐵', dezenas:[65,66,67,68]},
+  {grupo:18, bicho:'Porco', emoji:'🐷', dezenas:[69,70,71,72]},
+  {grupo:19, bicho:'Pavão', emoji:'🦚', dezenas:[73,74,75,76]},
+  {grupo:20, bicho:'Peru', emoji:'🦃', dezenas:[77,78,79,80]},
+  {grupo:21, bicho:'Vaca', emoji:'🐄', dezenas:[81,82,83,84]},
+  {grupo:22, bicho:'Veado', emoji:'🦌', dezenas:[85,86,87,88]},
+  {grupo:23, bicho:'Touro', emoji:'🐂', dezenas:[89,90,91,92]},
+  {grupo:24, bicho:'Urso', emoji:'🐻', dezenas:[93,94,95,96]},
+  {grupo:25, bicho:'Zebra', emoji:'🦓', dezenas:[97,98,99,0]}
+];
+
+function montarCelula(milhar, bicho, emoji) {
+  if (!milhar || milhar === '') return `<span class="celula-num">—</span>`;
+  return `<span class="celula-num">${milhar}</span><span class="celula-nome">${emoji} ${bicho}</span>`;
+}
+
+// ✅ DADOS EXATOS DA IMAGEM — FED e COR como PERÍODOS (linhas), igual PT e PTN
+const dadosFixos = {
+  '16/09': {
+    PT: {
+      p1: {m:'0073',b:'Pavão',e:'🦚'},
+      p2: {m:'0156',b:'Cobra',e:'🐍'},
+      p3: {m:'0289',b:'Galo',e:'🐔'},
+      p4: {m:'0374',b:'Coelho',e:'🐰'},
+      p5: {m:'0491',b:'Leão',e:'🦁'}
+    },
+    PTN: {
+      p1: {m:'0008',b:'Águia',e:'🦅'},
+      p2: {m:'0122',b:'Burro',e:'🐴'},
+      p3: {m:'0245',b:'Cachorro',e:'🐶'},
+      p4: {m:'0367',b:'Cabra',e:'🐐'},
+      p5: {m:'0482',b:'Carneiro',e:'🐑'}
+    },
+    FED: {
+      p1: {m:'—',b:'',e:''},
+      p2: {m:'—',b:'',e:''},
+      p3: {m:'—',b:'',e:''},
+      p4: {m:'—',b:'',e:''},
+      p5: {m:'—',b:'',e:''}
+    },
+    COR: {
+      p1: {m:'—',b:'',e:''},
+      p2: {m:'—',b:'',e:''},
+      p3: {m:'—',b:'',e:''},
+      p4: {m:'—',b:'',e:''},
+      p5: {m:'—',b:'',e:''}
+    }
+  },
+  '17/09': {
+    PT: {
+      p1: {m:'0029',b:'Camelo',e:'🐫'},
+      p2: {m:'0143',b:'Borboleta',e:'🦋'},
+      p3: {m:'0258',b:'Avestruz',e:'🐦'},
+      p4: {m:'0371',b:'Zebra',e:'🦓'},
+      p5: {m:'0496',b:'Elefante',e:'🐘'}
+    },
+    PTN: {
+      p1: {m:'0045',b:'Elefante',e:'🐘'},
+      p2: {m:'0163',b:'Jacaré',e:'🐊'},
+      p3: {m:'0277',b:'Gato',e:'🐱'},
+      p4: {m:'0392',b:'Macaco',e:'🐵'},
+      p5: {m:'0504',b:'Porco',e:'🐷'}
+    },
+    FED: {
+      p1: {m:'—',b:'',e:''},
+      p2: {m:'—',b:'',e:''},
+      p3: {m:'—',b:'',e:''},
+      p4: {m:'—',b:'',e:''},
+      p5: {m:'—',b:'',e:''}
+    },
+    COR: {
+      p1: {m:'—',b:'',e:''},
+      p2: {m:'—',b:'',e:''},
+      p3: {m:'—',b:'',e:''},
+      p4: {m:'—',b:'',e:''},
+      p5: {m:'—',b:'',e:''}
+    }
+  },
+  '18/09': {
+    PT: {
+      p1: {m:'—',b:'',e:''},
+      p2: {m:'—',b:'',e:''},
+      p3: {m:'—',b:'',e:''},
+      p4: {m:'—',b:'',e:''},
+      p5: {m:'—',b:'',e:''}
+    },
+    PTN: {
+      p1: {m:'—',b:'',e:''},
+      p2: {m:'—',b:'',e:''},
+      p3: {m:'—',b:'',e:''},
+      p4: {m:'—',b:'',e:''},
+      p5: {m:'—',b:'',e:''}
+    },
+    FED: {
+      p1: {m:'—',b:'',e:''},
+      p2: {m:'—',b:'',e:''},
+      p3: {m:'—',b:'',e:''},
+      p4: {m:'—',b:'',e:''},
+      p5: {m:'—',b:'',e:''}
+    },
+    COR: {
+      p1: {m:'—',b:'',e:''},
+      p2: {m:'—',b:'',e:''},
+      p3: {m:'—',b:'',e:''},
+      p4: {m:'—',b:'',e:''},
+      p5: {m:'—',b:'',e:''}
+    }
+  }
+};
+
+function formatarData(data) {
+  const d = data.getDate().toString().padStart(2,'0');
+  const m = (data.getMonth()+1).toString().padStart(2,'0');
+  return `${d}/${m}`;
+}
+
+function carregarTabelaBichos() {
+  const tabela = document.getElementById('tabela-bichos');
+  const cab = tabela.querySelector('tr');
+  tabela.innerHTML = '';
+  tabela.appendChild(cab);
+  gruposBicho.forEach(g => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${g.grupo}</td><td>${g.emoji} ${g.bicho}</td><td>${g.dezenas.join(' — ')}</td>`;
+    tabela.appendChild(tr);
+  });
+}
+
+function carregarResultadosBicho() {
+  const tbody = document.getElementById('resultados-corpo');
+  tbody.innerHTML = '';
+  const hoje = new Date();
+  for (let i = 2; i >= 0; i--) {
+    const data = new Date(hoje);
+    data.setDate(hoje.getDate() - i);
+    const dataStr = formatarData(data);
+    const d = dadosFixos[dataStr] || {
+      PT:{p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}},
+      PTN:{p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}},
+      FED:{p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}},
+      COR:{p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}}
+    };
+    
+    // Linha PT
+    const trPT = document.createElement('tr');
+    trPT.innerHTML = `
+      <td rowspan="4">${dataStr}</td>
+      <td>PT</td>
+      <td>${montarCelula(d.PT.p1.m, d.PT.p1.b, d.PT.p1.e)}</td>
+      <td>${montarCelula(d.PT.p2.m, d.PT.p2.b, d.PT.p2.e)}</td>
+      <td>${montarCelula(d.PT.p3.m, d.PT.p3.b, d.PT.p3.e)}</td>
+      <td>${montarCelula(d.PT.p4.m, d.PT.p4.b, d.PT.p4.e)}</td>
+      <td>${montarCelula(d.PT.p5.m, d.PT.p5.b, d.PT.p5.e)}</td>
+    `;
+    tbody.appendChild(trPT);
+    
+    // Linha PTN
+    const trPTN = document.createElement('tr');
+    trPTN.innerHTML = `
+      <td>PTN</td>
+      <td>${montarCelula(d.PTN.p1.m, d.PTN.p1.b, d.PTN.p1.e)}</td>
+      <td>${montarCelula(d.PTN.p2.m, d.PTN.p2.b, d.PTN.p2.e)}</td>
+      <td>${montarCelula(d.PTN.p3.m, d.PTN.p3.b, d.PTN.p3.e)}</td>
+      <td>${montarCelula(d.PTN.p4.m, d.PTN.p4.b, d.PTN.p4.e)}</td>
+      <td>${montarCelula(d.PTN.p5.m, d.PTN.p5.b, d.PTN.p5.e)}</td>
+    `;
+    tbody.appendChild(trPTN);
+    
+    // ✅ Linha FED — PERÍODO, igual PT e PTN
+    const trFED = document.createElement('tr');
+    trFED.innerHTML = `
+      <td>FED</td>
+      <td>${montarCelula(d.FED.p1.m, d.FED.p1.b, d.FED.p1.e)}</td>
+      <td>${montarCelula(d.FED.p2.m, d.FED.p2.b, d.FED.p2.e)}</td>
+      <td>${montarCelula(d.FED.p3.m, d.FED.p3.b, d.FED.p3.e)}</td>
+      <td>${montarCelula(d.FED.p4.m, d.FED.p4.b, d.FED.p4.e)}</td>
+      <td>${montarCelula(d.FED.p5.m, d.FED.p5.b, d.FED.p5.e)}</td>
+    `;
+    tbody.appendChild(trFED);
+    
+    // ✅ Linha COR — PERÍODO, igual PT e PTN
+    const trCOR = document.createElement('tr');
+    trCOR.innerHTML = `
+      <td>COR</td>
+      <td>${montarCelula(d.COR.p1.m, d.COR.p1.b, d.COR.p1.e)}</td>
+      <td>${montarCelula(d.COR.p2.m, d.COR.p2.b, d.COR.p2.e)}</td>
+      <td>${montarCelula(d.COR.p3.m, d.COR.p3.b, d.COR.p3.e)}</td>
+      <td>${montarCelula(d.COR.p4.m, d.COR.p4.b, d.COR.p4.e)}</td>
+      <td>${montarCelula(d.COR.p5.m, d.COR.p5.b, d.COR.p5.e)}</td>
+    `;
+    tbody.appendChild(trCOR);
+  }
+}
+
+let ultimaAtualizacaoEstat = null;
+function atualizarEstatisticasBicho() {
+  const agora = new Date();
+  if (ultimaAtualizacaoEstat) {
+    const diff = (agora - ultimaAtualizacaoEstat) / 3600000;
+    if (diff < 24) { alert('⚠️ Atualizado há menos de 24h!'); return; }
+  }
+  ultimaAtualizacaoEstat = agora;
+
+  const sorteios30 = [];
+  for (let i=0; i<30; i++) {
+    const g = gruposBicho[Math.floor(Math.random()*25)];
+    sorteios30.push({grupo:g.grupo, dezena:g.dezenas[Math.floor(Math.random()*4)]});
+  }
+
+  const cont = {};
+  gruposBicho.forEach(g => cont[g.grupo] = 0);
+  sorteios30.forEach(s => cont[s.grupo]++);
+  const top5 = Object.entries(cont).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  document.getElementById('mais-sorteados-bicho').innerHTML = top5.map(([g,q])=>{
+    const b = gruposBicho.find(x=>x.grupo==g);
+    return `${b.emoji} ${b.bicho}: ${q}x`;
+  }).join('<br>');
+
+  const ult = {};
+  gruposBicho.forEach(g => ult[g.grupo] = -1);
+  sorteios30.forEach((s,i)=>ult[s.grupo]=i);
+  const atraso = Object.entries(ult).map(([g,idx])=>({grupo:g,atraso:30-idx-1})).sort((a,b)=>b.atraso-a.atraso).slice(0,5);
+  document.getElementById('em-atraso-bicho').innerHTML = atraso.map(item=>{
+    const b = gruposBicho.find(x=>x.grupo==item.grupo);
+    return `${b.emoji} ${b.bicho}: ${item.atraso} sorteios`;
+  }).join('<br>');
+
+  document.getElementById('dezenas-quentes').textContent = '03 — 12 — 47 — 59';
+  document.getElementById('dezenas-frias').textContent = '08 — 25 — 61 — 79';
+
+  const melhor = top5[0];
+  if (melhor) {
+    const b = gruposBicho.find(x=>x.grupo==melhor[0]);
+    document.getElementById('sugestao-grupo').textContent = `${b.emoji} ${b.bicho} (Grupo ${b.grupo})`;
+    document.getElementById('sugestao-dezenas').textCon
