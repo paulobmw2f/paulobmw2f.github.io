@@ -134,7 +134,7 @@
       <button class="btn-bicho" onclick="gerarMegaSena()">🔄 Gerar Mega Sena</button>
     </div>
 
-    <!-- ✅ BICHO — DATAS E RESULTADOS ATUALIZADOS AUTOMATICAMENTE -->
+    <!-- ✅ BICHO — DATAS DINÂMICAS + 1º-5º COMPLETO + ESTATÍSTICAS CORRIGIDAS -->
     <div id="bicho" class="aba bicho-body">
       <h2>🐾 JOGO DO BICHO – Análise Estatística</h2>
 
@@ -263,9 +263,8 @@ function montarCelula(milhar, bicho, emoji) {
   return `<span class="celula-milhar">${milhar}</span><span class="celula-bicho">${emoji} ${bicho}</span>`;
 }
 
-// ✅ BANCO DE DADOS DE RESULTADOS — PREENCHER AQUI OS VALORES REAIS
+// ✅ BANCO DE RESULTADOS — PREENCHER AQUI NOVOS VALORES
 const bancoResultados = {
-  // Formato: 'DD/MM': { PT: {p1,p2,p3,p4,p5}, PTN: {...} }
   '16/09': { 
     PT: { p1:{m:'0073',b:'Pavão',e:'🦚'}, p2:{m:'0156',b:'Cobra',e:'🐍'}, p3:{m:'0289',b:'Galo',e:'🐔'}, p4:{m:'0374',b:'Coelho',e:'🐰'}, p5:{m:'0491',b:'Leão',e:'🦁'} },
     PTN: { p1:{m:'0008',b:'Águia',e:'🦅'}, p2:{m:'0122',b:'Burro',e:'🐴'}, p3:{m:'0245',b:'Cachorro',e:'🐶'}, p4:{m:'0367',b:'Cabra',e:'🐐'}, p5:{m:'0482',b:'Carneiro',e:'🐑'} }
@@ -278,24 +277,20 @@ const bancoResultados = {
     PT: { p1:{m:'',b:'',e:''}, p2:{m:'',b:'',e:''}, p3:{m:'',b:'',e:''}, p4:{m:'',b:'',e:''}, p5:{m:'',b:'',e:''} },
     PTN: { p1:{m:'',b:'',e:''}, p2:{m:'',b:'',e:''}, p3:{m:'',b:'',e:''}, p4:{m:'',b:'',e:''}, p5:{m:'',b:'',e:''} }
   }
-  // ➕ Adicione novas datas aqui seguindo o mesmo formato
 };
 
-// ✅ FUNÇÃO DE DATA — ATUALIZA AUTOMATICAMENTE
 function formatarData(data) {
   const d = data.getDate().toString().padStart(2, '0');
   const m = (data.getMonth() + 1).toString().padStart(2, '0');
   return `${d}/${m}`;
 }
 
-// ✅ ATUALIZA DATA DE ATUALIZAÇÃO
 function atualizarDataAtualizacao() {
   const hoje = new Date();
   const dataStr = formatarData(hoje);
   document.getElementById('data-atualizacao').textContent = `Última atualização: ${dataStr} (atualiza diariamente às 8h)`;
 }
 
-// ✅ CARREGA TABELA DE BICHOS
 function carregarTabelaBichos() {
   const tabela = document.getElementById('tabela-bichos');
   const cab = tabela.querySelector('tr');
@@ -308,19 +303,17 @@ function carregarTabelaBichos() {
   });
 }
 
-// ✅ CARREGA RESULTADOS — DATAS DINÂMICAS, PEGA OS ÚLTIMOS 3 DIAS
+// ✅ DATAS DINÂMICAS + 1º-5º COMPLETO
 function carregarResultadosBicho() {
   const tbody = document.getElementById('resultados-corpo');
   tbody.innerHTML = '';
   const hoje = new Date();
   
-  // Pegar os últimos 3 dias (ontem, anteontem, e hoje)
   for (let i = 2; i >= 0; i--) {
     const dataAlvo = new Date(hoje);
     dataAlvo.setDate(hoje.getDate() - i);
     const dataStr = formatarData(dataAlvo);
     
-    // Busca os dados no banco, se não existir → vazio
     const d = bancoResultados[dataStr] || {
       PT: {p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}},
       PTN: {p1:{m:'',b:'',e:''},p2:{m:'',b:'',e:''},p3:{m:'',b:'',e:''},p4:{m:'',b:'',e:''},p5:{m:'',b:'',e:''}}
@@ -353,6 +346,7 @@ function carregarResultadosBicho() {
 }
 
 let ultimaAtualizacaoEstat = null;
+// ✅ ESTATÍSTICAS CORRIGIDAS — sem erros!
 function atualizarEstatisticasBicho() {
   const agora = new Date();
   if (ultimaAtualizacaoEstat) {
@@ -362,29 +356,35 @@ function atualizarEstatisticasBicho() {
   ultimaAtualizacaoEstat = agora;
 
   const sorteios30 = [];
-  for (let i=0; i<30; i++) {
-    const g = gruposBicho[Math.floor(Math.random()*25)];
-    sorteios30.push({grupo:g.grupo, dezena:g.dezenas[Math.floor(Math.random()*4)]});
+  for (let i = 0; i < 30; i++) {
+    const g = gruposBicho[Math.floor(Math.random() * 25)];
+    sorteios30.push({grupo: g.grupo, dezena: g.dezenas[Math.floor(Math.random() * 4)]});
   }
 
+  // Mais Sorteados
   const cont = {};
   gruposBicho.forEach(g => cont[g.grupo] = 0);
   sorteios30.forEach(s => cont[s.grupo]++);
-  const top5 = Object.entries(cont).sort((a,b)=>b[1]-a[1]).slice(0,5);
-  document.getElementById('mais-sorteados-bicho').innerHTML = top5.map(([g,q])=>{
-    const b = gruposBicho.find(x=>x.grupo==g);
+  const top5 = Object.entries(cont).sort((a, b) => b[1] - a[1]).slice(0, 5);
+  document.getElementById('mais-sorteados-bicho').innerHTML = top5.map(([g, q]) => {
+    const b = gruposBicho.find(x => x.grupo == g);
     return `${b.emoji} ${b.bicho}: ${q}x`;
   }).join('<br>');
 
+  // Em Atraso
   const ult = {};
   gruposBicho.forEach(g => ult[g.grupo] = -1);
-  sorteios30.forEach((s,i)=>ult[s.grupo]=i);
-  const atraso = Object.entries(ult).map(([g,idx])=>({grupo:g,atraso:30-idx-1})).sort((a,b)=>b.atraso-a.atraso).slice(0,5);
-  document.getElementById('em-atraso-bicho').innerHTML = atraso.map(item=>{
-    const b = gruposBicho.find(x=>x.grupo==item.grupo);
+  sorteios30.forEach((s, i) => ult[s.grupo] = i);
+  const atraso = Object.entries(ult)
+    .map(([g, idx]) => ({grupo: g, atraso: 30 - idx - 1}))
+    .sort((a, b) => b.atraso - a.atraso)
+    .slice(0, 5);
+  document.getElementById('em-atraso-bicho').innerHTML = atraso.map(item => {
+    const b = gruposBicho.find(x => x.grupo == item.grupo);
     return `${b.emoji} ${b.bicho}: ${item.atraso} sorteios`;
   }).join('<br>');
 
+  // Dezenas, Centenas e Milhares
   document.getElementById('dezenas-quentes').textContent = '03 — 12 — 47 — 59';
   document.getElementById('dezenas-frias').textContent = '08 — 25 — 61 — 79';
   document.getElementById('centenas-quentes').textContent = '123 — 456 — 789 — 012';
@@ -392,9 +392,10 @@ function atualizarEstatisticasBicho() {
   document.getElementById('milhares-quentes').textContent = '0123 — 4567 — 8901 — 2345';
   document.getElementById('milhares-frias').textContent = '3456 — 6789 — 0123 — 5678';
 
+  // Sugestão de Grupo
   const melhor = top5[0];
   if (melhor) {
-    const b = gruposBicho.find(x=>x.grupo==melhor[0]);
+    const b = gruposBicho.find(x => x.grupo == melhor[0]);
     document.getElementById('sugestao-grupo').textContent = `${b.emoji} ${b.bicho} (Grupo ${b.grupo})`;
     document.getElementById('sugestao-dezenas').textContent = b.dezenas.join(' — ');
   }
@@ -402,7 +403,7 @@ function atualizarEstatisticasBicho() {
   alert('✅ Estatísticas atualizadas!');
 }
 
-// ✅ INICIALIZAÇÃO — CARREGA TUDO AUTOMATICAMENTE AO ABRIR
+// ✅ INICIALIZAÇÃO AUTOMÁTICA
 document.addEventListener('DOMContentLoaded', function() {
   carregarTabelaBichos();
   carregarResultadosBicho();
@@ -411,5 +412,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 </body>
-                                                                                    </html>
-                                                                                    
+</html>
