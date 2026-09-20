@@ -83,7 +83,7 @@
     .sugestao-final { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px; border-radius: 8px; margin-top: 20px; font-size: 14px; }
     .sugestao-final h4 { font-size: 15px; margin-bottom: 6px; }
     .sugestao-final p { font-size: 14px; font-weight: bold; margin-top: 2px; }
-    .atualizacao-info { font-size: 11px; color: #ddd; margin: 4px 0 8px 0; text-align: right; }
+    .atualizacao-info { font-size: 11px; color: #666; margin: 4px 0 8px 0; text-align: right; }
     .rodape { margin-top: 20px; padding: 12px; background: #f5f5f5; border-radius: 8px; font-size: 11px; color: #666; line-height: 1.8; }
     .rodape-bicho { background: rgba(0,0,0,0.2); color: #eee; }
   </style>
@@ -229,7 +229,7 @@
 </div>
 
 <script>
-// ✅ FUNÇÃO DE TROCA DE ABA — CORRIGIDA
+// ✅ FUNÇÃO DE TROCA DE ABA — CORRIGIDA E GARANTIDA
 function trocarAba(nomeAba) {
   document.querySelectorAll('.aba').forEach(aba => aba.classList.remove('ativa'));
   document.getElementById(nomeAba).classList.add('ativa');
@@ -348,5 +348,4 @@ function atualizarDataAtualizacao() {
   const hoje = new Date();
   document.getElementById('data-atualizacao').textContent = `Última atualização: ${formatarData(hoje)} (atualiza diariamente às 8h)`;
 }
-
-function ca
+  
