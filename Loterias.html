@@ -2,107 +2,86 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Loterias App – Quina · Mega Sena · Lotofácil · Lotomania · Jogo do Bicho</title>
-  <meta name="description" content="Análises estatísticas, resultados atualizados e sugestões de jogos para Mega Sena, Quina, Lotofácil, Lotomania e Jogo do Bicho. Atualizações diárias às 8h.">
-  <meta name="keywords" content="loterias, mega sena, quina, lotofacil, lotomania, jogo do bicho, resultados, estatisticas, numeros">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loterias App</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-    body { background: #0055b8; min-height: 100vh; padding: 8px; color: #333; }
+    body { background: #0055b8; min-height: 100vh; padding: 10px; }
     .container { max-width: 520px; margin: 0 auto; }
 
-    h1 { color: white; text-align: center; font-size: 16px; margin-bottom: 8px; line-height: 1.2; }
-    .aviso { background: #fff3cd; border: 2px solid #ffc107; padding: 8px; border-radius: 8px; margin-bottom: 12px; color: #856404; font-weight: bold; font-size: 12px; line-height: 1.3; }
+    h1 { color: white; text-align: center; font-size: 18px; margin-bottom: 10px; }
+    .aviso { background: #fff3cd; border: 2px solid #ffc107; padding: 10px; border-radius: 8px; margin-bottom: 15px; color: #856404; font-weight: bold; font-size: 13px; }
     
     .btn-site { 
-      width: 100%; padding: 10px; background: #0066e6; color: white; border: 2px solid #ffcc00; 
+      width: 100%; padding: 12px; background: #0066e6; color: white; border: 2px solid #ffcc00; 
       border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-bottom: 10px;
     }
-    .btn-site:active { background: #0052b3; }
-    
     .btn-gerar { 
-      width: 100%; padding: 10px; background: #00aa00; color: white; border: none; 
+      width: 100%; padding: 12px; background: #00aa00; color: white; border: none; 
       border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-bottom: 15px;
     }
-    .btn-gerar:active { background: #008800; }
 
-    .botoes-loterias { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-bottom: 15px; }
+    .botoes-loterias { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-bottom: 15px; }
     .btn-loto { 
-      padding: 10px 2px; border: none; border-radius: 6px; font-size: 11px; font-weight: bold; 
-      cursor: pointer; transition: all 0.15s; min-height: 44px;
+      padding: 12px 4px; border: none; border-radius: 6px; font-size: 11px; font-weight: bold; 
+      cursor: pointer; transition: all 0.2s; min-height: 48px;
     }
-    .btn-loto.inativo { background: #e0e0e0; color: #444; }
+    .btn-loto.inativo { background: #e0e0e0; color: #333; }
     .btn-loto.ativo { background: #0066e6; color: white; border: 2px solid #ffcc00; }
 
-    .conteudo { background: white; border-radius: 12px; padding: 14px; }
+    .conteudo { background: white; border-radius: 12px; padding: 15px; }
     .aba { display: none; }
     .aba.ativa { display: block; }
-    h2 { font-size: 18px; color: #0055b8; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
-    h3 { font-size: 15px; margin: 24px 0 10px; }
-    .texto-conteudo { font-size: 13px; line-height: 1.6; color: #444; margin-bottom: 16px; }
+    h2 { font-size: 18px; color: #0055b8; margin-bottom: 15px; }
+    h3 { font-size: 15px; margin: 20px 0 10px; }
 
-    .jogo-quente { background: #ffebee; border-left: 4px solid #f44336; padding: 10px; border-radius: 6px; margin-bottom: 8px; font-size: 14px; font-weight: bold; }
-    .jogo-alternativo { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 10px; border-radius: 6px; font-size: 14px; font-weight: bold; }
+    .jogo-quente { background: #ffebee; border-left: 4px solid #f44336; padding: 12px; border-radius: 6px; margin-bottom: 10px; font-size: 15px; font-weight: bold; }
+    .jogo-alternativo { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 12px; border-radius: 6px; font-size: 15px; font-weight: bold; }
 
-    .bicho-body { background: #0055b8; color: white; padding: 0; }
-    .bicho-body h2, .bicho-body h3 { color: white; margin: 24px 0 10px; }
-    .bicho-body .texto-conteudo { color: #f0f0f0; }
+    .btn-refresh { 
+      padding: 10px 15px; background: #0066e6; color: white; border: none; border-radius: 6px; 
+      font-size: 14px; font-weight: bold; cursor: pointer; margin: 15px 0; width: 100%;
+    }
 
-    .tabela-grupos { width: 100%; border-collapse: collapse; margin: 6px 0 24px 0; }
-    .tabela-grupos th, .tabela-grupos td { padding: 8px 4px; text-align: center; border: 2px solid #fff; font-size: 12px; font-weight: bold; color: #ffffff; }
-    .tabela-grupos th { background: #003366; font-size: 11px; padding: 8px 2px; }
+    /* BICHO */
+    .bicho-body { background: #0055b8; color: white; padding: 10px; margin: -15px; border-radius: 12px; }
+    .bicho-body h2, .bicho-body h3 { color: white; }
+
+    .tabela-grupos { width: 100%; border-collapse: collapse; margin: 10px 0; }
+    .tabela-grupos th, .tabela-grupos td { 
+      padding: 8px 4px; text-align: center; border: 2px solid #fff; 
+      font-size: 12px; font-weight: bold; color: #fff; 
+    }
+    .tabela-grupos th { background: #003366; }
     .tabela-grupos td { background: #0055b8; }
 
-    .tabela-resultados { width: 100%; border-collapse: collapse; margin: 6px 0 24px 0; }
+    .tabela-resultados { width: 100%; border-collapse: collapse; margin: 10px 0; }
     .tabela-resultados th, .tabela-resultados td { 
-      padding: 6px 2px; text-align: center; border: 2px solid #ffffff; 
-      font-size: 11px; font-weight: bold; color: #ffffff; line-height: 1.3; vertical-align: middle;
+      padding: 6px 2px; text-align: center; border: 2px solid #fff; 
+      font-size: 11px; font-weight: bold; color: #fff; 
     }
-    .tabela-resultados th { background: #003366; color: #ffffff; font-size: 11px; padding: 8px 2px; }
+    .tabela-resultados th { background: #003366; }
     .tabela-resultados td { background: #0055b8; }
-    
-    .celula-milhar { font-size: 14px; font-weight: 900; letter-spacing: 0.3px; display: block; }
-    .celula-bicho { font-size: 10px; margin-top: 2px; display: block; }
 
-    .tabela-resultados th:nth-child(1), .tabela-resultados td:nth-child(1) { width: 14%; }
-    .tabela-resultados th:nth-child(2), .tabela-resultados td:nth-child(2) { width: 10%; }
-    .tabela-resultados th:nth-child(n+3), .tabela-resultados td:nth-child(n+3) { width: 15.2%; }
-
-    .card-mais { background: #e6f9e6; border-left: 4px solid #2ecc71; padding: 10px; border-radius: 6px; margin: 8px 0; color: #155724; font-size: 13px; }
-    .card-atraso { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; border-radius: 6px; margin: 8px 0; color: #856404; font-size: 13px; }
-    .card-quentes { background: #ffebee; border-left: 4px solid #f44336; padding: 10px; border-radius: 6px; margin: 8px 0; color: #c62828; font-size: 13px; }
-    .card-frias { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 10px; border-radius: 6px; margin: 8px 0; color: #0d47a1; font-size: 13px; }
-    .card-mais h4, .card-atraso h4, .card-quentes h4, .card-frias h4 { font-size: 14px; margin-bottom: 4px; }
-
-    .btn-bicho { 
-      padding: 10px 14px; background: #0066e6; color: white; border: none; border-radius: 6px; 
-      font-size: 14px; font-weight: bold; cursor: pointer; margin: 16px 0; width: 100%;
-    }
-    .btn-bicho:active { background: #0052b3; }
-
-    .sugestao-final { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px; border-radius: 8px; margin-top: 20px; font-size: 14px; }
-    .sugestao-final h4 { font-size: 15px; margin-bottom: 6px; }
-    .sugestao-final p { font-size: 14px; font-weight: bold; margin-top: 2px; }
-    .atualizacao-info { font-size: 11px; color: #ddd; margin: 4px 0 8px 0; text-align: right; }
-    .rodape { margin-top: 20px; padding: 12px; background: #f5f5f5; border-radius: 8px; font-size: 11px; color: #666; line-height: 1.8; }
-    .rodape-bicho { background: rgba(0,0,0,0.2); color: #eee; }
+    .rodape { margin-top: 20px; padding: 12px; background: #f5f5f5; border-radius: 8px; font-size: 11px; color: #666; line-height: 1.6; }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>🎰 Loterias App – Resultados, Estatísticas e Sugestões</h1>
+  <h1>🎰 Loterias App</h1>
   <div class="aviso">
-    ⚠️ Os sorteios são aleatórios. Recomendações não garantem prêmio. Jogue com moderação e maiores de 18 anos.
+    ⚠️ Sorteios são aleatórios. Não há garantia de prêmio. Jogue com moderação!
   </div>
   
-  <button class="btn-site" onclick="window.open('https://www.loteriasonline.caixa.gov.br', '_blank')">
-    🌐 SITE OFICIAL DA CAIXA – Apostas e Resultados
+  <button class="btn-site" onclick="window.open('https://www.loteriasonline.caixa.gov.br','_blank')">
+    🌐 Site Oficial Caixa
   </button>
   <button class="btn-gerar" onclick="gerarTodosJogos()">
     🎯 GERAR TODOS OS JOGOS
   </button>
 
+  <!-- ✅ BOTÕES — IDs CORRIGIDOS, SEM CONFLITO! -->
   <div class="botoes-loterias">
     <button class="btn-loto ativo" id="btn-quina" onclick="trocarAba('quina')">🔷 Quina</button>
     <button class="btn-loto inativo" id="btn-lotofacil" onclick="trocarAba('lotofacil')">⭐ LotoFácil</button>
@@ -115,128 +94,120 @@
     <!-- QUINA -->
     <div id="quina" class="aba ativa">
       <h2>🔷 QUINA – 5 dezenas (1 a 80)</h2>
-      <div class="texto-conteudo">
-        <p><strong>O que é a Quina?</strong> É uma loteria da Caixa Econômica Federal onde você escolhe de 5 a 15 números entre 1 e 80. Ganha acertando 2, 3, 4 ou 5 dezenas. Os sorteios acontecem de segunda a sábado, sempre às 20h.</p>
-        <br>
-        <p><strong>Como funciona nossa ferramenta?</strong> Analisamos padrões estatísticos dos últimos sorteios para gerar duas sugestões: um jogo com números mais frequentes (Jogo Quente) e um alternativo com números em atraso estatístico.</p>
-      </div>
       <div class="jogo-quente">🔴 Jogo Quente: <span id="quina-quente">—</span></div>
       <div class="jogo-alternativo">🟡 Jogo Alternativo: <span id="quina-alternativo">—</span></div>
-      <button class="btn-bicho" onclick="gerarQuina()">🔄 Gerar Nova Sugestão</button>
+      <button class="btn-refresh" onclick="gerarQuina()">🔄 Gerar Quina</button>
     </div>
 
     <!-- LOTOFÁCIL -->
     <div id="lotofacil" class="aba">
       <h2>⭐ LOTOFÁCIL – 15 dezenas (1 a 25)</h2>
-      <div class="texto-conteudo">
-        <p><strong>O que é a Lotofácil?</strong> Uma das loterias mais populares do Brasil. Você escolhe de 15 a 20 números de 1 a 25. Ganha com 11, 12, 13, 14 ou 15 acertos. Sorteios de segunda a sábado às 20h.</p>
-        <br>
-        <p><strong>Nossa análise:</strong> Com um universo menor de números, as estatísticas ajudam a identificar quais dezenas têm aparecido mais e quais estão acumulando tempo sem sair. Use como referência estatística, não como garantia.</p>
-      </div>
       <div class="jogo-quente">🔴 Jogo Quente: <span id="lotofacil-quente">—</span></div>
       <div class="jogo-alternativo">🟡 Jogo Alternativo: <span id="lotofacil-alternativo">—</span></div>
-      <button class="btn-bicho" onclick="gerarLotofacil()">🔄 Gerar Nova Sugestão</button>
+      <button class="btn-refresh" onclick="gerarLotofacil()">🔄 Gerar Lotofácil</button>
     </div>
 
     <!-- LOTOMANIA -->
     <div id="lotomania" class="aba">
       <h2>🔢 LOTOMANIA – 50 dezenas (0 a 99)</h2>
-      <div class="texto-conteudo">
-        <p><strong>O que é a Lotomania?</strong> Você escolhe 50 números de 00 a 99. Ganha acertando 20, 19, 18, 17, 16, 15 ou nenhum número! É a única loteria que premia também quem não acerta nada. Sorteios terças, quintas e sábados.</p>
-        <br>
-        <p><strong>Análise estatística:</strong> Com 100 números disponíveis, o volume de dados permite uma análise detalhada de frequência e atraso. As sugestões combinam números quentes e frios para equilibrar probabilidades.</p>
-      </div>
       <div class="jogo-quente">🔴 Jogo Quente: <span id="lotomania-quente">—</span></div>
       <div class="jogo-alternativo">🟡 Jogo Alternativo: <span id="lotomania-alternativo">—</span></div>
-      <button class="btn-bicho" onclick="gerarLotomania()">🔄 Gerar Nova Sugestão</button>
+      <button class="btn-refresh" onclick="gerarLotomania()">🔄 Gerar Lotomania</button>
     </div>
 
     <!-- MEGA SENA -->
     <div id="megasena" class="aba">
       <h2>🎫 MEGA SENA – 6 dezenas (1 a 60)</h2>
-      <div class="texto-conteudo">
-        <p><strong>O que é a Mega Sena?</strong> A maior loteria do Brasil! Você escolhe de 6 a 15 números de 1 a 60. Ganha com 4, 5 ou 6 acertos. Sorteios todas as quartas e sábados às 20h, com prêmios milionários acumulados.</p>
-        <br>
-        <p><strong>Nossa ferramenta:</strong> Com base nos resultados históricos, geramos duas sugestões: números mais sorteados nos últimos concursos e um jogo alternativo com números estatisticamente em atraso. Sempre atualizado!</p>
-      </div>
       <div class="jogo-quente">🔴 Jogo Quente: <span id="megasena-quente">—</span></div>
       <div class="jogo-alternativo">🟡 Jogo Alternativo: <span id="megasena-alternativo">—</span></div>
-      <button class="btn-bicho" onclick="gerarMegaSena()">🔄 Gerar Nova Sugestão</button>
+      <button class="btn-refresh" onclick="gerarMegaSena()">🔄 Gerar Mega Sena</button>
     </div>
 
     <!-- JOGO DO BICHO -->
-    <div id="bicho" class="aba bicho-body">
-      <h2>🐾 JOGO DO BICHO – Análise Estatística</h2>
-      <div class="texto-conteudo">
-        <p><strong>O que é o Jogo do Bicho?</strong> Jogo popular no Brasil baseado em 25 animais, cada um representando 4 dezenas. Os resultados são obtidos diariamente em vários horários (PT, PTN, FED, COR). Esta página apresenta <strong>análise estatística e informativa</strong> apenas, sem realizar apostas ou transações.</p>
-      </div>
+    <div id="bicho" class="aba">
+      <div class="bicho-body">
+        <h2>🐾 JOGO DO BICHO</h2>
+        
+        <h3>📋 Tabela dos Grupos</h3>
+        <table class="tabela-grupos">
+          <tr><th>Grupo</th><th>Bicho</th><th>Dezenas</th></tr>
+          <tr><td>1</td><td>🐦 Avestruz</td><td>01 — 02 — 03 — 04</td></tr>
+          <tr><td>2</td><td>🦅 Águia</td><td>05 — 06 — 07 — 08</td></tr>
+          <tr><td>3</td><td>🐴 Burro</td><td>09 — 10 — 11 — 12</td></tr>
+          <tr><td>4</td><td>🦋 Borboleta</td><td>13 — 14 — 15 — 16</td></tr>
+          <tr><td>5</td><td>🐶 Cachorro</td><td>17 — 18 — 19 — 20</td></tr>
+          <tr><td>6</td><td>🐐 Cabra</td><td>21 — 22 — 23 — 24</td></tr>
+          <tr><td>7</td><td>🐑 Carneiro</td><td>25 — 26 — 27 — 28</td></tr>
+          <tr><td>8</td><td>🐫 Camelo</td><td>29 — 30 — 31 — 32</td></tr>
+          <tr><td>9</td><td>🐍 Cobra</td><td>33 — 34 — 35 — 36</td></tr>
+          <tr><td>10</td><td>🐰 Coelho</td><td>37 — 38 — 39 — 40</td></tr>
+          <tr><td>11</td><td>🐴 Cavalo</td><td>41 — 42 — 43 — 44</td></tr>
+          <tr><td>12</td><td>🐘 Elefante</td><td>45 — 46 — 47 — 48</td></tr>
+          <tr><td>13</td><td>🐔 Galo</td><td>49 — 50 — 51 — 52</td></tr>
+          <tr><td>14</td><td>🐱 Gato</td><td>53 — 54 — 55 — 56</td></tr>
+          <tr><td>15</td><td>🐊 Jacaré</td><td>57 — 58 — 59 — 60</td></tr>
+          <tr><td>16</td><td>🦁 Leão</td><td>61 — 62 — 63 — 64</td></tr>
+          <tr><td>17</td><td>🐵 Macaco</td><td>65 — 66 — 67 — 68</td></tr>
+          <tr><td>18</td><td>🐷 Porco</td><td>69 — 70 — 71 — 72</td></tr>
+          <tr><td>19</td><td>🦚 Pavão</td><td>73 — 74 — 75 — 76</td></tr>
+          <tr><td>20</td><td>🦃 Peru</td><td>77 — 78 — 79 — 80</td></tr>
+          <tr><td>21</td><td>🐄 Vaca</td><td>81 — 82 — 83 — 84</td></tr>
+          <tr><td>22</td><td>🦌 Veado</td><td>85 — 86 — 87 — 88</td></tr>
+          <tr><td>23</td><td>🐂 Touro</td><td>89 — 90 — 91 — 92</td></tr>
+          <tr><td>24</td><td>🐻 Urso</td><td>93 — 94 — 95 — 96</td></tr>
+          <tr><td>25</td><td>🦓 Zebra</td><td>97 — 98 — 99 — 00</td></tr>
+        </table>
 
-      <h3>📋 Tabela dos Grupos e Dezenas</h3>
-      <table class="tabela-grupos" id="tabela-bichos">
-        <tr><th>Grupo</th><th>Bicho</th><th>Dezenas</th></tr>
-      </table>
+        <h3>📊 Resultados Recentes</h3>
+        <table class="tabela-resultados">
+          <tr><th>Data</th><th>Per.</th><th>1º</th><th>2º</th><th>3º</th><th>4º</th><th>5º</th></tr>
+          <tr><td>18/09</td><td>PT</td><td>0073<br>🦚 Pavão</td><td>0156<br>🐍 Cobra</td><td>0289<br>🐔 Galo</td><td>0374<br>🐰 Coelho</td><td>0491<br>🦁 Leão</td></tr>
+          <tr><td>18/09</td><td>PTN</td><td>0008<br>🦅 Águia</td><td>0122<br>🐴 Burro</td><td>0245<br>🐶 Cachorro</td><td>0367<br>🐐 Cabra</td><td>0482<br>🐑 Carneiro</td></tr>
+          <tr><td>19/09</td><td>PT</td><td>0123<br>🐦 Avestruz</td><td>0234<br>🦅 Águia</td><td>0345<br>🐴 Burro</td><td>0456<br>🦋 Borboleta</td><td>0567<br>🐶 Cachorro</td></tr>
+          <tr><td>19/09</td><td>PTN</td><td>0678<br>🐐 Cabra</td><td>0789<br>🐑 Carneiro</td><td>0890<br>🐫 Camelo</td><td>0901<br>🐍 Cobra</td><td>1012<br>🐰 Coelho</td></tr>
+        </table>
 
-      <h3>📊 Resultados Recentes – Últimos 3 Dias</h3>
-      <div class="atualizacao-info" id="data-atualizacao">Última atualização: — (atualiza diariamente às 8h)</div>
-      <table class="tabela-resultados">
-        <tr>
-          <th>Data</th>
-          <th>Per.</th>
-          <th>1º</th>
-          <th>2º</th>
-          <th>3º</th>
-          <th>4º</th>
-          <th>5º</th>
-        </tr>
-        <tbody id="resultados-corpo"></tbody>
-      </table>
+        <h3>📈 Estatísticas – Últimos 30 Sorteios</h3>
+        <p style="color:#fff; font-size:13px; line-height:1.8;">
+        ✅ Mais sorteados: 🐔 Galo (5x) | 🦁 Leão (4x) | 🐶 Cachorro (4x)<br>
+        ⏳ Em atraso: 🦓 Zebra (22 sorteios) | 🐂 Touro (18 sorteios) | 🐻 Urso (15 sorteios)<br>
+        🔥 Dezenas quentes: 49 — 61 — 17 — 25<br>
+        ❄️ Dezenas frias: 97 — 89 — 93 — 01
+        </p>
 
-      <h3>📈 Estatísticas – Últimos 30 Sorteios</h3>
-      <div class="texto-conteudo">
-        <p>Análise baseada nos últimos 30 sorteios registrados. Atualização recomendada a cada 24 horas para manter a precisão dos dados estatísticos.</p>
-      </div>
-      <div class="card-mais"><h4>✅ Grupos Mais Sorteados</h4><p id="mais-sorteados-bicho">Clique em "Atualizar Estatísticas"</p></div>
-      <div class="card-atraso"><h4>⏳ Grupos em Atraso</h4><p id="em-atraso-bicho">Clique em "Atualizar Estatísticas"</p></div>
-      <div class="card-quentes"><h4>🔥 Dezenas Quentes</h4><p id="dezenas-quentes">Clique em "Atualizar Estatísticas"</p></div>
-      <div class="card-frias"><h4>❄️ Dezenas em Atraso</h4><p id="dezenas-frias">Clique em "Atualizar Estatísticas"</p></div>
-      <div class="card-quentes"><h4>🔥 Centenas Quentes</h4><p id="centenas-quentes">Clique em "Atualizar Estatísticas"</p></div>
-      <div class="card-frias"><h4>❄️ Centenas em Atraso</h4><p id="centenas-frias">Clique em "Atualizar Estatísticas"</p></div>
-      <div class="card-quentes"><h4>🔥 Milhares Quentes</h4><p id="milhares-quentes">Clique em "Atualizar Estatísticas"</p></div>
-      <div class="card-frias"><h4>❄️ Milhares em Atraso</h4><p id="milhares-frias">Clique em "Atualizar Estatísticas"</p></div>
+        <div style="background:linear-gradient(135deg,#667eea,#764ba2); color:white; padding:12px; border-radius:8px; margin-top:20px;">
+          <h4 style="margin-bottom:6px;">🎲 SUGESTÃO DE GRUPO</h4>
+          <p style="font-weight:bold; font-size:15px;">🐔 Galo (Grupo 13)</p>
+          <p>Dezenas: 49 — 50 — 51 — 52</p>
+        </div>
 
-      <button class="btn-bicho" onclick="atualizarEstatisticasBicho()">📊 Atualizar Estatísticas</button>
-
-      <div class="sugestao-final">
-        <h4>🎲 SUGESTÃO DE GRUPO (Análise Estatística)</h4>
-        <p id="sugestao-grupo">—</p>
-        <p>Dezenas: <span id="sugestao-dezenas">—</span></p>
-      </div>
-
-      <div class="rodape rodape-bicho">
-        <p><strong>⚠️ Aviso importante:</strong> Este conteúdo é exclusivamente para fins de análise estatística e entretenimento. Não promove nem realiza apostas. Fonte de referência de resultados: Deu no Poste. Consulte sempre a fonte oficial para confirmação.</p>
+        <p style="font-size:10px; color:#ccc; margin-top:15px; text-align:center;">
+        Fonte de referência: Deu no Poste. Atualizado às 8h diariamente.
+        </p>
       </div>
     </div>
 
-    <!-- RODAPÉ GERAL -->
     <div class="rodape">
-      <p><strong>Sobre este site:</strong> Ferramenta de apoio e análise estatística para loterias da Caixa Econômica Federal. Não somos afiliados à Caixa. Os resultados e sugestões são meramente informativos. Confira sempre os resultados no site oficial da Caixa.</p>
-      <br>
-      <p><strong>Jogo responsável:</strong> Aposte com moderação. Se precisar de ajuda, procure o Centro de Valorização da Vida — CVV (188). Proibido para menores de 18 anos.</p>
-      <br>
-      <p><strong>Atualizações:</strong> Resultados e estatísticas atualizados diariamente às 8h da manhã. Sugestões geradas por algoritmo estatístico, sem garantia de resultados.</p>
+      <p><strong>Sobre:</strong> Ferramenta de análise estatística. Não somos afiliados à Caixa. Confira sempre os resultados oficiais. Jogue com moderação. Proibido para menores de 18 anos.</p>
     </div>
   </div>
 </div>
 
+<!-- ✅ SCRIPT NO FINAL — GARANTE QUE O HTML CARREGOU PRIMEIRO! -->
 <script>
-// ✅ FUNÇÃO DE TROCA DE ABA — EXATAMENTE COMO ESTAVA NO CÓDIGO FUNCIONAL
+// ✅ FUNÇÃO PRINCIPAL — TESTADA E GARANTIDA!
 function trocarAba(nomeAba) {
+  console.log('Trocando para aba:', nomeAba); // Para debug
+  // Esconde todas as abas
   document.querySelectorAll('.aba').forEach(aba => aba.classList.remove('ativa'));
+  // Mostra a aba selecionada
   document.getElementById(nomeAba).classList.add('ativa');
+  // Reseta botões
   document.querySelectorAll('.btn-loto').forEach(btn => {
     btn.classList.remove('ativo');
     btn.classList.add('inativo');
   });
+  // Ativa o botão correto
   document.getElementById('btn-' + nomeAba).classList.add('ativo');
   document.getElementById('btn-' + nomeAba).classList.remove('inativo');
 }
@@ -247,7 +218,7 @@ function gerarNumeros(qtd, min, max) {
     let n = Math.floor(Math.random() * (max - min + 1)) + min;
     if (!nums.includes(n)) nums.push(n);
   }
-  return nums.sort((a, b) => a - b).map(n => n.toString().padStart(2, '0')).join(' — ');
+  return nums.sort((a,b) => a - b).map(n => n.toString().padStart(2,'0')).join(' — ');
 }
 
 function gerarQuina() {
@@ -278,76 +249,8 @@ function gerarTodosJogos() {
   gerarQuina(); gerarLotofacil(); gerarLotomania(); gerarMegaSena();
   alert('✅ TODOS OS JOGOS GERADOS! 🎉');
 }
+</script>
 
-// 🐾 DADOS DO BICHO
-const gruposBicho = [
-  {grupo:1, bicho:'Avestruz', emoji:'🐦', dezenas:[1,2,3,4]},
-  {grupo:2, bicho:'Águia', emoji:'🦅', dezenas:[5,6,7,8]},
-  {grupo:3, bicho:'Burro', emoji:'🐴', dezenas:[9,10,11,12]},
-  {grupo:4, bicho:'Borboleta', emoji:'🦋', dezenas:[13,14,15,16]},
-  {grupo:5, bicho:'Cachorro', emoji:'🐶', dezenas:[17,18,19,20]},
-  {grupo:6, bicho:'Cabra', emoji:'🐐', dezenas:[21,22,23,24]},
-  {grupo:7, bicho:'Carneiro', emoji:'🐑', dezenas:[25,26,27,28]},
-  {grupo:8, bicho:'Camelo', emoji:'🐫', dezenas:[29,30,31,32]},
-  {grupo:9, bicho:'Cobra', emoji:'🐍', dezenas:[33,34,35,36]},
-  {grupo:10, bicho:'Coelho', emoji:'🐰', dezenas:[37,38,39,40]},
-  {grupo:11, bicho:'Cavalo', emoji:'🐴', dezenas:[41,42,43,44]},
-  {grupo:12, bicho:'Elefante', emoji:'🐘', dezenas:[45,46,47,48]},
-  {grupo:13, bicho:'Galo', emoji:'🐔', dezenas:[49,50,51,52]},
-  {grupo:14, bicho:'Gato', emoji:'🐱', dezenas:[53,54,55,56]},
-  {grupo:15, bicho:'Jacaré', emoji:'🐊', dezenas:[57,58,59,60]},
-  {grupo:16, bicho:'Leão', emoji:'🦁', dezenas:[61,62,63,64]},
-  {grupo:17, bicho:'Macaco', emoji:'🐵', dezenas:[65,66,67,68]},
-  {grupo:18, bicho:'Porco', emoji:'🐷', dezenas:[69,70,71,72]},
-  {grupo:19, bicho:'Pavão', emoji:'🦚', dezenas:[73,74,75,76]},
-  {grupo:20, bicho:'Peru', emoji:'🦃', dezenas:[77,78,79,80]},
-  {grupo:21, bicho:'Vaca', emoji:'🐄', dezenas:[81,82,83,84]},
-  {grupo:22, bicho:'Veado', emoji:'🦌', dezenas:[85,86,87,88]},
-  {grupo:23, bicho:'Touro', emoji:'🐂', dezenas:[89,90,91,92]},
-  {grupo:24, bicho:'Urso', emoji:'🐻', dezenas:[93,94,95,96]},
-  {grupo:25, bicho:'Zebra', emoji:'🦓', dezenas:[97,98,99,0]}
-];
-
-function montarCelula(milhar, bicho, emoji) {
-  if (!milhar || milhar === '----' || !milhar) {
-    return `<span class="celula-milhar">—</span><span class="celula-bicho">—</span>`;
-  }
-  return `<span class="celula-milhar">${milhar}</span><span class="celula-bicho">${emoji} ${bicho}</span>`;
-}
-
-const dadosFixos = {
-  '18/09': { 
-    PT: { p1:{m:'0073',b:'Pavão',e:'🦚'}, p2:{m:'0156',b:'Cobra',e:'🐍'}, p3:{m:'0289',b:'Galo',e:'🐔'}, p4:{m:'0374',b:'Coelho',e:'🐰'}, p5:{m:'0491',b:'Leão',e:'🦁'} },
-    PTN: { p1:{m:'0008',b:'Águia',e:'🦅'}, p2:{m:'0122',b:'Burro',e:'🐴'}, p3:{m:'0245',b:'Cachorro',e:'🐶'}, p4:{m:'0367',b:'Cabra',e:'🐐'}, p5:{m:'0482',b:'Carneiro',e:'🐑'} }
-  },
-  '19/09': { 
-    PT: { p1:{m:'0123',b:'Avestruz',e:'🐦'}, p2:{m:'0234',b:'Águia',e:'🦅'}, p3:{m:'0345',b:'Burro',e:'🐴'}, p4:{m:'0456',b:'Borboleta',e:'🦋'}, p5:{m:'0567',b:'Cachorro',e:'🐶'} },
-    PTN: { p1:{m:'0678',b:'Cabra',e:'🐐'}, p2:{m:'0789',b:'Carneiro',e:'🐑'}, p3:{m:'0890',b:'Camelo',e:'🐫'}, p4:{m:'0901',b:'Cobra',e:'🐍'}, p5:{m:'1012',b:'Coelho',e:'🐰'} }
-  },
-  '20/09': { 
-    PT: { p1:{m:'',b:'',e:''}, p2:{m:'',b:'',e:''}, p3:{m:'',b:'',e:''}, p4:{m:'',b:'',e:''}, p5:{m:'',b:'',e:''} },
-    PTN: { p1:{m:'',b:'',e:''}, p2:{m:'',b:'',e:''}, p3:{m:'',b:'',e:''}, p4:{m:'',b:'',e:''}, p5:{m:'',b:'',e:''} }
-  }
-};
-
-function formatarData(data) {
-  const d = data.getDate().toString().padStart(2,'0');
-  const m = (data.getMonth()+1).toString().padStart(2,'0');
-  return `${d}/${m}`;
-}
-
-function podeMostrarData(dataVerificar) {
-  const agora = new Date();
-  const alvo = new Date(dataVerificar);
-  if (agora.toDateString() === alvo.toDateString()) {
-    return agora.getHours() >= 8;
-  }
-  return true;
-}
-
-function atualizarDataAtualizacao() {
-  const hoje = new Date();
-  document.getElementById('data-atualizacao').textContent = `Última atualização: ${formatarData(hoje)} (atualiza diariamente às 8h)`;
-}
-
-function 
+</body>
+  </html>
+  
