@@ -29,7 +29,7 @@
     .botoes-loterias { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-bottom: 15px; }
     .btn-loto { 
       padding: 10px 2px; border: none; border-radius: 6px; font-size: 11px; font-weight: bold; 
-      cursor: pointer; transition: all 0.15s; min-height: 44px; pointer-events: auto;
+      cursor: pointer; transition: all 0.15s; min-height: 44px;
     }
     .btn-loto.inativo { background: #e0e0e0; color: #444; }
     .btn-loto.ativo { background: #0066e6; color: white; border: 2px solid #ffcc00; }
@@ -76,14 +76,14 @@
 
     .btn-bicho { 
       padding: 10px 14px; background: #0066e6; color: white; border: none; border-radius: 6px; 
-      font-size: 14px; font-weight: bold; cursor: pointer; margin: 16px 0; width: 100%; pointer-events: auto;
+      font-size: 14px; font-weight: bold; cursor: pointer; margin: 16px 0; width: 100%;
     }
     .btn-bicho:active { background: #0052b3; }
 
     .sugestao-final { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px; border-radius: 8px; margin-top: 20px; font-size: 14px; }
     .sugestao-final h4 { font-size: 15px; margin-bottom: 6px; }
     .sugestao-final p { font-size: 14px; font-weight: bold; margin-top: 2px; }
-    .atualizacao-info { font-size: 11px; color: #666; margin: 4px 0 8px 0; text-align: right; }
+    .atualizacao-info { font-size: 11px; color: #ddd; margin: 4px 0 8px 0; text-align: right; }
     .rodape { margin-top: 20px; padding: 12px; background: #f5f5f5; border-radius: 8px; font-size: 11px; color: #666; line-height: 1.8; }
     .rodape-bicho { background: rgba(0,0,0,0.2); color: #eee; }
   </style>
@@ -229,11 +229,10 @@
 </div>
 
 <script>
-// ✅ FUNÇÃO DE TROCA DE ABA — CORRIGIDA E GARANTIDA
+// ✅ FUNÇÃO DE TROCA DE ABA — EXATAMENTE COMO ESTAVA NO CÓDIGO FUNCIONAL
 function trocarAba(nomeAba) {
   document.querySelectorAll('.aba').forEach(aba => aba.classList.remove('ativa'));
   document.getElementById(nomeAba).classList.add('ativa');
-  
   document.querySelectorAll('.btn-loto').forEach(btn => {
     btn.classList.remove('ativo');
     btn.classList.add('inativo');
@@ -310,11 +309,13 @@ const gruposBicho = [
 ];
 
 function montarCelula(milhar, bicho, emoji) {
-  if (!milhar || milhar === '') return `<span class="celula-milhar">—</span><span class="celula-bicho">—</span>`;
+  if (!milhar || milhar === '----' || !milhar) {
+    return `<span class="celula-milhar">—</span><span class="celula-bicho">—</span>`;
+  }
   return `<span class="celula-milhar">${milhar}</span><span class="celula-bicho">${emoji} ${bicho}</span>`;
 }
 
-const bancoResultados = {
+const dadosFixos = {
   '18/09': { 
     PT: { p1:{m:'0073',b:'Pavão',e:'🦚'}, p2:{m:'0156',b:'Cobra',e:'🐍'}, p3:{m:'0289',b:'Galo',e:'🐔'}, p4:{m:'0374',b:'Coelho',e:'🐰'}, p5:{m:'0491',b:'Leão',e:'🦁'} },
     PTN: { p1:{m:'0008',b:'Águia',e:'🦅'}, p2:{m:'0122',b:'Burro',e:'🐴'}, p3:{m:'0245',b:'Cachorro',e:'🐶'}, p4:{m:'0367',b:'Cabra',e:'🐐'}, p5:{m:'0482',b:'Carneiro',e:'🐑'} }
@@ -330,8 +331,8 @@ const bancoResultados = {
 };
 
 function formatarData(data) {
-  const d = data.getDate().toString().padStart(2, '0');
-  const m = (data.getMonth() + 1).toString().padStart(2, '0');
+  const d = data.getDate().toString().padStart(2,'0');
+  const m = (data.getMonth()+1).toString().padStart(2,'0');
   return `${d}/${m}`;
 }
 
@@ -348,4 +349,5 @@ function atualizarDataAtualizacao() {
   const hoje = new Date();
   document.getElementById('data-atualizacao').textContent = `Última atualização: ${formatarData(hoje)} (atualiza diariamente às 8h)`;
 }
-  
+
+function 
