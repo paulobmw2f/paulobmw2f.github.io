@@ -55,15 +55,16 @@
     .tabela-grupos th { background: #003366; }
     .tabela-grupos td { background: #0055b8; }
 
+    /* ✅ TABELA ATUALIZADA — COM CENTENA E MILHAR! */
     .tabela-resultados { width: 100%; border-collapse: collapse; margin: 10px 0; }
     .tabela-resultados th, .tabela-resultados td { 
-      padding: 6px 2px; text-align: center; border: 2px solid #fff; 
-      font-size: 11px; font-weight: bold; color: #fff; 
+      padding: 5px 2px; text-align: center; border: 2px solid #fff; 
+      font-size: 10px; font-weight: bold; color: #fff; 
     }
-    .tabela-resultados th { background: #003366; }
+    .tabela-resultados th { background: #003366; font-size: 11px; }
     .tabela-resultados td { background: #0055b8; }
 
-    /* ✅ ESTATÍSTICAS EM CARDS — VISUAL BONITO E ORGANIZADO! */
+    /* Cards de Estatísticas — EXATAMENTE COMO ESTAVA! */
     .card-mais { background: #e6f9e6; border-left: 4px solid #2ecc71; padding: 12px; border-radius: 6px; margin: 8px 0; color: #155724; font-size: 14px; }
     .card-atraso { background: #fff3cd; border-left: 4px solid #ffc107; padding: 12px; border-radius: 6px; margin: 8px 0; color: #856404; font-size: 14px; }
     .card-quentes { background: #ffebee; border-left: 4px solid #f44336; padding: 12px; border-radius: 6px; margin: 8px 0; color: #c62828; font-size: 14px; }
@@ -171,15 +172,40 @@
         </table>
 
         <h3>📊 Resultados Recentes</h3>
+        <!-- ✅ TABELA COM CENTENA E MILHAR INCLUÍDOS! -->
         <table class="tabela-resultados">
-          <tr><th>Data</th><th>Per.</th><th>1º</th><th>2º</th><th>3º</th><th>4º</th><th>5º</th></tr>
-          <tr><td>18/09</td><td>PT</td><td>0073<br>🦚 Pavão</td><td>0156<br>🐍 Cobra</td><td>0289<br>🐔 Galo</td><td>0374<br>🐰 Coelho</td><td>0491<br>🦁 Leão</td></tr>
-          <tr><td>18/09</td><td>PTN</td><td>0008<br>🦅 Águia</td><td>0122<br>🐴 Burro</td><td>0245<br>🐶 Cachorro</td><td>0367<br>🐐 Cabra</td><td>0482<br>🐑 Carneiro</td></tr>
-          <tr><td>19/09</td><td>PT</td><td>0123<br>🐦 Avestruz</td><td>0234<br>🦅 Águia</td><td>0345<br>🐴 Burro</td><td>0456<br>🦋 Borboleta</td><td>0567<br>🐶 Cachorro</td></tr>
-          <tr><td>19/09</td><td>PTN</td><td>0678<br>🐐 Cabra</td><td>0789<br>🐑 Carneiro</td><td>0890<br>🐫 Camelo</td><td>0901<br>🐍 Cobra</td><td>1012<br>🐰 Coelho</td></tr>
+          <tr><th>Data</th><th>Per.</th><th>Prêmio</th><th>Milhar</th><th>Centena</th><th>Bicho</th></tr>
+          
+          <!-- 18/09 PT -->
+          <tr><td rowspan="5">18/09</td><td rowspan="5">PT</td><td>1º</td><td>0073</td><td>073</td><td>🦚 Pavão</td></tr>
+          <tr><td>2º</td><td>0156</td><td>156</td><td>🐍 Cobra</td></tr>
+          <tr><td>3º</td><td>0289</td><td>289</td><td>🐔 Galo</td></tr>
+          <tr><td>4º</td><td>0374</td><td>374</td><td>🐰 Coelho</td></tr>
+          <tr><td>5º</td><td>0491</td><td>491</td><td>🦁 Leão</td></tr>
+
+          <!-- 18/09 PTN -->
+          <tr><td rowspan="5">18/09</td><td rowspan="5">PTN</td><td>1º</td><td>0008</td><td>008</td><td>🦅 Águia</td></tr>
+          <tr><td>2º</td><td>0122</td><td>122</td><td>🐴 Burro</td></tr>
+          <tr><td>3º</td><td>0245</td><td>245</td><td>🐶 Cachorro</td></tr>
+          <tr><td>4º</td><td>0367</td><td>367</td><td>🐐 Cabra</td></tr>
+          <tr><td>5º</td><td>0482</td><td>482</td><td>🐑 Carneiro</td></tr>
+
+          <!-- 19/09 PT -->
+          <tr><td rowspan="5">19/09</td><td rowspan="5">PT</td><td>1º</td><td>0123</td><td>123</td><td>🐦 Avestruz</td></tr>
+          <tr><td>2º</td><td>0234</td><td>234</td><td>🦅 Águia</td></tr>
+          <tr><td>3º</td><td>0345</td><td>345</td><td>🐴 Burro</td></tr>
+          <tr><td>4º</td><td>0456</td><td>456</td><td>🦋 Borboleta</td></tr>
+          <tr><td>5º</td><td>0567</td><td>567</td><td>🐶 Cachorro</td></tr>
+
+          <!-- 19/09 PTN -->
+          <tr><td rowspan="5">19/09</td><td rowspan="5">PTN</td><td>1º</td><td>0678</td><td>678</td><td>🐐 Cabra</td></tr>
+          <tr><td>2º</td><td>0789</td><td>789</td><td>🐑 Carneiro</td></tr>
+          <tr><td>3º</td><td>0890</td><td>890</td><td>🐫 Camelo</td></tr>
+          <tr><td>4º</td><td>0901</td><td>901</td><td>🐍 Cobra</td></tr>
+          <tr><td>5º</td><td>1012</td><td>012</td><td>🐰 Coelho</td></tr>
         </table>
 
-        <!-- ✅ ESTATÍSTICAS — AGORA EM CARDS BONITOS E ORGANIZADOS! -->
+        <!-- Cards de Estatísticas — EXATAMENTE COMO ESTAVA! NADA ALTERADO! -->
         <h3>📈 Estatísticas – Últimos 30 Sorteios</h3>
         
         <div class="card-mais">
@@ -271,5 +297,5 @@ function gerarTodosJogos() {
 </script>
 
 </body>
-        </html>
-        
+  </html>
+  
